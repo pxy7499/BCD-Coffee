@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>북창동 커피 1호점 전략</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  color-scheme: light;
+  --page:#efe7dc; --paper:#fff; --ink:#15131d; --ink2:#4a4757; --muted:#8a8797; --line:#e7e4ed; --line2:#cfcbd8;
+  --brand:#3b2418; --brand2:#9a5b2e; --soft:#f8f0e5; --mid:#e8d5bc;
+  --hl:#9a5b2e; --base:#d6cdc2; --c1:#2a78d6; --c2:#eb6834; --c3:#1baf7a; --c4:#eda100;
+  --pos:#2a78d6; --neg:#e34948;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--page)}
+body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;word-break:keep-all}
+.toolbar{position:sticky;top:0;z-index:20;display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(239,231,220,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line2)}
+.toolbar b{font-size:14px;color:var(--brand)}
+.toolbar button{font:inherit;font-size:13px;padding:7px 12px;border-radius:8px;border:1px solid var(--line2);background:#fff;cursor:pointer;margin-left:6px}
+.toolbar button.p{background:var(--brand);border-color:var(--brand);color:#fff}
+.deck{display:flex;flex-direction:column;align-items:center;gap:22px;padding:22px 16px 60px}
+.slide{position:relative;width:min(100%,1280px);aspect-ratio:16/9;background:var(--paper);container-type:inline-size;overflow:hidden;box-shadow:0 1px 2px rgba(20,18,30,.06),0 8px 28px rgba(20,18,30,.08);border-radius:6px}
+.si{position:absolute;inset:0;padding:3cqw 3.8cqw 2.4cqw;display:flex;flex-direction:column;font-size:1.25cqw;line-height:1.45}
+.sec{display:flex;align-items:center;gap:.8cqw;font-size:.95cqw;font-weight:800;color:var(--brand2)}
+.sec .n{width:1.9cqw;height:1.9cqw;border-radius:50%;background:var(--brand2);color:#fff;display:grid;place-items:center;font-size:1cqw}
+.sec .p{color:var(--muted);font-weight:600;margin-left:auto;font-size:.85cqw}
+.at{font-size:2.3cqw;font-weight:800;line-height:1.25;letter-spacing:-.02em;margin:.6cqw 0 1.5cqw}
+.at em{font-style:normal;color:var(--brand2)}
+.body{flex:1;min-height:0;display:grid;gap:1.8cqw}
+.ft{border-top:1px solid var(--line);padding-top:.5cqw;margin-top:.8cqw;font-size:.72cqw;color:var(--muted);display:flex;justify-content:space-between}
+.lab{font-size:.95cqw;font-weight:700;color:var(--ink2);margin-bottom:.5cqw}
+.card{border:1px solid var(--line);border-radius:.8cqw;padding:1.2cqw;background:#fff;min-height:0}
+.card.soft{background:var(--soft);border-color:var(--mid)}
+.big{font-size:3.4cqw;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--brand2)}
+.big small{font-size:1.4cqw;font-weight:700;margin-left:.2cqw}
+.mid{font-size:2.2cqw;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.mid small{font-size:1.05cqw;font-weight:700;margin-left:.15cqw;color:var(--ink2)}
+.cap{font-size:.95cqw;color:var(--ink2);margin-top:.35cqw}
+.muted{color:var(--muted)}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.legend{display:flex;gap:1.2cqw;font-size:.85cqw;color:var(--ink2);margin-bottom:.4cqw}
+.legend i{display:inline-block;width:.85cqw;height:.85cqw;border-radius:.15cqw;margin-right:.35cqw;vertical-align:-.1cqw}
+.chip{display:inline-flex;align-items:center;gap:.5cqw;background:var(--soft);border:1px solid var(--mid);color:var(--brand);font-weight:700;border-radius:99px;padding:.35cqw .9cqw;font-size:.95cqw}
+.icon{width:3.2cqw;height:3.2cqw;border-radius:50%;background:var(--soft);border:1px solid var(--mid);display:grid;place-items:center;flex:none}
+.icon svg{width:1.7cqw;height:1.7cqw;stroke:var(--brand2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.row{display:flex;align-items:center;gap:1cqw}
+.arrow{display:grid;place-items:center;color:var(--brand2);font-size:2cqw;font-weight:800}
+table.t{width:100%;border-collapse:collapse;font-size:1cqw;font-variant-numeric:tabular-nums}
+table.t th{font-weight:700;color:var(--ink2);text-align:right;padding:.45cqw .5cqw;border-bottom:1.5px solid var(--ink)}
+table.t td{padding:.45cqw .5cqw;border-bottom:1px solid var(--line);text-align:right}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t tr.hl td{background:var(--soft);font-weight:800}
+/* 표지 */
+.cover .si{padding:0;flex-direction:row}
+.cover .l{flex:1.2;padding:5cqw 4.4cqw;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(150deg,#1f120b,#3b2418 50%,#7a4a26);color:#fff}
+.cover h1{font-size:3.6cqw;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+.cover .r{flex:1;padding:4.4cqw 3.6cqw;display:flex;flex-direction:column;justify-content:center;gap:1.1cqw}
+.ag{display:flex;align-items:center;gap:1.2cqw;border:1px solid var(--line);border-radius:.8cqw;padding:1.1cqw 1.3cqw}
+.ag .n{font-size:2.2cqw;font-weight:800;color:var(--brand2);width:2.6cqw}
+.ag b{font-size:1.5cqw}
+.ag span{display:block;font-size:.95cqw;color:var(--ink2)}
+/* 요약 */
+.sum{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2cqw;position:relative}
+.sum .card{display:flex;flex-direction:column;gap:.7cqw;padding:1.5cqw 1.3cqw}
+.sum .q{font-size:1.05cqw;font-weight:800;color:var(--brand2)}
+.sum .a{font-size:1.35cqw;font-weight:700;line-height:1.35}
+/* 깔때기 */
+.fn{display:flex;align-items:center;gap:.8cqw}
+.fn .st{flex:1;text-align:center;border-radius:.8cqw;padding:1.1cqw .6cqw;background:var(--soft);border:1px solid var(--mid)}
+.fn .st .v{font-size:2.4cqw;font-weight:800;color:var(--brand)}
+.fn .st .l{font-size:.95cqw;color:var(--ink2)}
+.fn .st.fin{background:var(--brand2);border-color:var(--brand2)} .fn .st.fin .v,.fn .st.fin .l{color:#fff}
+/* 페르소나 */
+.pc{display:flex;flex-direction:column;gap:.8cqw;padding:1.5cqw}
+.pc .top{display:flex;justify-content:space-between;align-items:flex-start}
+.pc .nm{font-size:1.5cqw;font-weight:800}
+.pc .when{font-size:1cqw;color:var(--muted);font-weight:600}
+.pc .kv{display:grid;grid-template-columns:4.6cqw 1fr;gap:.45cqw .8cqw;font-size:1.02cqw}
+.pc .kv dt{color:var(--muted);font-weight:600}
+.pc .ans{margin-top:auto;background:var(--brand2);color:#fff;border-radius:.6cqw;padding:.8cqw 1cqw;font-weight:700;font-size:1.05cqw}
+/* 메뉴판 */
+.mb{display:grid;grid-template-columns:repeat(3,1fr);gap:1cqw}
+.mb{background:#2a1a12;border-radius:1cqw;padding:1.2cqw;box-shadow:inset 0 0 0 .35cqw #5a3a24}
+.mb .col{border-radius:.6cqw;border:1px dashed rgba(245,233,216,.28);padding:1cqw 1.1cqw;color:#f5e9d8;background:transparent!important}
+.mb .col h5{font-size:1.1cqw;font-weight:800;margin-bottom:.6cqw;display:flex;justify-content:space-between;color:#f0c48a;letter-spacing:.04em}
+.mb .col h5 .muted{color:#c9b49a}
+.mb .it{display:flex;justify-content:space-between;font-size:1.12cqw;padding:.34cqw 0;border-bottom:1px dotted rgba(245,233,216,.22)}
+.mb .it b{color:#fff;font-size:1.2cqw}
+.mbh{grid-column:1/4;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(245,233,216,.25);padding-bottom:.8cqw;margin-bottom:.2cqw;color:#f5e9d8}
+.mbh .t{font-size:1.6cqw;font-weight:800;letter-spacing:.06em}
+.mbh .hero{display:flex;align-items:baseline;gap:.8cqw}
+.mbh .hero .p{font-size:3cqw;font-weight:900;color:#f0c48a;letter-spacing:-.02em}
+.stamp{background:#e34948;color:#fff;font-weight:900;font-size:1.05cqw;padding:.45cqw .9cqw;border-radius:99px;transform:rotate(-4deg);box-shadow:0 .2cqw .6cqw rgba(0,0,0,.3)}
+.mb .it:last-child{border-bottom:0}
+.mb .it b{font-variant-numeric:tabular-nums}
+/* 시나리오 카드 */
+.sc{display:grid;grid-template-columns:repeat(3,1fr);gap:.8cqw}
+.sc .card{text-align:center;padding:1cqw .6cqw}
+.sc .card.on{border:2px solid var(--brand2);background:var(--soft)}
+.sc .t1{font-size:1cqw;font-weight:800;color:var(--ink2)}
+.sc .v1{font-size:1.9cqw;font-weight:800;margin:.2cqw 0}
+.sc .s1{font-size:.92cqw;color:var(--ink2);line-height:1.5}
+.gate{display:flex;align-items:stretch;gap:.6cqw}
+.gate .g{flex:1;border-radius:.7cqw;background:var(--soft);border:1px solid var(--mid);padding:.8cqw 1cqw}
+.gate .g b{display:block;color:var(--brand2);font-size:.95cqw}
+.gate .g span{font-size:1cqw;font-weight:600}
+.tip{position:fixed;z-index:50;pointer-events:none;background:#15131d;color:#fff;font-size:12px;line-height:1.45;padding:7px 9px;border-radius:6px;max-width:280px;opacity:0}
+body.present{background:#0b0a10;overflow:hidden}
+body.present .toolbar{display:none}
+body.present .deck{padding:0;gap:0;height:100vh;justify-content:center}
+body.present .slide{display:none;width:min(100vw,177.78vh);border-radius:0;box-shadow:none}
+body.present .slide.on{display:block}
+@media print{@page{size:338.667mm 190.5mm;margin:0} html,body{background:#fff} .toolbar{display:none} .deck{padding:0;gap:0} .slide{width:338.667mm;height:190.5mm;aspect-ratio:auto;box-shadow:none;border-radius:0;break-after:page}}
+.lg{display:flex;flex-direction:column;gap:.7cqw}
+.step{display:flex;gap:1cqw;align-items:center;border:1px solid var(--line);border-radius:.8cqw;padding:.9cqw 1.1cqw;background:#fff}
+.step .no{font-size:.85cqw;font-weight:800;color:#fff;background:var(--brand2);border-radius:99px;padding:.25cqw .7cqw;white-space:nowrap}
+.step .q{font-size:1.2cqw;font-weight:800}
+.step .d{font-size:.92cqw;color:var(--ink2)}
+.step .res{margin-left:auto;text-align:right;white-space:nowrap}
+.step .res b{font-size:2cqw;font-weight:900;color:var(--brand2)}
+.step .res span{display:block;font-size:.8cqw;color:var(--muted)}
+.down{text-align:center;color:var(--brand2);font-weight:900;font-size:1.2cqw;line-height:.8}
+.wbar{display:flex;height:2.4cqw;border-radius:.5cqw;overflow:hidden;margin:.5cqw 0 .4cqw}
+.wbar div{display:grid;place-items:center;color:#fff;font-weight:800;font-size:.9cqw;border-right:2px solid #fff}
+.wdef{display:grid;grid-template-columns:1fr 1fr;gap:.25cqw 1cqw;font-size:.86cqw;color:var(--ink2)}
+.wdef b{color:var(--ink)}
+table.sc2{width:100%;border-collapse:collapse;font-size:1.02cqw}
+table.sc2 th{font-size:.88cqw;color:var(--ink2);font-weight:700;padding:.5cqw .4cqw;border-bottom:1.5px solid var(--ink);text-align:center}
+table.sc2 th:first-child{text-align:left}
+table.sc2 td{padding:.62cqw .4cqw;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+table.sc2 td:first-child{text-align:left;font-weight:700}
+table.sc2 tr.win td{background:var(--soft);font-weight:800}
+table.sc2 tr.win td:first-child{color:var(--brand2)}
+.hv{display:inline-block;width:1.15cqw;height:1.15cqw;border-radius:50%;border:.16cqw solid var(--brand2);vertical-align:-.2cqw;margin-right:.35cqw}
+.hv.f{background:var(--brand2)} .hv.h{background:linear-gradient(90deg,var(--brand2) 50%,#fff 50%)}
+.sbar{display:inline-block;height:.9cqw;border-radius:.2cqw;background:var(--base);vertical-align:-.1cqw;margin-right:.4cqw}
+tr.win .sbar{background:var(--brand2)}
+</style>
+</head>
+<body>
+<div class="toolbar"><b>북창동 커피 1호점 전략</b><div><button id="btnP" class="p">발표 모드 (F)</button><button onclick="print()">PDF로 인쇄</button></div></div>
+<main class="deck">
+
+<!-- 1 표지 -->
+<section class="slide cover"><div class="si">
+  <div class="l">
+    <div style="font-size:1cqw;font-weight:700;letter-spacing:.08em;opacity:.8">PE 보유 커피 전문점 · 서울 신규 출점 전략</div>
+    <div><h1>북창동(시청역)에서<br>시작하는<br>중저가 커피 1호점</h1>
+      <div style="font-size:1.35cqw;opacity:.88;margin-top:1.4cqw">점심에 팀 커피를 사는 직장인을 위한 15평 픽업 매장</div></div>
+    <div style="font-size:.95cqw;opacity:.8">2026년 11월 · 서울 열린데이터광장 2021–2026 분석</div>
+  </div>
+  <div class="r">
+    <div class="ag"><div class="n">1</div><div><b>왜 북창동인가</b><span>지금 2등급, 3년 뒤 1등급이 될 상권</span></div></div>
+    <div class="ag"><div class="n">2</div><div><b>고객은 누구인가</b><span>점심 3시간에 매출의 58%</span></div></div>
+    <div class="ag"><div class="n">3</div><div><b>공간 및 메뉴 구성</b><span>15평 픽업 매장 · 커피 9종</span></div></div>
+    <div class="ag"><div class="n">4</div><div><b>손익 시나리오</b><span>1호점 손익과 30개점 확장</span></div></div>
+  </div>
+</div></section>
+
+<!-- 2 한 장 요약 -->
+<section class="slide"><div class="si">
+  <div class="sec">한 장 요약</div>
+  <h2 class="at">북창동은 지금 2등급이지만 <em>3년 뒤 1등급</em>이 될 상권. 점심 직장인용 픽업 매장으로 <em>연 매출 <span data-k="salesEok"></span>, 영업이익률 <span data-k="ebitM"></span></em></h2>
+  <div class="body" style="grid-template-rows:1fr auto">
+    <div class="sum">
+      <div class="card soft"><div class="q">1 · 왜 북창동인가</div><div class="big">+14.7<small>%</small></div><div class="cap">3년 뒤 예상 커피 매출 성장<br>98.6억 → 114.2억 원</div><div class="a">1등급 기준(102.9억)을<br>넘어서는 상권</div></div>
+      <div class="card soft"><div class="q">2 · 고객은 누구인가</div><div class="big">58<small>%</small></div><div class="cap">점심 11–14시 매출 비중<br>(서울 평균 36%)</div><div class="a">점심 후 팀 커피를 사는<br>30–40대 직장인</div></div>
+      <div class="card soft"><div class="q">3 · 공간 및 메뉴</div><div class="big">2,500<small>원</small></div><div class="cap">아메리카노 · 커피 9종만<br>평균 잔단가 3,100원</div><div class="a">좌석 대신 속도를 파는<br>15평 픽업 매장</div></div>
+      <div class="card soft"><div class="q">4 · 손익 시나리오</div><div class="big" data-k="paybackBig"></div><div class="cap">투자금 회수 · 총투자 <span data-k="investEok"></span><br>손익분기까지 여유 <span data-k="safety"></span></div><div class="a">30개점 확장 시<br>IRR <span data-k="r30irr"></span></div></div>
+    </div>
+    <div class="row" style="justify-content:center;gap:1.2cqw;font-size:1.1cqw;font-weight:700;color:var(--ink2)">
+      <span class="chip">성장하는 상권</span><span class="arrow">→</span><span class="chip">분명한 고객</span><span class="arrow">→</span><span class="chip">그 고객에 맞춘 매장·메뉴</span><span class="arrow">→</span><span class="chip">복제 가능한 손익</span>
+    </div>
+  </div>
+  <div class="ft"><span>자료: 서울시 상권분석서비스(2021Q1–2026Q2), 휴게음식점 인허가, 지하철 승하차, 한국부동산원. 분석: 컨설팅팀</span><span>2</span></div>
+</div></section>
+
+<!-- 3 왜 북창동 ① -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">1</span>왜 북창동인가<span class="p">시장</span></div>
+  <h2 class="at">서울 카페는 <em>줄고</em>, 남은 카페의 매출은 <em>오른다</em>. 이제는 이기는 상권을 골라야 합니다</h2>
+  <div class="body" style="grid-template-columns:1fr 1fr;grid-template-rows:auto auto">
+    <div><div class="lab">서울 상권 커피 점포 수 (개)</div><div class="chart" id="c_st"></div></div>
+    <div><div class="lab">점포당 월매출 (만 원)</div><div class="chart" id="c_sps"></div></div>
+    <div style="grid-column:1/3">
+      <div class="lab">어떻게 골랐나: 서울 1,650개 상권 → 1곳</div>
+      <div class="fn">
+        <div class="st"><div class="v">1,650</div><div class="l">서울 전체 상권</div></div><div class="arrow">→</div>
+        <div class="st"><div class="v">602</div><div class="l">커피 시장이 충분한 곳</div></div><div class="arrow">→</div>
+        <div class="st"><div class="v">120</div><div class="l">지금 2등급<br>(상위 10–30%)</div></div><div class="arrow">→</div>
+        <div class="st"><div class="v">3</div><div class="l">성장 · 포맷 적합 · 낮은 리스크</div></div><div class="arrow">→</div>
+        <div class="st fin"><div class="v">1</div><div class="l">북창동(시청역 6번)</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>자료: 서울시 상권분석서비스 점포·추정매출(커피-음료). 1등급 = 연 커피매출 상위 10%(102.9억 원 이상)</span><span>3</span></div>
+</div></section>
+
+<!-- 3b 선정 로직 -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">1</span>왜 북창동인가<span class="p">선정 로직</span></div>
+  <h2 class="at">세 단계로 거르고 네 가지로 점수를 매겼더니, <em>네 항목 모두 상위권</em>인 상권은 북창동뿐이었습니다</h2>
+  <div class="body" style="grid-template-columns:1fr 1.3fr">
+    <div class="lg">
+      <div class="step"><span class="no">거름 ①</span><div><div class="q">시장이 충분히 큰가</div><div class="d">연 커피 매출 4억 원 이상, 카페 3곳 이상</div></div><div class="res"><b>602</b><span>1,650곳 중</span></div></div>
+      <div class="down">▼</div>
+      <div class="step"><span class="no">거름 ②</span><div><div class="q">들어갈 가격이 맞나</div><div class="d">1등급 바로 아래인 2등급(상위 10–30%)만.<br>1등급은 임대료·권리금이 이미 비쌈</div></div><div class="res"><b>120</b><span>2등급 상권</span></div></div>
+      <div class="down">▼</div>
+      <div class="step" style="flex-direction:column;align-items:stretch;background:var(--soft);border-color:var(--mid)">
+        <div style="display:flex;align-items:center;gap:1cqw"><span class="no">점수 ③</span><div class="q">네 가지 점수로 순위 매기기</div><div class="res" style="margin-left:auto"><b>1위</b><span>북창동</span></div></div>
+        <div class="wbar"><div style="flex:35;background:var(--brand2)">승급 35%</div><div style="flex:25;background:#b9773f">성장 25%</div><div style="flex:25;background:#d2a06b">포맷 적합 25%</div><div style="flex:15;background:var(--c2)">리스크 −15%</div></div>
+        <div class="wdef"><span><b>승급</b>: 3년 내 1등급이 될 확률</span><span><b>성장</b>: 3년 뒤 커피 매출 예측</span><span><b>포맷 적합</b>: 점심·직장인·가격 민감 손님</span><span><b>리스크</b>: 폐업률·저가 경쟁·매출 둔화</span></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1cqw">
+      <div class="lab">2등급 120곳 중 종합 점수 상위 5 &nbsp;<span class="muted" style="font-weight:500"><span class="hv f"></span>상위권 <span class="hv h"></span>중간 <span class="hv"></span>하위권 (상위 후보 12곳 기준)</span></div>
+      <table class="sc2" id="t_logic"></table>
+      <div style="display:flex;gap:.8cqw;flex-wrap:wrap">
+        <span class="chip">북창동: 성장 예측 상위 10%</span><span class="chip">승급 확률 상위 3%</span><span class="chip">포맷 적합 상위 3%</span>
+      </div>
+      <div class="card" style="display:flex;gap:1.2cqw;align-items:center"><div class="icon"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div><div style="font-size:1.02cqw"><b>점수는 믿을 만한가?</b> 2022년 데이터로 점수를 매겨 2025년 결과와 비교했더니, 점수 상위 20% 상권은 3년간 <b style="color:var(--brand2)">+2.9%</b>, 하위 20%는 <b style="color:var(--c2)">−10.0%</b> 성장했습니다.</div></div>
+    </div>
+  </div>
+  <div class="ft"><span>주: 승급 확률은 과거 2등급 상권이 실제로 1등급이 된 사례로 학습한 모델, 성장 예측은 17개 신호(매출·손님·점포 변화, 유동·직장인구, 개·폐업, 커피숍 인허가 10년, 지하철 승하차 10년) 기반. 자료: 서울시 상권분석서비스. 분석: 컨설팅팀</span><span>4</span></div>
+</div></section>
+
+<!-- 4 왜 북창동 ② -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">1</span>왜 북창동인가<span class="p">북창동</span></div>
+  <h2 class="at">북창동은 <em>지금 2등급, 3년 뒤 1등급</em>. 손님이 실제로 늘고 있는 상권입니다</h2>
+  <div class="body" style="grid-template-columns:1.25fr 1fr">
+    <div style="display:flex;flex-direction:column;gap:1.4cqw">
+      <div><div class="lab">연 커피 매출과 1등급 기준 (억 원)</div><div class="chart" id="c_ladder"></div></div>
+      <div><div class="lab">분기별 커피 매출 (억 원) · 최근 1년 강조</div><div class="chart" id="c_q"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1cqw">
+      <div class="card soft row"><div class="icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div><div><div class="mid">+42<small>%</small></div><div class="cap">2026년 상반기 매출 (전년 같은 기간 대비)</div></div></div>
+      <div class="card soft row"><div class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M15 20c0-2 1-4 4-4"/></svg></div><div><div class="mid">+38<small>%</small></div><div class="cap">손님 결제 건수 증가 · 점포는 37 → 33개로 감소</div></div></div>
+      <div class="card soft row"><div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M8 21l2-4M16 21l-2-4M5 11h14"/></svg></div><div><div class="mid">311<small>만 명/월</small></div><div class="cap">시청역 승하차, 코로나 이전 수준 회복</div></div></div>
+      <div class="card soft row"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><div><div class="mid">2배</div><div class="cap">점포당 월매출 2,347만 원 (서울 평균 1,164만 원)</div></div></div>
+    </div>
+  </div>
+  <div class="ft"><span>주: 3년 뒤 매출은 2022년 데이터로 2025년을 맞혀 검증한 예측 모델 기준. 자료: 서울시 상권분석서비스, 지하철 역별 승하차(2015–2026)</span><span>4</span></div>
+</div></section>
+
+<!-- 5 고객 ① -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">2</span>고객은 누구인가<span class="p">언제, 누가</span></div>
+  <h2 class="at">손님의 <em>58%가 점심 3시간</em>에 옵니다. 평일 장사, 30–40대 직장인 상권입니다</h2>
+  <div class="body" style="grid-template-columns:1.5fr 1fr;grid-template-rows:auto 1fr">
+    <div style="grid-column:1/3"><div class="lab">하루 매출이 몰리는 시간 (커피 매출 비중)</div><div class="chart" id="c_day"></div></div>
+    <div><div class="lab">연령대별 매출 비중 (%)</div>
+      <div class="legend"><span><i style="background:var(--hl)"></i>북창동</span><span><i style="background:var(--base)"></i>서울 평균</span></div>
+      <div class="chart" id="c_age"></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1cqw;align-content:start">
+      <div class="card soft" style="grid-column:1/3"><div class="lab">평일 vs 주말 매출</div><div class="chart" id="c_wk"></div></div>
+      <div class="card"><div class="mid">2.1<small>만 명</small></div><div class="cap">상권 직장인</div></div>
+      <div class="card"><div class="mid">60<small>%</small></div><div class="cap">그중 20–30대</div></div>
+    </div>
+  </div>
+  <div class="ft"><span>자료: 서울시 상권분석서비스 추정매출(커피-음료, 2025Q3–2026Q2), 직장인구(2026Q2)</span><span>5</span></div>
+</div></section>
+
+<!-- 6 고객 ② 페르소나 -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">2</span>고객은 누구인가<span class="p">페르소나</span></div>
+  <h2 class="at">우리가 잡을 손님은 <em>세 명</em>입니다. 셋이 매출의 89%를 만듭니다</h2>
+  <div class="body" style="grid-template-columns:1.15fr 1fr 1fr">
+    <div class="card soft pc">
+      <div class="top"><div><div class="nm">점심 팀 커피 결제자</div><div class="when">11–14시 · 30대 대리·과장</div></div><div class="big">58<small>%</small></div></div>
+      <dl class="kv"><dt>주문</dt><dd>식사 후 팀원 몫까지 2–4잔</dd><dt>불편</dt><dd>12시 40분의 긴 줄</dd><dt>원하는 것</dt><dd>빨리, 한 번에, 싸게</dd></dl>
+      <div class="ans">앱 단체 사전주문 + 픽업 선반 + 4잔 캐리어</div>
+    </div>
+    <div class="card pc">
+      <div class="top"><div><div class="nm">출근길 루틴</div><div class="when">07–10시 · 20–30대 사원</div></div><div class="big" style="color:var(--ink)">14<small>%</small></div></div>
+      <dl class="kv"><dt>주문</dt><dd>매일 아메리카노 1잔</dd><dt>불편</dt><dd>지각 압박, 대기</dd><dt>원하는 것</dt><dd>30초 안에 받기</dd></dl>
+      <div class="ans" style="background:var(--ink)">출근 정기권(월 20잔) + 원탭 재주문</div>
+    </div>
+    <div class="card pc">
+      <div class="top"><div><div class="nm">오후 회의·리필</div><div class="when">14–17시 · 40대 팀장·영업직</div></div><div class="big" style="color:var(--ink)">17<small>%</small></div></div>
+      <dl class="kv"><dt>주문</dt><dd>회의용 4–8잔</dd><dt>불편</dt><dd>오후 카페인 부담</dd><dt>원하는 것</dt><dd>대량 주문, 디카페인</dd></dl>
+      <div class="ans" style="background:var(--ink)">전 메뉴 디카페인 +500원 + 회의 세트</div>
+    </div>
+  </div>
+  <div class="ft"><span>주: 비중 = 해당 시간대 커피 매출 비중(북창동). 주말·저녁 체류 손님(약 11%)은 대상에서 제외. 행동·불편은 매출 패턴에서 세운 가설로, 오픈 전 현장 조사로 확인</span><span>6</span></div>
+</div></section>
+
+<!-- 7 공간 -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">3</span>공간 및 메뉴 구성<span class="p">공간</span></div>
+  <h2 class="at">좌석이 아니라 <em>속도를 파는 15평 픽업 매장</em>. 같은 도면으로 어디서나 복제합니다</h2>
+  <div class="body" style="grid-template-columns:1.45fr 1fr">
+    <div><div class="lab">15평(49.6㎡) 표준 평면 (개념도)</div><div class="chart" id="c_floor"></div></div>
+    <div style="display:flex;flex-direction:column;gap:1cqw">
+      <div class="card row"><div class="icon"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></svg></div><div><div class="mid">60<small>%</small></div><div class="cap">앱·키오스크 사전주문 목표 · 카운터 1개</div></div></div>
+      <div class="card row"><div class="icon"><svg viewBox="0 0 24 24"><path d="M5 8h12v6a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5z"/><path d="M17 10h2a2 2 0 0 1 0 4h-2"/><path d="M8 2v3M12 2v3"/></svg></div><div><div class="mid">120<small>잔/시간</small></div><div class="cap">3그룹 머신 + 바리스타 3명, 점심 피크 대응</div></div></div>
+      <div class="card row"><div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/><path d="M13 7h4a2 2 0 0 1 2 2v2M11 17H7a2 2 0 0 1-2-2v-2"/></svg></div><div><div class="mid">4<small>주</small></div><div class="cap">모듈형 공사 · 평당 200만 원 · 2호점부터 같은 도면</div></div></div>
+      <div class="card soft"><div class="lab">점심 피크, 감당할 수 있나?</div><div class="chart" id="c_cap"></div></div>
+    </div>
+  </div>
+  <div class="ft"><span>주: 피크 수요 = 상권 평일 점심 거래 × 우리 점유율 6% × 1.75잔 기준. 처리능력은 3그룹 머신 업계 일반값</span><span>7</span></div>
+</div></section>
+
+<!-- 8 메뉴 -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">3</span>공간 및 메뉴 구성<span class="p">메뉴</span></div>
+  <h2 class="at">커피 전문점의 <em>절반 가격</em>. 아메리카노 2,500원, 라떼 3,500원으로 매일 마셔도 부담 없는 커피 9종</h2>
+  <div class="body" style="grid-template-columns:1.5fr 1fr">
+    <div style="display:flex;flex-direction:column;gap:1.2cqw">
+      <div class="mb">
+        <div class="mbh"><div class="t">TODAY'S COFFEE</div><div class="hero"><span style="font-size:1.1cqw">아메리카노</span><span class="p">2,500원</span><span class="stamp">전문점보다 47% 저렴</span></div></div><div class="col"><h5>코어 <span class="muted">매출 79%</span></h5>
+          <div class="it"><span>아메리카노</span><b>2,500</b></div><div class="it"><span>카페라떼</span><b>3,500</b></div><div class="it"><span>바닐라라떼</span><b>3,900</b></div><div class="it"><span>카페모카</span><b>3,900</b></div><div class="it"><span>에스프레소</span><b>2,000</b></div></div>
+        <div class="col"><h5>시그니처 <span class="muted">12%</span></h5>
+          <div class="it"><span>크림라떼</span><b>4,300</b></div><div class="it"><span>연유라떼</span><b>4,200</b></div></div>
+        <div class="col"><h5>콜드브루 <span class="muted">9%</span></h5>
+          <div class="it"><span>콜드브루</span><b>3,300</b></div><div class="it"><span>콜드브루 라떼</span><b>4,000</b></div>
+          <div style="margin-top:.8cqw;font-size:.95cqw;font-weight:800;color:var(--brand2)">옵션</div>
+          <div class="it"><span>디카페인</span><b>+500</b></div><div class="it"><span>사이즈업</span><b>+800</b></div></div>
+      </div>
+      <div><div class="lab">가격 포지션 (아메리카노, 원)</div><div class="chart" id="c_pos"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1cqw">
+      <div class="card soft"><div class="lab">메뉴별 판매 비중</div><div class="chart" id="c_mix"></div></div>
+      <div class="card"><div class="lab">한 잔에 남는 돈 (원)</div><div class="chart" id="c_cm"></div></div>
+      <div class="row" style="gap:1.4cqw"><div><div class="mid">3,100<small>원</small></div><div class="cap">평균 잔단가</div></div><div><div class="mid">32<small>%</small></div><div class="cap">원가율 (원두가 버퍼 포함)</div></div></div>
+    </div>
+  </div>
+  <div class="ft"><span>주: 원두 ₩26,000/kg, 우유 ₩2,300/L, 컵·뚜껑 ₩140 기준. 판매 비중은 오피스 상권 중저가 브랜드 일반 구성 가정, 오픈 후 POS로 보정. 경쟁 가격은 브랜드 공개 메뉴 기준 대표값</span><span>8</span></div>
+</div></section>
+
+<!-- 9 손익 ① -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">4</span>손익 시나리오<span class="p">1호점</span></div>
+  <h2 class="at">1호점은 월 <em><span data-k="salesMan"></span>만 원</em>을 팔아 <em><span data-k="ebitMan"></span>만 원</em>이 남습니다. 손익분기까지 <span data-k="safety"></span> 여유</h2>
+  <div class="body" style="grid-template-columns:1.25fr 1fr">
+    <div style="display:flex;flex-direction:column;gap:1.2cqw">
+      <div class="card soft"><div class="lab">매출은 이렇게 나온다 (월)</div>
+        <div class="row" id="f_rev" style="justify-content:space-between;gap:.6cqw"></div></div>
+      <div><div class="lab">월 손익 흐름 (만 원)</div><div class="chart" id="c_wf"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.1cqw">
+      <div><div class="lab">시나리오 3개</div><div class="sc" id="sc"></div></div>
+      <div class="card"><div class="lab">손익분기 매출 vs 기본 매출 (월, 만 원)</div><div class="chart" id="c_bep"></div></div>
+      <div class="card"><div class="lab">영업이익을 가장 크게 흔드는 변수 (월, 만 원)</div><div class="chart" id="c_tor"></div></div>
+    </div>
+  </div>
+  <div class="ft"><span>주: 월세 ㎡당 7만 원(서울 소규모 1층 52,800원 × 도심 프리미엄), 인건비는 2026 최저임금 10,320원 기준, 총투자에 보증금·권리금 포함. 회수기간은 보증금 제외 투자 ÷ EBITDA, 1년 차 매출 85%</span><span>9</span></div>
+</div></section>
+
+<!-- 10 손익 ② 확장 -->
+<section class="slide"><div class="si">
+  <div class="sec"><span class="n">4</span>손익 시나리오<span class="p">확장</span></div>
+  <h2 class="at">같은 포맷 <em>30개점</em>(직영 30%·가맹 70%)이면 5년 차 EBITDA <em data-k="r30ebitda"></em>, IRR <em data-k="r30irr"></em></h2>
+  <div class="body" style="grid-template-columns:1.2fr 1fr;grid-template-rows:1fr auto">
+    <div><div class="lab">연도별 점포 수</div>
+      <div class="legend"><span><i style="background:var(--hl)"></i>직영</span><span><i style="background:var(--mid)"></i>가맹</span></div>
+      <div class="chart" id="c_rs"></div>
+      <div class="lab" style="margin-top:.6cqw">연도별 EBITDA (억 원)</div><div class="chart" id="c_re"></div></div>
+    <div style="display:flex;flex-direction:column;gap:1cqw">
+      <div><div class="lab">점포 수별 IRR (직영 30%, 5년)</div><div class="chart" id="c_irr"></div></div>
+      <div class="card soft" style="font-size:1.05cqw"><b style="color:var(--brand)">25–30개점이 최소 조건.</b> 10개점은 본사 비용을 감당하지 못해 손실입니다. 가맹점 1개는 본사에 연 <b data-k="franUnit"></b>만 원을 남깁니다.</div>
+    </div>
+    <div style="grid-column:1/3"><div class="lab">진행 조건 (게이트)</div>
+      <div class="gate"><div class="g"><b>① 계약 전</b><span>2026년 3분기에도 상권 매출 +10% 유지</span></div><div class="arrow">→</div><div class="g"><b>② 오픈 6개월</b><span>평일 하루 200건 · 원가율 33%↓ · 인건비 30%↓</span></div><div class="arrow">→</div><div class="g"><b>③ 가맹 시작</b><span>2·3호점 매출이 1호점의 80% 이상</span></div></div></div>
+  </div>
+  <div class="ft"><span>주: 가맹 본사 수익 = 원부자재 공급마진 10% − 물류·관리 2.5% + 월 로열티 20만 원 + 개점 마진 2,500만 원. 본사 고정비 연 3억 원. Exit = 5년 차 EBITDA × 8배. 2호점부터 매출은 1호점의 90%</span><span>10</span></div>
+</div></section>
+
+</main>
+<div class="tip" id="tip"></div>
+<script>/* 커피 1호점 손익 · 확장 엔진 (리포트 HTML과 검증 스크립트가 같은 코드를 쓴다) */
+(function (root) {
+  "use strict";
+
+  // ── 기본 가정 (출처·근거는 리포트 '가정표' 섹션) ───────────────────────────
+  const BASE = {
+    // 수요 (A 상권 실측 기반)
+    mkt_wd_txn: 3543,      // 상권 평일 1일 커피 거래건수 (최근 4분기, 신한카드 기반 추정)
+    mkt_we_txn: 966,       // 상권 주말 1일 거래건수
+    capture: 0.06,         // 우리 매장 거래 점유율 (공정 점유율 1/35=2.9%의 약 2배: 1층·사전주문·중저가)
+    cups_per_txn: 1.75,    // 거래당 잔수 (오피스 단체결제, 상권 객단가 9,649원 ÷ 상권 평균 잔단가 약 5,500원)
+    price: 3100,           // 평균 잔단가 (메뉴 믹스 가중, 앱 할인 반영)
+    wd_days: 21.7, we_days: 8.7,
+    // 변동비 (매출 대비)
+    cogs: 0.32,            // 원두·우유·시럽·컵 + 로스
+    card: 0.012,           // 결제수수료
+    platform: 0.02,        // 배달·앱 수수료 (배달 비중 10% × 20%)
+    util: 0.025, supplies: 0.01, marketing: 0.015, hq_fee: 0.03,
+    // 인건비 (스케줄 기반 반고정비)
+    mgr_salary: 350,       // 점장 월 급여(만원, 4대보험 포함)
+    wd_hours: 23, we_hours: 8, // 1일 투입 시간(총, 점장 포함)
+    mgr_hours: 209,
+    wage: 10320, load: 1.25,   // 2026 최저임금 × (주휴·4대보험·퇴직충당)
+    // 고정비
+    area_m2: 49.6,         // 15평
+    rent_m2: 70000,        // 원/㎡/월 (서울 소규모 1층 52,800원 × 도심 프리미엄)
+    mgmt_m2: 6000,
+    other_fixed: 35,       // 보험·세무·POS·통신·보안 (만원)
+    // 투자
+    interior: 3000, equipment: 2800, fixtures: 1000, preopen: 700, // 만원
+    deposit_months: 10, key_money: 4000, key_recovery: 0.5,
+    dep_years: 5,
+    // 성장
+    ramp_y1: 0.85, growth: 0.03,
+  };
+
+  function store(o) {
+    const a = Object.assign({}, BASE, o || {});
+    const txn_m = a.mkt_wd_txn * a.capture * a.wd_days + a.mkt_we_txn * a.capture * a.we_days;
+    const cups_m = txn_m * a.cups_per_txn;
+    const sales = cups_m * a.price / 1e4; // 만원/월
+    const hours = a.wd_hours * a.wd_days + a.we_hours * a.we_days;
+    const labor = a.mgr_salary + Math.max(0, hours - a.mgr_hours) * a.wage * a.load / 1e4;
+    const rent = a.area_m2 * a.rent_m2 / 1e4;
+    const mgmt = a.area_m2 * a.mgmt_m2 / 1e4;
+    const v = {
+      cogs: sales * a.cogs, card: sales * a.card, platform: sales * a.platform, util: sales * a.util,
+      supplies: sales * a.supplies, marketing: sales * a.marketing, hq: sales * a.hq_fee,
+    };
+    const varTotal = Object.values(v).reduce((s, x) => s + x, 0);
+    const varRate = a.cogs + a.card + a.platform + a.util + a.supplies + a.marketing + a.hq_fee;
+    const fixed = labor + rent + mgmt + a.other_fixed;
+    const ebitda = sales - varTotal - fixed;
+    const capexDep = a.interior + a.equipment + a.fixtures + a.preopen;
+    const da = capexDep / (a.dep_years * 12);
+    const ebit = ebitda - da;
+    const deposit = rent * a.deposit_months;
+    const invest = capexDep + deposit + a.key_money;          // 총 투입
+    const investSunk = capexDep + a.key_money;                // 회수 불가분(보증금 제외)
+    const bep_ebitda = fixed / (1 - varRate);
+    const bep_ebit = (fixed + da) / (1 - varRate);
+    // 연도별 현금흐름 (5년, 세전·무차입)
+    const years = [1, 2, 3, 4, 5].map(y => {
+      const f = y === 1 ? a.ramp_y1 : Math.pow(1 + a.growth, y - 2);
+      const s = sales * f * 12;
+      const lab = labor * 12 * (y === 1 ? 1 : Math.pow(1.03, y - 1)); // 임금 3%/년
+      const fx = lab + (rent + mgmt) * 12 * Math.pow(1.02, y - 1) + a.other_fixed * 12;
+      const eb = s * (1 - varRate) - fx;
+      return { y, sales: s, ebitda: eb, ebit: eb - da * 12 };
+    });
+    const cfs = [-invest].concat(years.map((r, i) => r.ebitda + (i === 4 ? deposit + a.key_money * a.key_recovery : 0)));
+    let cum = -investSunk, payback = null;
+    for (let m = 1; m <= 120; m++) {
+      const y = Math.min(5, Math.ceil(m / 12));
+      const r = years[y - 1] || years[4];
+      cum += r.ebitda / 12;
+      if (cum >= 0) { payback = m; break; }
+    }
+    return {
+      a, txn_m, cups_m, cups_day_wd: a.mkt_wd_txn * a.capture * a.cups_per_txn, sales, salesYear: sales * 12,
+      ticket: a.cups_per_txn * a.price, hours, labor, rent, mgmt, fixed, v, varTotal, varRate, ebitda, da, ebit,
+      ebitdaM: ebitda / sales, ebitM: ebit / sales, laborR: labor / sales, rentR: (rent + mgmt) / sales,
+      deposit, invest, investSunk, bep_ebitda, bep_ebit, safety: 1 - bep_ebitda / sales,
+      roi: ebit * 12 / invest, years, cfs, irr: irr(cfs), payback,
+      mktShare: sales * 12 / 985600, // A 상권 연 커피매출 98.56억 = 985,600만원
+    };
+  }
+
+  function irr(cfs) {
+    let lo = -0.99, hi = 5;
+    const npv = r => cfs.reduce((s, c, t) => s + c / Math.pow(1 + r, t), 0);
+    if (npv(lo) * npv(hi) > 0) return null;
+    for (let i = 0; i < 200; i++) {
+      const m = (lo + hi) / 2;
+      if (npv(lo) * npv(m) <= 0) hi = m; else lo = m;
+    }
+    return (lo + hi) / 2;
+  }
+
+  const SCEN = {
+    bear: { label: "비관", capture: 0.045, price: 3000, cogs: 0.35, rent_m2: 84000, ramp_y1: 0.75, growth: 0.0,
+            wd_hours: 20, we_hours: 6 },
+    base: { label: "기본" },
+    bull: { label: "낙관", capture: 0.08, price: 3200, cogs: 0.30, ramp_y1: 0.95, growth: 0.05,
+            wd_hours: 27 },
+  };
+
+  function sensitivity() {
+    const b = store().ebit;
+    const items = [
+      ["거래 점유율 ±20%", { capture: BASE.capture * 0.8 }, { capture: BASE.capture * 1.2 }],
+      ["잔단가 ±10%", { price: BASE.price * 0.9 }, { price: BASE.price * 1.1 }],
+      ["원가율 ±3%p", { cogs: BASE.cogs + 0.03 }, { cogs: BASE.cogs - 0.03 }],
+      ["임대료 ±30%", { rent_m2: BASE.rent_m2 * 1.3 }, { rent_m2: BASE.rent_m2 * 0.7 }],
+      ["투입시간 ±15%", { wd_hours: BASE.wd_hours * 1.15, we_hours: BASE.we_hours * 1.15 },
+        { wd_hours: BASE.wd_hours * 0.85, we_hours: BASE.we_hours * 0.85 }],
+      ["거래당 잔수 ±10%", { cups_per_txn: BASE.cups_per_txn * 0.9 }, { cups_per_txn: BASE.cups_per_txn * 1.1 }],
+    ];
+    return items.map(([k, lo, hi]) => ({ k, lo: store(lo).ebit - b, hi: store(hi).ebit - b }))
+      .sort((x, y) => (Math.abs(y.hi - y.lo)) - (Math.abs(x.hi - x.lo)));
+  }
+
+  // ── N개점 확장 (5년, 연결 기준) ──────────────────────────────────────
+  // 본사 수익모델은 중저가 프랜차이즈 표준: 원부자재 공급마진 + 로열티 + 개점 시 일회성(가맹비·교육·인테리어/설비 마진)
+  const ROLL = {
+    n_target: 30, direct_share: 0.3, sales_factor: 0.9, // 2호점부터 1호점 대비 매출 90%
+    supply_margin: 0.10,   // 원부자재 공급 매출총이익 (점포 매출 대비)
+    sv_cost: 0.025,        // 물류·슈퍼바이저 변동비 (점포 매출 대비)
+    royalty_m: 20,         // 월 로열티 (만원)
+    fran_fee_margin: 2500, // 가맹 개점 1건당 일회성 마진 (만원)
+    hq_fixed: 30000,       // 본사 고정비 3억/년 (만원)
+    hq_per_store: 500,     // 점포당 본사비용 증가분 (만원/년)
+    hq_setup: 30000,       // 브랜드·IT·물류 초기 셋업 3억
+    multiple: 8, tax: 0.22,
+  };
+
+  function rollout(o, storeOpt) {
+    const r = Object.assign({}, ROLL, o || {});
+    const s1 = store(storeOpt);
+    const unit = store(Object.assign({}, storeOpt, { capture: s1.a.capture * r.sales_factor }));
+    const unitSalesY = unit.salesYear;
+    // 직영점 연결 EBITDA = 점포 EBITDA + 본사로 가는 수수료(hq_fee)·공급마진(내부거래) 환원
+    const consAdd = s1.a.hq_fee + r.supply_margin;
+    const unitConsY = unit.ebitda * 12 + unitSalesY * consAdd;
+    const unitInvest = unit.invest;
+    const ramp = s1.a.ramp_y1;
+    const rest = Math.max(0, r.n_target - 1);
+    const per = [0, 1, 2, 3, 4].map(i => i === 0 ? 1 :
+      Math.round(rest * i / 4) - Math.round(rest * (i - 1) / 4));
+    let dCum = 1, fCum = 0;
+    const rows = [];
+    const cfs = [-(r.hq_setup + s1.invest)];
+    per.forEach((n, i) => {
+      const y = i + 1;
+      const nd = i === 0 ? 0 : Math.round(n * r.direct_share), nf = i === 0 ? 0 : n - nd;
+      const dPrev = dCum - 1, fPrev = fCum;              // 1호점 제외 기존 직영 / 기존 가맹
+      dCum += nd; fCum += nf;
+      const s1y = s1.years[i];
+      const first = s1y.ebitda + s1y.sales * consAdd;    // 1호점 연결 EBITDA
+      const dEq = dPrev + nd * 0.5 * ramp, fEq = fPrev + nf * 0.5 * ramp; // 신규점 반년 × 램프업
+      const direct = first + dEq * unitConsY;
+      const hqFran = fEq * (unitSalesY * (r.supply_margin - r.sv_cost) + r.royalty_m * 12) + nf * r.fran_fee_margin;
+      const svDirect = (dEq * unitSalesY + s1y.sales) * r.sv_cost;
+      const hqCost = r.hq_fixed + (dCum + fCum) * r.hq_per_store + svDirect;
+      const ebitda = direct + hqFran - hqCost;
+      const capex = nd * unitInvest;
+      const da = (s1.da + (dCum - 1) * unit.da) * 12;
+      const tax = Math.max(0, ebitda - da) * r.tax;
+      const cf = ebitda - tax - capex;
+      const sysSales = s1y.sales + (dEq + fEq) * unitSalesY;
+      rows.push({ y, open: i === 0 ? 1 : n, nd: i === 0 ? 1 : nd, nf, direct: dCum, fran: fCum, sysSales,
+                  directEbitda: direct, hqFran, hqCost, ebitda, capex, tax, cf });
+      cfs.push(cf);
+    });
+    const L = rows[4];
+    // Exit 기준 EBITDA: Y5 말 전 점포 정상 가동 run-rate (일회성 개점 마진 제외)
+    const s15 = s1.years[4];
+    const runRate = (s15.ebitda + s15.sales * consAdd) + (L.direct - 1) * unitConsY
+      + L.fran * (unitSalesY * (r.supply_margin - r.sv_cost) + r.royalty_m * 12)
+      - r.hq_fixed - (L.direct + L.fran) * r.hq_per_store - (s15.sales + (L.direct - 1) * unitSalesY) * r.sv_cost;
+    const ev = runRate * r.multiple;
+    const depositBack = s1.deposit + (L.direct - 1) * unit.deposit;
+    cfs[5] += ev + depositBack;
+    const neg = -cfs.filter(c => c < 0).reduce((s, c) => s + c, 0);
+    const pos = cfs.filter(c => c > 0).reduce((s, c) => s + c, 0);
+    return { r, rows, runRate, ev, depositBack, cfs, irr: irr(cfs), moic: pos / neg, invested: neg,
+             unitSalesY, unitConsY, unitInvest, unitEbitdaY: unit.ebitda * 12,
+             franUnitY: unitSalesY * (r.supply_margin - r.sv_cost) + r.royalty_m * 12,
+             runMargin: runRate / (s15.sales + (L.direct - 1 + L.fran) * unitSalesY) };
+  }
+
+  root.CoffeeEngine = { BASE, SCEN, ROLL, store, sensitivity, rollout, irr };
+})(typeof window !== "undefined" ? window : globalThis);
+</script>
+<script>
+const D = {"market_q": [{"q": "20211", "sales_eok": 4763.0, "stores": 18482, "frc": 4432, "sps_man": 859.0, "ticket": 7641.0, "opn": 754, "cls": 621}, {"q": "20212", "sales_eok": 6112.0, "stores": 18893, "frc": 4526, "sps_man": 1078.0, "ticket": 7385.0, "opn": 1133, "cls": 734}, {"q": "20213", "sales_eok": 5900.0, "stores": 19251, "frc": 4630, "sps_man": 1022.0, "ticket": 7246.0, "opn": 990, "cls": 649}, {"q": "20214", "sales_eok": 6400.0, "stores": 19870, "frc": 4769, "sps_man": 1074.0, "ticket": 7776.0, "opn": 1294, "cls": 693}, {"q": "20221", "sales_eok": 5485.0, "stores": 20156, "frc": 4848, "sps_man": 907.0, "ticket": 7733.0, "opn": 892, "cls": 565}, {"q": "20222", "sales_eok": 7043.0, "stores": 20798, "frc": 4992, "sps_man": 1129.0, "ticket": 7771.0, "opn": 1219, "cls": 576}, {"q": "20223", "sales_eok": 7099.0, "stores": 20975, "frc": 5046, "sps_man": 1128.0, "ticket": 7767.0, "opn": 1150, "cls": 991}, {"q": "20224", "sales_eok": 6929.0, "stores": 21642, "frc": 5239, "sps_man": 1067.0, "ticket": 8023.0, "opn": 1434, "cls": 797}, {"q": "20231", "sales_eok": 6758.0, "stores": 21661, "frc": 5271, "sps_man": 1040.0, "ticket": 8288.0, "opn": 989, "cls": 932}, {"q": "20232", "sales_eok": 7186.0, "stores": 21998, "frc": 5379, "sps_man": 1089.0, "ticket": 7837.0, "opn": 1193, "cls": 911}, {"q": "20233", "sales_eok": 7127.0, "stores": 21955, "frc": 5425, "sps_man": 1082.0, "ticket": 7768.0, "opn": 964, "cls": 976}, {"q": "20234", "sales_eok": 6880.0, "stores": 22017, "frc": 5460, "sps_man": 1042.0, "ticket": 8041.0, "opn": 969, "cls": 900}, {"q": "20241", "sales_eok": 6615.0, "stores": 22150, "frc": 5527, "sps_man": 996.0, "ticket": 8202.0, "opn": 1125, "cls": 964}, {"q": "20242", "sales_eok": 7374.0, "stores": 22072, "frc": 5547, "sps_man": 1114.0, "ticket": 7704.0, "opn": 916, "cls": 964}, {"q": "20243", "sales_eok": 7186.0, "stores": 21926, "frc": 5582, "sps_man": 1092.0, "ticket": 7721.0, "opn": 883, "cls": 1035}, {"q": "20244", "sales_eok": 6913.0, "stores": 21728, "frc": 5559, "sps_man": 1061.0, "ticket": 7987.0, "opn": 719, "cls": 904}, {"q": "20251", "sales_eok": 6325.0, "stores": 21438, "frc": 5552, "sps_man": 984.0, "ticket": 8213.0, "opn": 654, "cls": 828}, {"q": "20252", "sales_eok": 7046.0, "stores": 21335, "frc": 5556, "sps_man": 1101.0, "ticket": 7758.0, "opn": 754, "cls": 869}, {"q": "20253", "sales_eok": 7347.0, "stores": 21170, "frc": 5545, "sps_man": 1157.0, "ticket": 7811.0, "opn": 741, "cls": 929}, {"q": "20254", "sales_eok": 6864.0, "stores": 20997, "frc": 5260, "sps_man": 1090.0, "ticket": 8225.0, "opn": 623, "cls": 745}, {"q": "20261", "sales_eok": 6514.0, "stores": 20863, "frc": 5260, "sps_man": 1041.0, "ticket": 8376.0, "opn": 687, "cls": 782}, {"q": "20262", "sales_eok": 7286.0, "stores": 20867, "frc": 5283, "sps_man": 1164.0, "ticket": 7902.0, "opn": 765, "cls": 745}], "permits_seoul": [{"y": 2010, "active": 3256, "opened": 1351, "closed": 289, "area_med": 45.0}, {"y": 2011, "active": 4476, "opened": 1649, "closed": 429, "area_med": 40.2}, {"y": 2012, "active": 5554, "opened": 1628, "closed": 550, "area_med": 40.8}, {"y": 2013, "active": 6713, "opened": 1756, "closed": 597, "area_med": 42.5}, {"y": 2014, "active": 8268, "opened": 2335, "closed": 780, "area_med": 41.3}, {"y": 2015, "active": 9316, "opened": 2202, "closed": 1154, "area_med": 37.8}, {"y": 2016, "active": 10490, "opened": 2590, "closed": 1416, "area_med": 33.1}, {"y": 2017, "active": 11425, "opened": 2584, "closed": 1649, "area_med": 39.0}, {"y": 2018, "active": 12396, "opened": 2751, "closed": 1780, "area_med": 38.4}, {"y": 2019, "active": 13270, "opened": 2688, "closed": 1814, "area_med": 39.4}, {"y": 2020, "active": 13992, "opened": 2520, "closed": 1798, "area_med": 38.0}, {"y": 2021, "active": 14887, "opened": 2867, "closed": 1972, "area_med": 36.7}, {"y": 2022, "active": 15353, "opened": 2658, "closed": 2192, "area_med": 39.0}, {"y": 2023, "active": 15412, "opened": 2504, "closed": 2445, "area_med": 37.6}, {"y": 2024, "active": 14988, "opened": 2134, "closed": 2558, "area_med": 39.8}, {"y": 2025, "active": 14676, "opened": 1919, "closed": 2231, "area_med": 41.6}, {"y": 2026, "active": 14711, "opened": 1572, "closed": 1537, "area_med": 44.4}], "coffee_rank_2025": 13, "coffee_sales_2025_eok": 27582.0, "coffee_sales_2022_eok": 26556.0, "funnel": {"all": 1650, "with_coffee": 1064, "eligible": 602, "grade2": 120, "shortlist": 5, "final": 1}, "thr1_eok": 102.9, "model": {"bt_main": {"label": "2022 신호 → 2025 성과 (3년)", "n": 588, "ic_cv": 0.147, "ic_momentum_only": 0.031, "quintile_median_growth": [-0.1002, -0.0672, 0.0248, 0.0185, 0.0292], "top_quintile_hit": 0.178, "coefs": {"g_sales": 0.0553, "g_txn": 0.0082, "g_sps": -0.0812, "g_flp2030": 0.0217, "g_wrc": 0.0092, "g_rep": 0.004, "g_stores": -0.071, "open_rt": 0.0744, "close_rt": -0.0094, "frc_sh": 0.0032, "size": 0.0446, "young_sh": -0.0048, "coffee_sh": -0.0639, "ix_LH": -0.0165, "ix_HH": 0.0392, "cafe10y": -0.0128, "sub_g": 0.0112}, "intercept": -0.04678097297872588, "y_median": -0.01664101552485494}, "bt_rob": {"label": "2023 신호 → 2025 성과 (2년, 코로나 영향 제외)", "n": 605, "ic_cv": 0.155, "ic_momentum_only": 0.068, "quintile_median_growth": [-0.0849, -0.1347, -0.0646, -0.0406, -0.0042], "top_quintile_hit": 0.281, "coefs": {"g_sales": 0.024, "g_txn": 0.042, "g_sps": -0.0436, "g_flp2030": 0.0144, "g_wrc": -0.0007, "g_rep": -0.0088, "g_stores": -0.0516, "open_rt": 0.048, "close_rt": -0.014, "frc_sh": 0.0205, "size": 0.0248, "young_sh": 0.0106, "coffee_sh": -0.0452, "ix_LH": -0.0003, "ix_HH": 0.0222, "cafe10y": 0.0008, "sub_g": 0.018}, "intercept": -0.076434257906352, "y_median": -0.06528305351716691}, "upgrade": {"n_grade2": 118, "base_rate": 0.059322033898305086, "auc_loo": 0.9214929214929215, "auc_gap_only": 0.9433719433719434, "rate_top_third_score": 0.075, "rate_rest": 0.05128205128205128, "coef": [0.44284762502616626, -9.910773951778056, 2.1716438654494796], "robust_2023_2025": {"n_grade2": 121, "base_rate": 0.04132231404958678, "auc_loo": 0.9275862068965517, "auc_gap_only": 0.9517241379310345, "rate_top_third_score": 0.024390243902439025, "rate_rest": 0.05, "coef": [-0.17616087707398742, -11.587814036515507, 2.7920602460141954]}}, "seoul_ticket": 8090.800484303878, "last_q": "20262"}, "grades": [{"g": 1, "n": 60, "min_eok": 103.3, "med_eok": 209.0, "med_sps_man": 1875.0, "pred_g": 6.7}, {"g": 2, "n": 120, "min_eok": 33.0, "med_eok": 57.2, "med_sps_man": 1403.0, "pred_g": 2.8}, {"g": 3, "n": 181, "min_eok": 11.3, "med_eok": 18.2, "med_sps_man": 912.0, "pred_g": -0.9}, {"g": 4, "n": 150, "min_eok": 5.8, "med_eok": 8.0, "med_sps_man": 565.0, "pred_g": -4.7}, {"g": 5, "n": 91, "min_eok": 4.0, "med_eok": 4.7, "med_sps_man": 454.0, "pred_g": -7.2}], "shortlist": [{"code": "3120022", "name": "북창동(시청역_6번)", "gu": "중구", "type": "발달상권", "sales_eok": 98.6, "g22": 26.1, "h1": 42.2, "pred_g": 14.7, "p_up": 58.0, "fit": 0.75, "risk": -0.11, "score": 1.58, "stores": 35.0, "frc_sh": 29.0, "sps_man": 2347.0, "ticket": 9649.0, "ix": "HH", "seg": 1, "am": 72.0, "wkend": 12.0, "y2030": 41.0, "close_rt": 7.2, "open_rt": 4.2}, {"code": "3120198", "name": "구역삼세무서", "gu": "강남구", "type": "발달상권", "sales_eok": 103.0, "g22": 9.4, "h1": 19.0, "pred_g": 4.7, "p_up": 63.0, "fit": 0.68, "risk": -0.08, "score": 1.46, "stores": 54.0, "frc_sh": 27.0, "sps_man": 1574.0, "ticket": 7282.0, "ix": "LL", "seg": 1, "am": 64.0, "wkend": 14.0, "y2030": 41.0, "close_rt": 3.8, "open_rt": 6.2}, {"code": "3120076", "name": "수유역", "gu": "강북구", "type": "발달상권", "sales_eok": 99.8, "g22": 14.2, "h1": 11.3, "pred_g": 8.1, "p_up": 58.0, "fit": 0.16, "risk": 0.26, "score": 1.23, "stores": 87.0, "frc_sh": 37.0, "sps_man": 956.0, "ticket": 6611.0, "ix": "LL", "seg": 4, "am": 40.0, "wkend": 29.0, "y2030": 45.0, "close_rt": 4.5, "open_rt": 5.2}, {"code": "3120175", "name": "남부터미널역", "gu": "서초구", "type": "발달상권", "sales_eok": 94.4, "g22": 56.0, "h1": 14.1, "pred_g": 10.4, "p_up": 45.0, "fit": 0.66, "risk": -0.1, "score": 1.18, "stores": 56.0, "frc_sh": 30.0, "sps_man": 1410.0, "ticket": 5922.0, "ix": "HH", "seg": 1, "am": 64.0, "wkend": 17.0, "y2030": 37.0, "close_rt": 2.8, "open_rt": 3.0}, {"code": "3120164", "name": "내방역", "gu": "서초구", "type": "발달상권", "sales_eok": 97.1, "g22": 20.1, "h1": 6.6, "pred_g": 10.3, "p_up": 52.0, "fit": -0.12, "risk": -0.22, "score": 1.16, "stores": 47.0, "frc_sh": 20.0, "sps_man": 1731.0, "ticket": 11719.0, "ix": "HH", "seg": 0, "am": 50.0, "wkend": 32.0, "y2030": 31.0, "close_rt": 2.5, "open_rt": 3.0}, {"code": "3120224", "name": "수서역", "gu": "강남구", "type": "발달상권", "sales_eok": 92.0, "g22": 4.0, "h1": -7.8, "pred_g": 17.3, "p_up": 43.0, "fit": 0.41, "risk": 0.55, "score": 1.11, "stores": 26.0, "frc_sh": 50.0, "sps_man": 2949.0, "ticket": 6129.0, "ix": "HH", "seg": 1, "am": 56.0, "wkend": 20.0, "y2030": 35.0, "close_rt": 3.0, "open_rt": 4.5}, {"code": "3120064", "name": "경희대학교(경희대)", "gu": "동대문구", "type": "발달상권", "sales_eok": 102.9, "g22": -16.4, "h1": -14.3, "pred_g": -5.4, "p_up": 58.0, "fit": 0.51, "risk": 0.18, "score": 1.06, "stores": 43.0, "frc_sh": 29.0, "sps_man": 1983.0, "ticket": 7571.0, "ix": "LL", "seg": 4, "am": 51.0, "wkend": 19.0, "y2030": 51.0, "close_rt": 2.8, "open_rt": 1.5}, {"code": "3120102", "name": "서교동(홍대)", "gu": "마포구", "type": "발달상권", "sales_eok": 98.7, "g22": 58.1, "h1": 17.7, "pred_g": -2.5, "p_up": 49.0, "fit": 0.45, "risk": -0.56, "score": 1.02, "stores": 82.0, "frc_sh": 9.0, "sps_man": 1009.0, "ticket": 10168.0, "ix": "LL", "seg": 4, "am": 49.0, "wkend": 32.0, "y2030": 57.0, "close_rt": 4.5, "open_rt": 3.8}, {"code": "3120188", "name": "압구정역", "gu": "강남구", "type": "발달상권", "sales_eok": 90.0, "g22": -36.9, "h1": 6.5, "pred_g": 15.5, "p_up": 37.0, "fit": 0.34, "risk": 0.34, "score": 0.96, "stores": 56.0, "frc_sh": 35.0, "sps_man": 1328.0, "ticket": 7407.0, "ix": "HH", "seg": 4, "am": 56.0, "wkend": 24.0, "y2030": 37.0, "close_rt": 6.8, "open_rt": 3.0}, {"code": "3130190", "name": "홍대소상공인상점가", "gu": "마포구", "type": "전통시장", "sales_eok": 101.6, "g22": -10.6, "h1": -18.9, "pred_g": 1.1, "p_up": 58.0, "fit": -0.46, "risk": 0.17, "score": 0.96, "stores": 34.0, "frc_sh": 15.0, "sps_man": 2528.0, "ticket": 14738.0, "ix": "LL", "seg": 3, "am": 17.0, "wkend": 45.0, "y2030": 65.0, "close_rt": 5.2, "open_rt": 5.2}, {"code": "3120186", "name": "가로수길", "gu": "강남구", "type": "발달상권", "sales_eok": 96.9, "g22": -40.5, "h1": -17.1, "pred_g": 3.5, "p_up": 48.0, "fit": -0.01, "risk": 0.04, "score": 0.91, "stores": 95.0, "frc_sh": 14.0, "sps_man": 848.0, "ticket": 11631.0, "ix": "LL", "seg": 3, "am": 38.0, "wkend": 33.0, "y2030": 53.0, "close_rt": 4.8, "open_rt": 3.2}, {"code": "3120023", "name": "서울시청", "gu": "중구", "type": "발달상권", "sales_eok": 86.9, "g22": 28.4, "h1": 47.4, "pred_g": 14.6, "p_up": 29.0, "fit": 0.43, "risk": -0.12, "score": 0.86, "stores": 32.0, "frc_sh": 41.0, "sps_man": 2263.0, "ticket": 9719.0, "ix": "HH", "seg": 1, "am": 68.0, "wkend": 11.0, "y2030": 31.0, "close_rt": 1.5, "open_rt": 4.5}], "A": {"code": "3120022", "name": "북창동(시청역_6번)", "gu": "중구", "dong": "소공동", "type": "발달상권", "area_m2": 108517.0, "sales_eok": 98.6, "pred_sales_eok": 114.2, "pred_g": 14.7, "p_up": 58.0, "rank_now": 66, "pred_rank": 57, "stores": 35.0, "frc_sh": 29.0, "sps_man": 2347.0, "ticket": 9649.0, "ix": "HH", "seg": 1, "txn_year": 1021517.0, "wrc": 21464.0, "rep": 193.0, "flp": 1017514.0, "h1": 42.2, "g22": 26.1}, "A_q": [{"q": "20211", "sales_eok": 13.75, "txn": 188923.0, "stores": 33.0, "frc": 13.0, "sps_man": 1389.0, "ticket": 7278.0, "flp": 854477.0, "wrc": 20192.0, "all_eok": 294.4, "ix": "HH", "opn": 0.0, "cls": 0.0}, {"q": "20212", "sales_eok": 17.39, "txn": 243405.0, "stores": 36.0, "frc": 15.0, "sps_man": 1610.0, "ticket": 7145.0, "flp": 939579.0, "wrc": 20192.0, "all_eok": 354.6, "ix": "HH", "opn": 3.0, "cls": 0.0}, {"q": "20213", "sales_eok": 14.59, "txn": 215480.0, "stores": 34.0, "frc": 14.0, "sps_man": 1431.0, "ticket": 6772.0, "flp": 855780.0, "wrc": 20192.0, "all_eok": 302.5, "ix": "HH", "opn": 0.0, "cls": 2.0}, {"q": "20214", "sales_eok": 17.97, "txn": 220486.0, "stores": 35.0, "frc": 11.0, "sps_man": 1711.0, "ticket": 8149.0, "flp": 1010372.0, "wrc": 20430.0, "all_eok": 423.9, "ix": "HH", "opn": 4.0, "cls": 3.0}, {"q": "20221", "sales_eok": 15.41, "txn": 179859.0, "stores": 36.0, "frc": 10.0, "sps_man": 1427.0, "ticket": 8569.0, "flp": 936349.0, "wrc": 20430.0, "all_eok": 293.9, "ix": "HH", "opn": 3.0, "cls": 2.0}, {"q": "20222", "sales_eok": 20.82, "txn": 236758.0, "stores": 36.0, "frc": 10.0, "sps_man": 1928.0, "ticket": 8793.0, "flp": 1076459.0, "wrc": 20430.0, "all_eok": 386.3, "ix": "HH", "opn": 1.0, "cls": 1.0}, {"q": "20223", "sales_eok": 20.6, "txn": 242444.0, "stores": 37.0, "frc": 10.0, "sps_man": 1856.0, "ticket": 8496.0, "flp": 1085087.0, "wrc": 20430.0, "all_eok": 394.0, "ix": "HH", "opn": 3.0, "cls": 2.0}, {"q": "20224", "sales_eok": 21.32, "txn": 249063.0, "stores": 37.0, "frc": 10.0, "sps_man": 1921.0, "ticket": 8561.0, "flp": 1169920.0, "wrc": 19398.0, "all_eok": 435.2, "ix": "HH", "opn": 2.0, "cls": 2.0}, {"q": "20231", "sales_eok": 19.71, "txn": 227006.0, "stores": 36.0, "frc": 10.0, "sps_man": 1825.0, "ticket": 8681.0, "flp": 1125653.0, "wrc": 19398.0, "all_eok": 518.0, "ix": "HH", "opn": 0.0, "cls": 1.0}, {"q": "20232", "sales_eok": 19.56, "txn": 225049.0, "stores": 36.0, "frc": 11.0, "sps_man": 1811.0, "ticket": 8690.0, "flp": 1133390.0, "wrc": 19398.0, "all_eok": 400.2, "ix": "HH", "opn": 1.0, "cls": 1.0}, {"q": "20233", "sales_eok": 18.95, "txn": 231322.0, "stores": 36.0, "frc": 11.0, "sps_man": 1755.0, "ticket": 8193.0, "flp": 1093791.0, "wrc": 19398.0, "all_eok": 390.1, "ix": "HH", "opn": 2.0, "cls": 2.0}, {"q": "20234", "sales_eok": 19.18, "txn": 212340.0, "stores": 36.0, "frc": 11.0, "sps_man": 1776.0, "ticket": 9035.0, "flp": 1190943.0, "wrc": 21826.0, "all_eok": 559.3, "ix": "HH", "opn": 1.0, "cls": 1.0}, {"q": "20241", "sales_eok": 17.42, "txn": 190439.0, "stores": 36.0, "frc": 11.0, "sps_man": 1613.0, "ticket": 9147.0, "flp": 1136227.0, "wrc": 21826.0, "all_eok": 479.6, "ix": "HH", "opn": 0.0, "cls": 0.0}, {"q": "20242", "sales_eok": 18.57, "txn": 212000.0, "stores": 34.0, "frc": 10.0, "sps_man": 1820.0, "ticket": 8758.0, "flp": 1126491.0, "wrc": 21826.0, "all_eok": 497.0, "ix": "HH", "opn": 1.0, "cls": 3.0}, {"q": "20243", "sales_eok": 18.2, "txn": 200386.0, "stores": 36.0, "frc": 11.0, "sps_man": 1685.0, "ticket": 9081.0, "flp": 1120192.0, "wrc": 21826.0, "all_eok": 727.8, "ix": "HH", "opn": 3.0, "cls": 1.0}, {"q": "20244", "sales_eok": 15.43, "txn": 170271.0, "stores": 36.0, "frc": 10.0, "sps_man": 1429.0, "ticket": 9064.0, "flp": 1168847.0, "wrc": 21464.0, "all_eok": 751.1, "ix": "HH", "opn": 2.0, "cls": 2.0}, {"q": "20251", "sales_eok": 14.95, "txn": 149147.0, "stores": 38.0, "frc": 10.0, "sps_man": 1311.0, "ticket": 10024.0, "flp": 1007229.0, "wrc": 21464.0, "all_eok": 711.9, "ix": "HH", "opn": 2.0, "cls": 0.0}, {"q": "20252", "sales_eok": 20.81, "txn": 216338.0, "stores": 37.0, "frc": 10.0, "sps_man": 1875.0, "ticket": 9619.0, "flp": 1004468.0, "wrc": 21464.0, "all_eok": 741.0, "ix": "HH", "opn": 1.0, "cls": 2.0}, {"q": "20253", "sales_eok": 23.74, "txn": 254105.0, "stores": 38.0, "frc": 11.0, "sps_man": 2082.0, "ticket": 9341.0, "flp": 1038179.0, "wrc": 21464.0, "all_eok": 758.6, "ix": "HH", "opn": 2.0, "cls": 1.0}, {"q": "20254", "sales_eok": 23.97, "txn": 236878.0, "stores": 36.0, "frc": 10.0, "sps_man": 2220.0, "ticket": 10120.0, "flp": 1019715.0, "wrc": 21464.0, "all_eok": 744.4, "ix": "HH", "opn": 1.0, "cls": 3.0}, {"q": "20261", "sales_eok": 22.94, "txn": 232183.0, "stores": 33.0, "frc": 10.0, "sps_man": 2317.0, "ticket": 9878.0, "flp": 985987.0, "wrc": 21464.0, "all_eok": 705.5, "ix": "HH", "opn": 1.0, "cls": 4.0}, {"q": "20262", "sales_eok": 27.93, "txn": 298351.0, "stores": 33.0, "frc": 10.0, "sps_man": 2821.0, "ticket": 9360.0, "flp": 1026173.0, "wrc": 21464.0, "all_eok": 753.9, "ix": "HH", "opn": 2.0, "cls": 2.0}], "mix_A": {"age": {"10대": 0.0015451926017347325, "20대": 0.1279398923389711, "30대": 0.2847724913422939, "40대": 0.20033024519068354, "50대": 0.12770437560673417, "60대+": 0.06175185851727949}, "time": {"06-11": 0.1396802834882852, "11-14": 0.5781626783265331, "14-17": 0.16741090220803595, "17-21": 0.10054806766911703, "21-24": 0.014046982230692916}, "female": 0.4290242875769176, "weekend": 0.1218020077530725, "ticket": 9649.293650521724}, "mix_seoul": {"age": {"10대": 0.010955351641025245, "20대": 0.18256348157948352, "30대": 0.25189375479571197, "40대": 0.17935280870163797, "50대": 0.14481361474146473, "60대+": 0.08882815102749325}, "time": {"06-11": 0.15123707777547737, "11-14": 0.36196710936377663, "14-17": 0.24116799650293788, "17-21": 0.1967535564555654, "21-24": 0.041915899582015456}, "female": 0.47418765205158325, "weekend": 0.25204139189798147, "ticket": 8090.800484303878}, "A_day_txn": {"MON": 41272.0, "TUES": 47765.0, "WED": 46261.0, "THUR": 47433.0, "FRI": 47535.0, "SAT": 15147.0, "SUN": 9966.0}, "A_day_amt": {"MON": 364801508.0, "TUES": 445954147.0, "WED": 442369800.0, "THUR": 456642636.0, "FRI": 454313199.0, "SAT": 176569018.0, "SUN": 123579067.0}, "A_time_txn": {"00_06": 8.0, "06_11": 63924.0, "11_14": 134370.0, "14_17": 38960.0, "17_21": 17443.0, "21_24": 674.0}, "A_time_amt": {"00_06": 372311.0, "06_11": 344204258.0, "11_14": 1424725456.0, "14_17": 412538863.0, "17_21": 247773502.0, "21_24": 34614986.0}, "A_gender_age_amt": {"남": 3696538921.0, "여": 4228857009.0}, "A_wrc": {"total": 21464.0, "male": 11388.0, "female": 10076.0, "age": {"10": 110.0, "20": 6212.0, "30": 6772.0, "40": 4716.0, "50": 2848.0, "60_ABOVE": 806.0}, "q": "20262"}, "A_flp_time": {"00_06": 47689.0, "06_11": 202171.0, "11_14": 250068.0, "14_17": 251258.0, "17_21": 213067.0, "21_24": 53259.0}, "A_flp_age": {"10": 44024.0, "20": 183541.0, "30": 263967.0, "40": 234736.0, "50": 164658.0, "60_ABOVE": 126588.0}, "A_fac": {"VIATR_FCLTY_CO": 48.0, "PBLOFC_CO": 3.0, "BANK_CO": 3.0, "GEHSPT_CO": 0.0, "GNRL_HSPTL_CO": 0.0, "PARMACY_CO": 1.0, "KNDRGR_CO": 0.0, "ELESCH_CO": 0.0, "MSKUL_CO": 0.0, "HGSCHL_CO": 0.0, "UNIV_CO": 0.0, "DRTS_CO": 0.0, "SUPMK_CO": 0.0, "THEAT_CO": 0.0, "STAYNG_FCLTY_CO": 2.0, "ARPRT_CO": 0.0, "RLROAD_STATN_CO": 0.0, "BUS_TRMINL_CO": 0.0, "SUBWAY_STATN_CO": 0.0, "BUS_STTN_CO": 8.0}, "A_permits": [{"y": 2010, "active": 5, "opened": 0, "closed": 0}, {"y": 2011, "active": 7, "opened": 3, "closed": 1}, {"y": 2012, "active": 7, "opened": 0, "closed": 0}, {"y": 2013, "active": 10, "opened": 4, "closed": 1}, {"y": 2014, "active": 11, "opened": 2, "closed": 1}, {"y": 2015, "active": 13, "opened": 2, "closed": 0}, {"y": 2016, "active": 13, "opened": 1, "closed": 1}, {"y": 2017, "active": 13, "opened": 1, "closed": 1}, {"y": 2018, "active": 15, "opened": 2, "closed": 0}, {"y": 2019, "active": 13, "opened": 1, "closed": 3}, {"y": 2020, "active": 14, "opened": 1, "closed": 0}, {"y": 2021, "active": 13, "opened": 1, "closed": 2}, {"y": 2022, "active": 12, "opened": 0, "closed": 1}, {"y": 2023, "active": 12, "opened": 1, "closed": 1}, {"y": 2024, "active": 10, "opened": 0, "closed": 2}, {"y": 2025, "active": 11, "opened": 1, "closed": 0}, {"y": 2026, "active": 11, "opened": 0, "closed": 0}], "A_subway": [{"y": 2015, "monthly": 3014224.0, "am_off": 733809.0}, {"y": 2016, "monthly": 3113860.0, "am_off": 731477.0}, {"y": 2017, "monthly": 2950394.0, "am_off": 691175.0}, {"y": 2018, "monthly": 2948929.0, "am_off": 720859.0}, {"y": 2019, "monthly": 3108585.0, "am_off": 748498.0}, {"y": 2020, "monthly": 2087072.0, "am_off": 618857.0}, {"y": 2021, "monthly": 2017780.0, "am_off": 586456.0}, {"y": 2022, "monthly": 2434501.0, "am_off": 649193.0}, {"y": 2023, "monthly": 2871861.0, "am_off": 723991.0}, {"y": 2024, "monthly": 2972380.0, "am_off": 744441.0}, {"y": 2025, "monthly": 3044347.0, "am_off": 764059.0}, {"y": 2026, "monthly": 3105779.0, "am_off": 772207.0}], "A_stations": [{"KEY": "시청", "DIST": 219.0}], "segments": [{"SEG": 0, "n": 204, "sales": 355976296190.0, "S_AGE20": 0.1184, "S_AGE30": 0.2107, "S_AGE40": 0.2189, "S_AGE50": 0.2163, "S_AGE60": 0.1718, "S_FEMALE": 0.5146, "S_T0611": 0.1586, "S_T1114": 0.3291, "S_T1417": 0.2664, "S_T1721": 0.209, "S_WKEND": 0.3223, "TICKET_IDX": 0.9057, "ticket": 6356.0518, "wrc": 782.0, "rep": 2171.0, "pred_g": -0.0158}, {"SEG": 1, "n": 145, "sales": 1073416857140.0, "S_AGE20": 0.1098, "S_AGE30": 0.2429, "S_AGE40": 0.1941, "S_AGE50": 0.1424, "S_AGE60": 0.0864, "S_FEMALE": 0.3936, "S_T0611": 0.2126, "S_T1114": 0.4538, "S_T1417": 0.1971, "S_T1721": 0.1112, "S_WKEND": 0.1596, "TICKET_IDX": 1.0077, "ticket": 7885.4098, "wrc": 5873.5, "rep": 1634.0, "pred_g": 0.0218}, {"SEG": 2, "n": 6, "sales": 10225080685.0, "S_AGE20": 0.0715, "S_AGE30": 0.172, "S_AGE40": 0.1005, "S_AGE50": 0.1246, "S_AGE60": 0.2627, "S_FEMALE": 0.3735, "S_T0611": 0.0208, "S_T1114": 0.1951, "S_T1417": 0.2206, "S_T1721": 0.3269, "S_WKEND": 0.2251, "TICKET_IDX": 5.1708, "ticket": 31480.5213, "wrc": 758.0, "rep": 506.5, "pred_g": -0.1455}, {"SEG": 3, "n": 83, "sales": 472298808669.0, "S_AGE20": 0.3457, "S_AGE30": 0.2813, "S_AGE40": 0.1293, "S_AGE50": 0.1227, "S_AGE60": 0.0598, "S_FEMALE": 0.6043, "S_T0611": 0.0633, "S_T1114": 0.2651, "S_T1417": 0.3021, "S_T1721": 0.2922, "S_WKEND": 0.3643, "TICKET_IDX": 1.2948, "ticket": 9713.7885, "wrc": 973.0, "rep": 2465.0, "pred_g": -0.0256}, {"SEG": 4, "n": 164, "sales": 809674134759.0, "S_AGE20": 0.199, "S_AGE30": 0.2824, "S_AGE40": 0.1754, "S_AGE50": 0.1539, "S_AGE60": 0.0983, "S_FEMALE": 0.5078, "S_T0611": 0.1316, "S_T1114": 0.3338, "S_T1417": 0.2604, "S_T1721": 0.2224, "S_WKEND": 0.3091, "TICKET_IDX": 1.0074, "ticket": 7443.4804, "wrc": 1620.0, "rep": 2732.5, "pred_g": -0.0121}], "seg_points": [{"seg": 4, "am": 40.4, "y2030": 54.6, "wk": 37.2, "s": 148.7, "n": "이태원 관광특구", "g": 1, "c": "3001491"}, {"seg": 1, "am": 61.7, "y2030": 37.7, "wk": 17.5, "s": 957.9, "n": "명동 남대문 북창동 다동 무교동 관광특구", "g": 1, "c": "3001492"}, {"seg": 4, "am": 38.1, "y2030": 50.0, "wk": 25.5, "s": 103.3, "n": "동대문패션타운 관광특구", "g": 1, "c": "3001493"}, {"seg": 4, "am": 51.9, "y2030": 36.5, "wk": 22.4, "s": 299.0, "n": "종로·청계 관광특구", "g": 1, "c": "3001494"}, {"seg": 4, "am": 41.7, "y2030": 45.9, "wk": 36.6, "s": 390.4, "n": "잠실 관광특구", "g": 1, "c": "3001495"}, {"seg": 4, "am": 51.2, "y2030": 39.3, "wk": 28.8, "s": 284.7, "n": "강남 마이스 관광특구", "g": 1, "c": "3001496"}, {"seg": 3, "am": 38.7, "y2030": 60.4, "wk": 41.2, "s": 78.4, "n": "배화여자대학교(박노수미술관)", "g": 2, "c": "3110008"}, {"seg": 3, "am": 18.0, "y2030": 60.3, "wk": 56.7, "s": 9.4, "n": "자하문터널", "g": 4, "c": "3110009"}, {"seg": 0, "am": 40.1, "y2030": 19.0, "wk": 25.0, "s": 5.7, "n": "평창동서측", "g": 5, "c": "3110010"}, {"seg": 1, "am": 65.9, "y2030": 35.8, "wk": 26.2, "s": 16.5, "n": "성곡미술관", "g": 3, "c": "3110012"}, {"seg": 4, "am": 50.0, "y2030": 51.6, "wk": 31.6, "s": 9.3, "n": "청와대사랑채", "g": 4, "c": "3110015"}, {"seg": 0, "am": 48.0, "y2030": 37.3, "wk": 34.6, "s": 10.3, "n": "중앙고등학교", "g": 4, "c": "3110018"}, {"seg": 4, "am": 48.8, "y2030": 46.2, "wk": 35.6, "s": 27.5, "n": "창덕궁", "g": 3, "c": "3110019"}, {"seg": 3, "am": 37.8, "y2030": 59.0, "wk": 39.9, "s": 10.9, "n": "성균관대학교", "g": 4, "c": "3110021"}, {"seg": 1, "am": 62.9, "y2030": 40.9, "wk": 18.2, "s": 21.4, "n": "서울대병원", "g": 3, "c": "3110023"}, {"seg": 0, "am": 47.0, "y2030": 32.3, "wk": 29.0, "s": 5.7, "n": "혜화동주민센터", "g": 5, "c": "3110024"}, {"seg": 3, "am": 36.0, "y2030": 55.8, "wk": 42.9, "s": 5.6, "n": "혜화역 1번", "g": 5, "c": "3110027"}, {"seg": 4, "am": 52.1, "y2030": 39.5, "wk": 20.1, "s": 4.6, "n": "이화달팽이길", "g": 5, "c": "3110028"}, {"seg": 1, "am": 82.6, "y2030": 33.9, "wk": 9.9, "s": 23.3, "n": "경향신문사", "g": 3, "c": "3110038"}, {"seg": 1, "am": 90.5, "y2030": 19.5, "wk": 3.0, "s": 5.4, "n": "중구회현체육센터(정화예술대남산캠퍼스)", "g": 5, "c": "3110040"}, {"seg": 4, "am": 49.3, "y2030": 48.9, "wk": 31.1, "s": 9.2, "n": "남산케이블카", "g": 4, "c": "3110041"}, {"seg": 1, "am": 64.7, "y2030": 47.2, "wk": 14.2, "s": 6.4, "n": "충무초등학교", "g": 4, "c": "3110043"}, {"seg": 4, "am": 51.9, "y2030": 54.4, "wk": 23.8, "s": 4.5, "n": "장충단 고개", "g": 5, "c": "3110049"}, {"seg": 4, "am": 44.9, "y2030": 48.2, "wk": 35.6, "s": 9.1, "n": "청구역 3번", "g": 4, "c": "3110054"}, {"seg": 0, "am": 42.0, "y2030": 36.8, "wk": 28.7, "s": 4.4, "n": "신당역 3번", "g": 5, "c": "3110056"}, {"seg": 0, "am": 48.6, "y2030": 37.1, "wk": 35.2, "s": 16.2, "n": "황학코아루아파트", "g": 3, "c": "3110057"}, {"seg": 1, "am": 68.4, "y2030": 38.3, "wk": 23.1, "s": 7.5, "n": "성심여자고등학교", "g": 4, "c": "3110058"}, {"seg": 4, "am": 50.9, "y2030": 53.1, "wk": 36.7, "s": 8.6, "n": "효창동주민센터", "g": 4, "c": "3110061"}, {"seg": 4, "am": 52.2, "y2030": 50.0, "wk": 31.1, "s": 21.7, "n": "한강로동땡땡거리(은행나무길)", "g": 3, "c": "3110062"}, {"seg": 4, "am": 58.2, "y2030": 55.6, "wk": 28.2, "s": 6.1, "n": "효창공원앞역 2번", "g": 4, "c": "3110064"}, {"seg": 1, "am": 70.0, "y2030": 43.8, "wk": 19.6, "s": 12.7, "n": "서울역 15번", "g": 3, "c": "3110066"}, {"seg": 0, "am": 54.7, "y2030": 38.8, "wk": 49.8, "s": 6.4, "n": "배문고등학교", "g": 4, "c": "3110067"}, {"seg": 4, "am": 56.2, "y2030": 53.2, "wk": 32.7, "s": 26.7, "n": "남영역 1번", "g": 3, "c": "3110068"}, {"seg": 3, "am": 47.4, "y2030": 55.3, "wk": 26.1, "s": 81.6, "n": "숙대입구", "g": 2, "c": "3110069"}, {"seg": 1, "am": 63.4, "y2030": 26.4, "wk": 9.6, "s": 40.2, "n": "서울역 12번", "g": 2, "c": "3110074"}, {"seg": 3, "am": 45.1, "y2030": 58.8, "wk": 25.4, "s": 23.6, "n": "숙대입구역 1번", "g": 3, "c": "3110075"}, {"seg": 4, "am": 54.3, "y2030": 40.0, "wk": 33.6, "s": 9.2, "n": "삼각지역 14번", "g": 4, "c": "3110076"}, {"seg": 4, "am": 40.2, "y2030": 40.6, "wk": 40.9, "s": 4.6, "n": "삼광초등학교", "g": 5, "c": "3110077"}, {"seg": 1, "am": 65.8, "y2030": 46.4, "wk": 27.3, "s": 18.0, "n": "후암동주민센터", "g": 3, "c": "3110079"}, {"seg": 3, "am": 19.2, "y2030": 76.8, "wk": 52.1, "s": 18.0, "n": "해방촌 남동측", "g": 3, "c": "3110081"}, {"seg": 4, "am": 52.5, "y2030": 39.9, "wk": 29.8, "s": 45.6, "n": "용산구청", "g": 2, "c": "3110082"}, {"seg": 3, "am": 39.9, "y2030": 60.3, "wk": 42.6, "s": 14.8, "n": "경리단길북측", "g": 3, "c": "3110084"}, {"seg": 4, "am": 50.0, "y2030": 57.8, "wk": 39.1, "s": 23.7, "n": "경리단길남측", "g": 3, "c": "3110085"}, {"seg": 4, "am": 52.3, "y2030": 49.7, "wk": 36.8, "s": 18.2, "n": "이태원엔틱가구거리", "g": 3, "c": "3110087"}, {"seg": 3, "am": 35.5, "y2030": 66.9, "wk": 40.0, "s": 7.4, "n": "리움미술관", "g": 4, "c": "3110091"}, {"seg": 4, "am": 50.5, "y2030": 49.2, "wk": 27.8, "s": 9.4, "n": "우사단길", "g": 4, "c": "3110093"}, {"seg": 3, "am": 25.1, "y2030": 62.6, "wk": 47.4, "s": 20.8, "n": "한강진역 3번", "g": 3, "c": "3110095"}, {"seg": 4, "am": 49.1, "y2030": 45.9, "wk": 28.9, "s": 11.3, "n": "한남힐사이드아파트", "g": 3, "c": "3110096"}, {"seg": 2, "am": 34.7, "y2030": 49.7, "wk": 20.1, "s": 7.4, "n": "서울독일학교", "g": 4, "c": "3110098"}, {"seg": 0, "am": 49.7, "y2030": 33.7, "wk": 31.1, "s": 6.1, "n": "옥수역 6번", "g": 4, "c": "3110102"}, {"seg": 0, "am": 48.1, "y2030": 36.5, "wk": 30.2, "s": 9.0, "n": "왕십리역 9번", "g": 4, "c": "3110118"}, {"seg": 0, "am": 43.0, "y2030": 35.8, "wk": 29.7, "s": 6.2, "n": "마장역 2번", "g": 4, "c": "3110122"}, {"seg": 4, "am": 42.7, "y2030": 49.1, "wk": 22.5, "s": 19.7, "n": "뚝섬역교차로", "g": 3, "c": "3110124"}, {"seg": 4, "am": 60.4, "y2030": 52.7, "wk": 20.7, "s": 9.6, "n": "사근동살곶이상점가", "g": 4, "c": "3110125"}, {"seg": 3, "am": 33.4, "y2030": 61.5, "wk": 32.0, "s": 5.2, "n": "서울숲역 1번", "g": 5, "c": "3110126"}, {"seg": 1, "am": 68.3, "y2030": 37.4, "wk": 16.6, "s": 8.3, "n": "성수1가1동주민센터", "g": 4, "c": "3110127"}, {"seg": 3, "am": 38.6, "y2030": 57.6, "wk": 30.4, "s": 57.3, "n": "성수동카페거리", "g": 2, "c": "3110131"}, {"seg": 3, "am": 33.5, "y2030": 73.1, "wk": 30.7, "s": 13.4, "n": "성수2가3동주민센터", "g": 3, "c": "3110132"}, {"seg": 3, "am": 30.8, "y2030": 75.3, "wk": 47.4, "s": 5.1, "n": "성수119안전센터", "g": 5, "c": "3110134"}, {"seg": 4, "am": 50.5, "y2030": 56.1, "wk": 27.8, "s": 14.9, "n": "경수초등학교", "g": 3, "c": "3110136"}, {"seg": 1, "am": 75.4, "y2030": 40.4, "wk": 6.0, "s": 68.9, "n": "성수초등학교", "g": 2, "c": "3110137"}, {"seg": 1, "am": 67.0, "y2030": 57.9, "wk": 17.4, "s": 6.1, "n": "어린이대공원역 3번", "g": 4, "c": "3110148"}, {"seg": 4, "am": 41.0, "y2030": 39.4, "wk": 35.5, "s": 6.0, "n": "자양한강도서관", "g": 4, "c": "3110151"}, {"seg": 0, "am": 49.6, "y2030": 35.1, "wk": 30.0, "s": 4.5, "n": "광진정말공원", "g": 5, "c": "3110154"}, {"seg": 1, "am": 62.6, "y2030": 46.3, "wk": 18.8, "s": 4.5, "n": "광진구청", "g": 5, "c": "3110155"}, {"seg": 4, "am": 44.7, "y2030": 52.5, "wk": 39.4, "s": 5.6, "n": "구의역 4번", "g": 5, "c": "3110159"}, {"seg": 0, "am": 53.1, "y2030": 42.2, "wk": 33.2, "s": 6.0, "n": "성자초등학교", "g": 4, "c": "3110163"}, {"seg": 4, "am": 44.5, "y2030": 45.6, "wk": 28.9, "s": 6.9, "n": "구의1동주민센터", "g": 4, "c": "3110166"}, {"seg": 0, "am": 47.6, "y2030": 35.9, "wk": 23.5, "s": 5.3, "n": "성동초등학교", "g": 5, "c": "3110169"}, {"seg": 0, "am": 60.8, "y2030": 42.9, "wk": 33.3, "s": 4.0, "n": "동대부여고", "g": 5, "c": "3110170"}, {"seg": 0, "am": 54.5, "y2030": 36.6, "wk": 28.7, "s": 5.1, "n": "구남초등학교", "g": 5, "c": "3110173"}, {"seg": 0, "am": 38.8, "y2030": 30.3, "wk": 35.0, "s": 4.9, "n": "해오름공원", "g": 5, "c": "3110176"}, {"seg": 1, "am": 69.2, "y2030": 33.0, "wk": 12.8, "s": 56.9, "n": "광나루역 1번", "g": 2, "c": "3110179"}, {"seg": 0, "am": 59.0, "y2030": 36.6, "wk": 31.6, "s": 11.2, "n": "광진정보도서관", "g": 4, "c": "3110180"}, {"seg": 3, "am": 38.5, "y2030": 68.1, "wk": 25.2, "s": 8.3, "n": "고려대역 6번", "g": 4, "c": "3110191"}, {"seg": 0, "am": 53.2, "y2030": 35.9, "wk": 35.5, "s": 14.4, "n": "간데메공원", "g": 3, "c": "3110204"}, {"seg": 3, "am": 25.2, "y2030": 74.7, "wk": 31.8, "s": 9.3, "n": "경희대삼거리", "g": 4, "c": "3110205"}, {"seg": 4, "am": 50.7, "y2030": 57.2, "wk": 31.5, "s": 4.6, "n": "시립대앞사거리", "g": 5, "c": "3110207"}, {"seg": 4, "am": 56.1, "y2030": 53.5, "wk": 25.0, "s": 13.1, "n": "서울시립대", "g": 3, "c": "3110210"}, {"seg": 0, "am": 40.2, "y2030": 39.1, "wk": 35.9, "s": 13.0, "n": "답십리초등학교", "g": 3, "c": "3110212"}, {"seg": 3, "am": 46.7, "y2030": 56.6, "wk": 24.7, "s": 30.0, "n": "경희대후문", "g": 3, "c": "3110214"}, {"seg": 0, "am": 59.9, "y2030": 28.3, "wk": 19.0, "s": 4.6, "n": "삼육보건대학교", "g": 5, "c": "3110219"}, {"seg": 3, "am": 41.3, "y2030": 58.2, "wk": 28.5, "s": 59.6, "n": "외대앞역 1번", "g": 2, "c": "3110220"}, {"seg": 1, "am": 88.3, "y2030": 45.4, "wk": 0.0, "s": 6.0, "n": "촬영소사거리", "g": 4, "c": "3110225"}, {"seg": 0, "am": 31.2, "y2030": 38.2, "wk": 31.5, "s": 7.2, "n": "장안1동주민센터", "g": 4, "c": "3110226"}, {"seg": 0, "am": 50.3, "y2030": 28.6, "wk": 25.4, "s": 4.4, "n": "동대부고", "g": 5, "c": "3110232"}, {"seg": 0, "am": 46.8, "y2030": 32.5, "wk": 37.8, "s": 6.4, "n": "메가박스 상봉", "g": 4, "c": "3110237"}, {"seg": 0, "am": 56.3, "y2030": 34.3, "wk": 32.0, "s": 5.4, "n": "먹골역 5번", "g": 5, "c": "3110241"}, {"seg": 0, "am": 48.7, "y2030": 37.2, "wk": 30.7, "s": 5.6, "n": "월드순복음교회", "g": 5, "c": "3110246"}, {"seg": 0, "am": 46.0, "y2030": 39.4, "wk": 31.6, "s": 5.6, "n": "오거리공원", "g": 5, "c": "3110254"}, {"seg": 4, "am": 39.9, "y2030": 44.5, "wk": 35.0, "s": 5.2, "n": "사가정역 4번", "g": 5, "c": "3110261"}, {"seg": 0, "am": 37.4, "y2030": 36.6, "wk": 30.5, "s": 37.7, "n": "신내1동주민센터", "g": 2, "c": "3110272"}, {"seg": 1, "am": 58.6, "y2030": 40.9, "wk": 23.5, "s": 7.0, "n": "서일대학교", "g": 4, "c": "3110274"}, {"seg": 0, "am": 56.2, "y2030": 33.5, "wk": 41.9, "s": 5.9, "n": "망우본동주민센터", "g": 4, "c": "3110278"}, {"seg": 0, "am": 48.6, "y2030": 28.0, "wk": 40.3, "s": 5.1, "n": "홍대부중", "g": 5, "c": "3110285"}, {"seg": 3, "am": 38.5, "y2030": 47.2, "wk": 39.8, "s": 9.0, "n": "한성대입구역 5번", "g": 4, "c": "3110286"}, {"seg": 0, "am": 48.6, "y2030": 36.8, "wk": 31.1, "s": 4.6, "n": "삼선중학교", "g": 5, "c": "3110293"}, {"seg": 0, "am": 38.8, "y2030": 43.5, "wk": 34.3, "s": 5.2, "n": "서경대학교", "g": 5, "c": "3110294"}, {"seg": 0, "am": 33.8, "y2030": 24.3, "wk": 31.9, "s": 6.8, "n": "정릉우체국", "g": 4, "c": "3110295"}, {"seg": 0, "am": 50.5, "y2030": 40.2, "wk": 27.8, "s": 62.0, "n": "성신여대입구역 4번", "g": 2, "c": "3110296"}, {"seg": 4, "am": 47.8, "y2030": 47.6, "wk": 32.6, "s": 35.0, "n": "삼선동주민센터", "g": 2, "c": "3110300"}, {"seg": 3, "am": 47.1, "y2030": 56.3, "wk": 34.5, "s": 5.6, "n": "보문역 4번", "g": 5, "c": "3110304"}, {"seg": 4, "am": 47.4, "y2030": 54.6, "wk": 22.8, "s": 49.8, "n": "안암역 2번", "g": 2, "c": "3110312"}, {"seg": 4, "am": 46.2, "y2030": 63.3, "wk": 21.1, "s": 28.0, "n": "안암역 3번", "g": 3, "c": "3110313"}, {"seg": 0, "am": 48.9, "y2030": 32.4, "wk": 31.4, "s": 14.4, "n": "종암경찰서", "g": 3, "c": "3110314"}, {"seg": 0, "am": 63.1, "y2030": 35.2, "wk": 30.9, "s": 13.9, "n": "숭곡초등학교", "g": 3, "c": "3110316"}, {"seg": 0, "am": 50.6, "y2030": 34.8, "wk": 15.0, "s": 14.8, "n": "종암중학교", "g": 3, "c": "3110317"}, {"seg": 3, "am": 45.2, "y2030": 59.7, "wk": 21.6, "s": 8.4, "n": "상월곡역 1번", "g": 4, "c": "3110323"}, {"seg": 4, "am": 44.5, "y2030": 45.0, "wk": 22.3, "s": 8.2, "n": "돌곶이역 8번", "g": 4, "c": "3110331"}, {"seg": 4, "am": 36.7, "y2030": 43.9, "wk": 33.9, "s": 20.1, "n": "석계역 7번", "g": 3, "c": "3110335"}, {"seg": 0, "am": 38.9, "y2030": 25.1, "wk": 37.9, "s": 25.4, "n": "아카데미하우스", "g": 3, "c": "3110337"}, {"seg": 0, "am": 35.5, "y2030": 38.7, "wk": 36.9, "s": 13.0, "n": "4.19민주묘지역 2번", "g": 3, "c": "3110346"}, {"seg": 0, "am": 57.1, "y2030": 27.1, "wk": 31.2, "s": 4.9, "n": "가오리역 2번", "g": 5, "c": "3110350"}, {"seg": 0, "am": 47.3, "y2030": 34.3, "wk": 36.3, "s": 4.3, "n": "삼각산119안전센터", "g": 5, "c": "3110354"}, {"seg": 0, "am": 66.4, "y2030": 34.7, "wk": 18.1, "s": 4.1, "n": "성신여대운정그린캠퍼스", "g": 5, "c": "3110369"}, {"seg": 0, "am": 56.7, "y2030": 42.8, "wk": 24.7, "s": 9.8, "n": "덕성여대시반거리", "g": 4, "c": "3110383"}, {"seg": 4, "am": 39.4, "y2030": 44.1, "wk": 32.0, "s": 33.7, "n": "쌍문역1번(쌍리단길)", "g": 2, "c": "3110396"}, {"seg": 0, "am": 57.0, "y2030": 31.0, "wk": 35.2, "s": 4.3, "n": "도봉산입구", "g": 5, "c": "3110397"}, {"seg": 0, "am": 53.4, "y2030": 30.5, "wk": 26.3, "s": 7.8, "n": "쌍문2동우체국", "g": 4, "c": "3110398"}, {"seg": 0, "am": 50.2, "y2030": 30.3, "wk": 33.1, "s": 5.6, "n": "방학1동주민센터", "g": 5, "c": "3110403"}, {"seg": 0, "am": 43.6, "y2030": 14.4, "wk": 44.4, "s": 15.5, "n": "도봉산역 1번", "g": 3, "c": "3110406"}, {"seg": 0, "am": 49.1, "y2030": 26.8, "wk": 29.2, "s": 4.9, "n": "도봉역 2번", "g": 5, "c": "3110407"}, {"seg": 0, "am": 38.4, "y2030": 41.4, "wk": 37.8, "s": 17.8, "n": "창동역 2번", "g": 3, "c": "3110409"}, {"seg": 0, "am": 41.9, "y2030": 37.8, "wk": 33.6, "s": 21.8, "n": "방학역 2번", "g": 3, "c": "3110410"}, {"seg": 0, "am": 43.4, "y2030": 36.5, "wk": 33.2, "s": 15.5, "n": "수락산역 4번", "g": 3, "c": "3110415"}, {"seg": 0, "am": 50.1, "y2030": 19.7, "wk": 35.8, "s": 13.0, "n": "수락산디자인거리", "g": 3, "c": "3110419"}, {"seg": 0, "am": 53.8, "y2030": 36.3, "wk": 23.7, "s": 17.2, "n": "광운대역 1번", "g": 3, "c": "3110420"}, {"seg": 0, "am": 35.3, "y2030": 42.7, "wk": 34.0, "s": 11.7, "n": "석계역 1번", "g": 3, "c": "3110421"}, {"seg": 0, "am": 46.9, "y2030": 25.1, "wk": 36.3, "s": 4.4, "n": "계상초등학교", "g": 5, "c": "3110425"}, {"seg": 3, "am": 33.0, "y2030": 50.2, "wk": 41.4, "s": 6.3, "n": "상계5동주민센터", "g": 4, "c": "3110428"}, {"seg": 0, "am": 41.6, "y2030": 32.5, "wk": 38.9, "s": 16.1, "n": "상계역", "g": 3, "c": "3110431"}, {"seg": 3, "am": 23.5, "y2030": 52.8, "wk": 35.7, "s": 6.7, "n": "공릉역 2번", "g": 4, "c": "3110433"}, {"seg": 4, "am": 53.0, "y2030": 51.0, "wk": 26.4, "s": 8.6, "n": "서울과학기술대", "g": 4, "c": "3110435"}, {"seg": 0, "am": 47.2, "y2030": 37.5, "wk": 31.2, "s": 7.2, "n": "경춘선숲길 우측", "g": 4, "c": "3110438"}, {"seg": 0, "am": 49.5, "y2030": 33.6, "wk": 37.2, "s": 12.8, "n": "당고개역 5번", "g": 3, "c": "3110439"}, {"seg": 0, "am": 54.7, "y2030": 34.2, "wk": 32.1, "s": 6.5, "n": "증산역 3번", "g": 4, "c": "3110449"}, {"seg": 1, "am": 77.1, "y2030": 27.2, "wk": 11.4, "s": 5.4, "n": "시립서북병원", "g": 5, "c": "3110450"}, {"seg": 0, "am": 49.1, "y2030": 33.1, "wk": 33.6, "s": 6.0, "n": "역촌노인복지관", "g": 4, "c": "3110455"}, {"seg": 0, "am": 39.4, "y2030": 34.4, "wk": 33.3, "s": 11.9, "n": "예일여고", "g": 3, "c": "3110457"}, {"seg": 0, "am": 60.2, "y2030": 26.6, "wk": 30.6, "s": 5.4, "n": "선일여고", "g": 5, "c": "3110458"}, {"seg": 0, "am": 37.4, "y2030": 43.1, "wk": 37.9, "s": 7.8, "n": "연신내역 7번", "g": 4, "c": "3110465"}, {"seg": 1, "am": 56.3, "y2030": 22.0, "wk": 12.8, "s": 21.0, "n": "은평구청", "g": 3, "c": "3110486"}, {"seg": 3, "am": 34.8, "y2030": 47.8, "wk": 51.4, "s": 7.7, "n": "하나고등학교", "g": 4, "c": "3110492"}, {"seg": 4, "am": 41.8, "y2030": 46.2, "wk": 35.8, "s": 8.8, "n": "북가좌2동주민센터", "g": 4, "c": "3110495"}, {"seg": 0, "am": 54.2, "y2030": 34.7, "wk": 33.9, "s": 4.6, "n": "모래내우체국", "g": 5, "c": "3110496"}, {"seg": 0, "am": 53.3, "y2030": 31.0, "wk": 33.7, "s": 4.1, "n": "남가좌동현대아파트", "g": 5, "c": "3110500"}, {"seg": 4, "am": 38.6, "y2030": 45.9, "wk": 29.5, "s": 9.3, "n": "명지대학교교회", "g": 4, "c": "3110503"}, {"seg": 3, "am": 36.6, "y2030": 51.1, "wk": 29.2, "s": 29.0, "n": "명지대학교", "g": 3, "c": "3110507"}, {"seg": 3, "am": 36.9, "y2030": 71.5, "wk": 45.0, "s": 34.0, "n": "서연중학교", "g": 2, "c": "3110508"}, {"seg": 3, "am": 29.7, "y2030": 55.2, "wk": 34.5, "s": 45.3, "n": "연희대우아파트앞", "g": 2, "c": "3110509"}, {"seg": 0, "am": 40.6, "y2030": 36.2, "wk": 40.7, "s": 10.7, "n": "연희파출소", "g": 4, "c": "3110513"}, {"seg": 4, "am": 55.8, "y2030": 41.8, "wk": 21.0, "s": 11.4, "n": "연희세브란스병원", "g": 3, "c": "3110524"}, {"seg": 0, "am": 51.9, "y2030": 36.1, "wk": 39.0, "s": 4.1, "n": "서울여자간호대학교", "g": 5, "c": "3110528"}, {"seg": 1, "am": 82.1, "y2030": 32.0, "wk": 0.1, "s": 7.0, "n": "미근동", "g": 4, "c": "3110539"}, {"seg": 3, "am": 38.2, "y2030": 61.4, "wk": 42.2, "s": 7.2, "n": "동교초등학교", "g": 4, "c": "3110541"}, {"seg": 0, "am": 43.5, "y2030": 39.4, "wk": 31.8, "s": 9.6, "n": "마포구청역 7번", "g": 4, "c": "3110542"}, {"seg": 3, "am": 36.6, "y2030": 68.4, "wk": 43.5, "s": 62.5, "n": "망리단길", "g": 2, "c": "3110544"}, {"seg": 4, "am": 53.0, "y2030": 49.1, "wk": 31.9, "s": 17.5, "n": "마포구청역 1번", "g": 3, "c": "3110545"}, {"seg": 4, "am": 33.6, "y2030": 47.3, "wk": 35.7, "s": 4.2, "n": "KB국민은행 망원동지점", "g": 5, "c": "3110547"}, {"seg": 4, "am": 63.8, "y2030": 45.2, "wk": 33.1, "s": 5.1, "n": "마포구청역 4번", "g": 5, "c": "3110548"}, {"seg": 3, "am": 39.5, "y2030": 66.8, "wk": 36.6, "s": 14.5, "n": "합정역 8번", "g": 3, "c": "3110550"}, {"seg": 3, "am": 23.3, "y2030": 72.5, "wk": 38.7, "s": 17.0, "n": "망원역 1번", "g": 3, "c": "3110554"}, {"seg": 4, "am": 52.9, "y2030": 56.8, "wk": 28.1, "s": 9.4, "n": "홍대부속여중고앞", "g": 4, "c": "3110557"}, {"seg": 4, "am": 55.7, "y2030": 47.4, "wk": 23.9, "s": 20.3, "n": "경성고등학교", "g": 3, "c": "3110558"}, {"seg": 3, "am": 32.4, "y2030": 62.5, "wk": 37.8, "s": 37.5, "n": "성산중학교", "g": 2, "c": "3110559"}, {"seg": 3, "am": 29.4, "y2030": 74.2, "wk": 34.0, "s": 15.0, "n": "상수역 4번", "g": 3, "c": "3110561"}, {"seg": 3, "am": 28.1, "y2030": 69.1, "wk": 46.7, "s": 39.4, "n": "연트럴파크(연남동주민센터)", "g": 2, "c": "3110562"}, {"seg": 3, "am": 28.4, "y2030": 69.9, "wk": 37.0, "s": 16.5, "n": "홍대입구역 3번", "g": 3, "c": "3110564"}, {"seg": 3, "am": 34.3, "y2030": 63.8, "wk": 41.9, "s": 78.7, "n": "경의선책거리", "g": 2, "c": "3110566"}, {"seg": 4, "am": 38.3, "y2030": 47.4, "wk": 34.2, "s": 38.1, "n": "홍대땡땡거리", "g": 2, "c": "3110569"}, {"seg": 0, "am": 55.7, "y2030": 26.2, "wk": 29.3, "s": 24.3, "n": "KB국민은행 서강지점", "g": 3, "c": "3110570"}, {"seg": 4, "am": 47.9, "y2030": 54.8, "wk": 33.1, "s": 26.9, "n": "서강대역 1번", "g": 3, "c": "3110572"}, {"seg": 4, "am": 38.6, "y2030": 38.8, "wk": 19.7, "s": 17.1, "n": "대흥역 3번", "g": 3, "c": "3110576"}, {"seg": 0, "am": 67.2, "y2030": 33.8, "wk": 27.6, "s": 4.7, "n": "용강동주민센터", "g": 5, "c": "3110577"}, {"seg": 0, "am": 54.9, "y2030": 37.5, "wk": 26.5, "s": 11.6, "n": "대흥역 2번", "g": 3, "c": "3110578"}, {"seg": 1, "am": 66.1, "y2030": 25.7, "wk": 11.8, "s": 13.4, "n": "서울서부지방법원", "g": 3, "c": "3110586"}, {"seg": 0, "am": 65.1, "y2030": 37.7, "wk": 22.2, "s": 4.3, "n": "한겨레신문사", "g": 5, "c": "3110588"}, {"seg": 0, "am": 50.9, "y2030": 30.7, "wk": 35.0, "s": 4.8, "n": "신월3동주민센터", "g": 5, "c": "3110593"}, {"seg": 0, "am": 55.9, "y2030": 23.0, "wk": 21.1, "s": 6.8, "n": "메디힐병원", "g": 4, "c": "3110595"}, {"seg": 0, "am": 59.0, "y2030": 44.0, "wk": 28.0, "s": 4.2, "n": "신정역 5번", "g": 5, "c": "3110612"}, {"seg": 1, "am": 69.2, "y2030": 30.8, "wk": 20.2, "s": 6.1, "n": "신서초등학교", "g": 4, "c": "3110615"}, {"seg": 0, "am": 46.1, "y2030": 38.1, "wk": 38.7, "s": 5.3, "n": "목동보건지소", "g": 5, "c": "3110620"}, {"seg": 0, "am": 49.0, "y2030": 26.2, "wk": 32.4, "s": 6.4, "n": "신정2동주민센터", "g": 4, "c": "3110625"}, {"seg": 0, "am": 54.2, "y2030": 35.7, "wk": 30.7, "s": 4.6, "n": "방화역 3번", "g": 5, "c": "3110632"}, {"seg": 0, "am": 47.1, "y2030": 39.9, "wk": 36.9, "s": 4.9, "n": "신방화역 2번", "g": 5, "c": "3110638"}, {"seg": 0, "am": 58.4, "y2030": 29.7, "wk": 29.9, "s": 11.1, "n": "방화역 1번", "g": 4, "c": "3110640"}, {"seg": 0, "am": 52.1, "y2030": 45.3, "wk": 31.4, "s": 35.8, "n": "우장산역 4번", "g": 2, "c": "3110645"}, {"seg": 0, "am": 50.2, "y2030": 41.3, "wk": 34.1, "s": 5.9, "n": "푸른들청소년도서관", "g": 4, "c": "3110646"}, {"seg": 1, "am": 67.3, "y2030": 50.7, "wk": 16.2, "s": 18.6, "n": "양천향교역 7번", "g": 3, "c": "3110648"}, {"seg": 4, "am": 37.2, "y2030": 45.7, "wk": 35.0, "s": 7.9, "n": "우장산역 1번", "g": 4, "c": "3110649"}, {"seg": 0, "am": 36.7, "y2030": 38.8, "wk": 28.0, "s": 4.7, "n": "화원중학교", "g": 5, "c": "3110651"}, {"seg": 0, "am": 57.5, "y2030": 37.2, "wk": 28.8, "s": 4.5, "n": "양천향교역 2번", "g": 5, "c": "3110652"}, {"seg": 0, "am": 38.1, "y2030": 33.9, "wk": 34.5, "s": 9.3, "n": "까치산역 4번", "g": 4, "c": "3110654"}, {"seg": 0, "am": 40.0, "y2030": 32.9, "wk": 33.4, "s": 16.1, "n": "발산역 5번", "g": 3, "c": "3110655"}, {"seg": 4, "am": 45.2, "y2030": 44.5, "wk": 34.1, "s": 8.7, "n": "화곡역 4번", "g": 4, "c": "3110659"}, {"seg": 0, "am": 53.4, "y2030": 30.2, "wk": 31.5, "s": 13.7, "n": "등촌3동주민센터", "g": 3, "c": "3110660"}, {"seg": 0, "am": 60.1, "y2030": 29.1, "wk": 26.0, "s": 9.5, "n": "우장산롯데캐슬아파트앞", "g": 4, "c": "3110663"}, {"seg": 1, "am": 61.9, "y2030": 33.0, "wk": 16.7, "s": 15.7, "n": "등촌1동주민센터", "g": 3, "c": "3110671"}, {"seg": 0, "am": 56.3, "y2030": 29.9, "wk": 23.0, "s": 7.1, "n": "서울공연예술고등학교", "g": 4, "c": "3110684"}, {"seg": 0, "am": 49.9, "y2030": 24.8, "wk": 24.6, "s": 6.2, "n": "개봉1동주민센터", "g": 4, "c": "3110695"}, {"seg": 0, "am": 53.8, "y2030": 36.9, "wk": 43.0, "s": 4.0, "n": "고척동성당", "g": 5, "c": "3110701"}, {"seg": 4, "am": 39.0, "y2030": 46.4, "wk": 35.3, "s": 6.9, "n": "개봉역", "g": 4, "c": "3110703"}, {"seg": 4, "am": 41.7, "y2030": 48.8, "wk": 35.9, "s": 18.9, "n": "그라운드 고척", "g": 3, "c": "3110706"}, {"seg": 1, "am": 56.8, "y2030": 31.0, "wk": 23.3, "s": 4.1, "n": "구로보건소", "g": 5, "c": "3110713"}, {"seg": 0, "am": 51.5, "y2030": 31.5, "wk": 35.4, "s": 8.8, "n": "구로4동주민센터", "g": 4, "c": "3110714"}, {"seg": 1, "am": 55.4, "y2030": 22.4, "wk": 17.1, "s": 13.3, "n": "구로나눔길", "g": 3, "c": "3110716"}, {"seg": 4, "am": 59.5, "y2030": 44.8, "wk": 25.3, "s": 4.0, "n": "남구로역 2번", "g": 5, "c": "3110717"}, {"seg": 3, "am": 26.5, "y2030": 63.7, "wk": 33.1, "s": 8.8, "n": "한국SGI본부", "g": 4, "c": "3110718"}, {"seg": 0, "am": 23.3, "y2030": 26.6, "wk": 51.1, "s": 5.9, "n": "대림역 2번", "g": 4, "c": "3110720"}, {"seg": 1, "am": 71.1, "y2030": 30.5, "wk": 12.9, "s": 9.0, "n": "금천구청역 1번 출입구", "g": 4, "c": "3110731"}, {"seg": 0, "am": 42.1, "y2030": 29.1, "wk": 36.8, "s": 14.1, "n": "문성초등학교", "g": 3, "c": "3110738"}, {"seg": 0, "am": 50.4, "y2030": 33.8, "wk": 36.4, "s": 12.1, "n": "KT금천빌딩(금천구시설관리공단)", "g": 3, "c": "3110742"}, {"seg": 0, "am": 45.4, "y2030": 34.3, "wk": 37.1, "s": 4.5, "n": "독산동정훈단지", "g": 5, "c": "3110745"}, {"seg": 0, "am": 51.3, "y2030": 34.3, "wk": 38.4, "s": 4.4, "n": "시흥4동주민센터(서울신흥초등학교)", "g": 5, "c": "3110750"}, {"seg": 1, "am": 58.5, "y2030": 48.3, "wk": 21.8, "s": 10.2, "n": "양평역 2번", "g": 4, "c": "3110757"}, {"seg": 3, "am": 27.7, "y2030": 66.2, "wk": 39.8, "s": 47.6, "n": "문래예술촌(문래창작촌)", "g": 2, "c": "3110759"}, {"seg": 1, "am": 68.1, "y2030": 36.8, "wk": 13.7, "s": 31.9, "n": "선유도역 6번", "g": 3, "c": "3110760"}, {"seg": 4, "am": 60.0, "y2030": 46.8, "wk": 29.4, "s": 40.6, "n": "선유도역 1번", "g": 2, "c": "3110762"}, {"seg": 1, "am": 70.4, "y2030": 35.3, "wk": 18.1, "s": 20.7, "n": "영등포구청역 2번", "g": 3, "c": "3110763"}, {"seg": 1, "am": 66.4, "y2030": 34.3, "wk": 19.4, "s": 5.6, "n": "대림성모병원", "g": 5, "c": "3110789"}, {"seg": 0, "am": 28.3, "y2030": 37.2, "wk": 34.9, "s": 4.3, "n": "신풍역 1번", "g": 5, "c": "3110804"}, {"seg": 0, "am": 46.1, "y2030": 32.7, "wk": 33.5, "s": 6.5, "n": "영신초등학교", "g": 4, "c": "3110810"}, {"seg": 4, "am": 55.6, "y2030": 38.7, "wk": 31.4, "s": 11.7, "n": "신길6동주민센터", "g": 3, "c": "3110812"}, {"seg": 0, "am": 64.5, "y2030": 33.7, "wk": 26.8, "s": 12.5, "n": "서울지방병무청", "g": 3, "c": "3110814"}, {"seg": 1, "am": 62.7, "y2030": 38.2, "wk": 28.4, "s": 4.3, "n": "공군호텔", "g": 5, "c": "3110815"}, {"seg": 4, "am": 47.5, "y2030": 58.2, "wk": 33.9, "s": 6.5, "n": "신대방역 4번", "g": 4, "c": "3110819"}, {"seg": 0, "am": 63.9, "y2030": 29.0, "wk": 24.2, "s": 6.3, "n": "대방역 3번", "g": 4, "c": "3110824"}, {"seg": 3, "am": 24.2, "y2030": 60.0, "wk": 38.8, "s": 4.5, "n": "장승배기역 4번", "g": 5, "c": "3110826"}, {"seg": 1, "am": 80.4, "y2030": 27.5, "wk": 10.5, "s": 6.0, "n": "노량진역 6번", "g": 4, "c": "3110828"}, {"seg": 4, "am": 45.8, "y2030": 55.0, "wk": 30.0, "s": 20.6, "n": "상도역 5번", "g": 3, "c": "3110836"}, {"seg": 0, "am": 51.9, "y2030": 35.8, "wk": 28.0, "s": 8.7, "n": "숭실대입구역 1번", "g": 4, "c": "3110837"}, {"seg": 3, "am": 41.4, "y2030": 59.3, "wk": 25.2, "s": 44.5, "n": "숭실대입구역 4번", "g": 2, "c": "3110839"}, {"seg": 4, "am": 50.3, "y2030": 51.4, "wk": 23.8, "s": 23.2, "n": "중앙대학교", "g": 3, "c": "3110840"}, {"seg": 0, "am": 38.6, "y2030": 37.5, "wk": 29.7, "s": 12.1, "n": "흑리단길", "g": 3, "c": "3110842"}, {"seg": 0, "am": 52.8, "y2030": 42.0, "wk": 35.4, "s": 4.3, "n": "사당5동주민센터", "g": 5, "c": "3110843"}, {"seg": 4, "am": 42.2, "y2030": 44.2, "wk": 33.7, "s": 8.0, "n": "남성역 1번", "g": 4, "c": "3110846"}, {"seg": 3, "am": 30.0, "y2030": 63.1, "wk": 39.6, "s": 15.9, "n": "사당역 10번", "g": 3, "c": "3110850"}, {"seg": 3, "am": 35.1, "y2030": 73.8, "wk": 31.9, "s": 4.1, "n": "이수역 9번", "g": 5, "c": "3110852"}, {"seg": 4, "am": 34.6, "y2030": 57.5, "wk": 34.7, "s": 9.5, "n": "신대방역 2번", "g": 4, "c": "3110855"}, {"seg": 0, "am": 48.8, "y2030": 37.2, "wk": 31.9, "s": 13.2, "n": "남강고등학교(남강중학교)", "g": 3, "c": "3110865"}, {"seg": 3, "am": 33.9, "y2030": 70.0, "wk": 39.5, "s": 9.9, "n": "신림역 5번(신림동주민센터, 신림동별빛거리)", "g": 4, "c": "3110869"}, {"seg": 4, "am": 52.8, "y2030": 49.0, "wk": 35.0, "s": 5.3, "n": "보라매동주민센터(당곡고등학교)", "g": 5, "c": "3110875"}, {"seg": 4, "am": 34.2, "y2030": 32.3, "wk": 27.3, "s": 21.7, "n": "신림역 8번", "g": 3, "c": "3110877"}, {"seg": 4, "am": 43.9, "y2030": 55.5, "wk": 33.2, "s": 27.2, "n": "구립대학경로당(관악산샘말공원)", "g": 3, "c": "3110881"}, {"seg": 4, "am": 40.1, "y2030": 61.4, "wk": 34.9, "s": 7.6, "n": "관악해태어린이공원", "g": 4, "c": "3110886"}, {"seg": 3, "am": 29.6, "y2030": 63.5, "wk": 36.8, "s": 15.8, "n": "샤로수길", "g": 3, "c": "3110895"}, {"seg": 4, "am": 47.7, "y2030": 49.9, "wk": 34.0, "s": 21.2, "n": "사당역 4번", "g": 3, "c": "3110902"}, {"seg": 4, "am": 33.2, "y2030": 51.5, "wk": 34.5, "s": 6.0, "n": "방배노인종합복지관(이수중학교)", "g": 4, "c": "3110905"}, {"seg": 0, "am": 61.5, "y2030": 28.4, "wk": 22.2, "s": 13.1, "n": "방배동사이길", "g": 3, "c": "3110912"}, {"seg": 1, "am": 59.5, "y2030": 26.3, "wk": 21.7, "s": 4.7, "n": "내방역 4번", "g": 5, "c": "3110916"}, {"seg": 2, "am": 19.4, "y2030": 9.8, "wk": 15.9, "s": 5.9, "n": "서울프랑스학교", "g": 4, "c": "3110921"}, {"seg": 1, "am": 73.9, "y2030": 30.2, "wk": 16.7, "s": 4.5, "n": "서초중학교", "g": 5, "c": "3110925"}, {"seg": 1, "am": 81.2, "y2030": 43.0, "wk": 4.2, "s": 24.5, "n": "삼성전자서울R&D(서울우면초등학교)", "g": 3, "c": "3110931"}, {"seg": 1, "am": 84.1, "y2030": 22.3, "wk": 11.8, "s": 19.3, "n": "더케이호텔(양재리본타워2단지아파트)", "g": 3, "c": "3110936"}, {"seg": 4, "am": 55.0, "y2030": 40.0, "wk": 40.1, "s": 18.3, "n": "바우뫼공원", "g": 3, "c": "3110938"}, {"seg": 1, "am": 76.5, "y2030": 26.9, "wk": 7.2, "s": 23.3, "n": "양재역 8번(양재동우체국)", "g": 3, "c": "3110939"}, {"seg": 4, "am": 58.8, "y2030": 43.2, "wk": 25.0, "s": 12.5, "n": "염곡동 구룡사(포이동성당)", "g": 3, "c": "3110942"}, {"seg": 0, "am": 64.6, "y2030": 36.4, "wk": 33.8, "s": 4.8, "n": "청계산원터골", "g": 5, "c": "3110946"}, {"seg": 1, "am": 63.8, "y2030": 42.7, "wk": 24.5, "s": 7.7, "n": "한남IC", "g": 4, "c": "3110949"}, {"seg": 3, "am": 21.2, "y2030": 80.0, "wk": 41.3, "s": 64.2, "n": "국기원", "g": 2, "c": "3110954"}, {"seg": 1, "am": 73.8, "y2030": 48.8, "wk": 11.6, "s": 12.3, "n": "언북중학교", "g": 3, "c": "3110957"}, {"seg": 1, "am": 61.9, "y2030": 26.5, "wk": 8.4, "s": 9.8, "n": "언주역 3번", "g": 4, "c": "3110961"}, {"seg": 1, "am": 78.0, "y2030": 33.7, "wk": 3.0, "s": 10.0, "n": "논현2동주민센터", "g": 4, "c": "3110966"}, {"seg": 4, "am": 53.5, "y2030": 43.0, "wk": 27.4, "s": 8.3, "n": "선정릉역 4번", "g": 4, "c": "3110971"}, {"seg": 1, "am": 65.8, "y2030": 32.1, "wk": 23.7, "s": 6.0, "n": "강남세브란스병원미래의학연구센터", "g": 4, "c": "3110972"}, {"seg": 0, "am": 57.5, "y2030": 22.3, "wk": 26.1, "s": 12.3, "n": "국악고교사거리", "g": 3, "c": "3110981"}, {"seg": 4, "am": 47.1, "y2030": 34.5, "wk": 26.5, "s": 5.5, "n": "포이초등학교(개포목련어린이공원)", "g": 5, "c": "3110984"}, {"seg": 0, "am": 54.0, "y2030": 28.8, "wk": 31.2, "s": 6.9, "n": "개포고등학교", "g": 4, "c": "3110994"}, {"seg": 1, "am": 63.5, "y2030": 22.2, "wk": 26.3, "s": 4.6, "n": "대치2동주민센터", "g": 5, "c": "3110996"}, {"seg": 0, "am": 51.6, "y2030": 32.8, "wk": 28.1, "s": 25.7, "n": "대청초등학교", "g": 3, "c": "3110997"}, {"seg": 0, "am": 68.1, "y2030": 26.0, "wk": 40.5, "s": 17.4, "n": "은곡마을(은곡마을공원)", "g": 3, "c": "3110998"}, {"seg": 1, "am": 60.6, "y2030": 43.8, "wk": 26.9, "s": 22.1, "n": "윗방죽마을공원", "g": 3, "c": "3110999"}, {"seg": 4, "am": 46.6, "y2030": 43.0, "wk": 35.8, "s": 46.8, "n": "삼전역 4번", "g": 2, "c": "3111003"}, {"seg": 4, "am": 38.9, "y2030": 40.4, "wk": 34.7, "s": 8.2, "n": "삼전역 1번", "g": 4, "c": "3111004"}, {"seg": 1, "am": 59.7, "y2030": 35.3, "wk": 19.5, "s": 7.0, "n": "석촌고분역 1번", "g": 4, "c": "3111006"}, {"seg": 3, "am": 44.5, "y2030": 63.5, "wk": 40.8, "s": 6.6, "n": "석촌역 7번", "g": 4, "c": "3111010"}, {"seg": 3, "am": 32.8, "y2030": 69.2, "wk": 41.1, "s": 44.8, "n": "송파나루역 1번(송리단길)", "g": 2, "c": "3111013"}, {"seg": 4, "am": 54.2, "y2030": 45.8, "wk": 29.8, "s": 10.3, "n": "석촌역 3번", "g": 4, "c": "3111015"}, {"seg": 4, "am": 54.0, "y2030": 44.2, "wk": 31.2, "s": 8.3, "n": "한성백제역 3번", "g": 4, "c": "3111019"}, {"seg": 0, "am": 48.1, "y2030": 23.5, "wk": 30.1, "s": 6.4, "n": "방이동고분군(방산고등학교)", "g": 4, "c": "3111020"}, {"seg": 0, "am": 48.6, "y2030": 29.7, "wk": 33.7, "s": 11.1, "n": "방이역 4번", "g": 4, "c": "3111021"}, {"seg": 1, "am": 59.0, "y2030": 38.0, "wk": 18.3, "s": 9.5, "n": "문정역 2번", "g": 4, "c": "3111026"}, {"seg": 4, "am": 57.7, "y2030": 38.8, "wk": 26.8, "s": 6.8, "n": "문정초등학교", "g": 4, "c": "3111027"}, {"seg": 4, "am": 46.5, "y2030": 45.3, "wk": 24.9, "s": 5.3, "n": "문현중학교(장지역 1번)", "g": 5, "c": "3111028"}, {"seg": 0, "am": 60.5, "y2030": 33.8, "wk": 30.7, "s": 5.1, "n": "방이역 2번", "g": 5, "c": "3111030"}, {"seg": 4, "am": 46.9, "y2030": 38.1, "wk": 32.3, "s": 6.8, "n": "장지동주민센터(한림연예예술고교)", "g": 4, "c": "3111031"}, {"seg": 0, "am": 63.8, "y2030": 9.5, "wk": 16.0, "s": 17.6, "n": "보인중학교", "g": 3, "c": "3111038"}, {"seg": 0, "am": 36.8, "y2030": 27.1, "wk": 38.9, "s": 4.8, "n": "벌말어린이공원", "g": 5, "c": "3111039"}, {"seg": 0, "am": 56.5, "y2030": 34.3, "wk": 34.7, "s": 7.2, "n": "마천역(마천초등학교)", "g": 4, "c": "3111046"}, {"seg": 4, "am": 44.9, "y2030": 54.6, "wk": 42.6, "s": 4.8, "n": "천호역 1번(천호문구완구거리)", "g": 5, "c": "3111048"}, {"seg": 0, "am": 45.0, "y2030": 31.0, "wk": 37.2, "s": 4.3, "n": "천호지구대(천호동자전거거리)", "g": 5, "c": "3111049"}, {"seg": 4, "am": 46.5, "y2030": 61.5, "wk": 36.6, "s": 4.1, "n": "천호역 6번", "g": 5, "c": "3111051"}, {"seg": 4, "am": 50.7, "y2030": 42.3, "wk": 40.1, "s": 12.3, "n": "성내천어린이공원(하니사랑길)", "g": 3, "c": "3111053"}, {"seg": 0, "am": 48.5, "y2030": 30.2, "wk": 28.7, "s": 6.9, "n": "천호공원(해공체육문화센터)", "g": 4, "c": "3111057"}, {"seg": 4, "am": 48.3, "y2030": 45.2, "wk": 31.7, "s": 15.0, "n": "강동역 4번(강풀만화거리)", "g": 3, "c": "3111059"}, {"seg": 0, "am": 40.8, "y2030": 36.2, "wk": 28.4, "s": 8.5, "n": "암사역 2번(서울강동초등학교)", "g": 4, "c": "3111060"}, {"seg": 0, "am": 40.7, "y2030": 35.0, "wk": 41.6, "s": 5.3, "n": "암사역 1번", "g": 5, "c": "3111061"}, {"seg": 0, "am": 63.3, "y2030": 30.9, "wk": 49.7, "s": 8.9, "n": "둔촌동역 3번(성내3동주민센터)", "g": 4, "c": "3111062"}, {"seg": 1, "am": 61.9, "y2030": 30.4, "wk": 20.2, "s": 20.7, "n": "강동성심병원", "g": 3, "c": "3111068"}, {"seg": 0, "am": 42.8, "y2030": 38.4, "wk": 30.9, "s": 5.0, "n": "굽은다리역 1번(십자성마을)", "g": 5, "c": "3111072"}, {"seg": 0, "am": 61.8, "y2030": 31.2, "wk": 29.5, "s": 5.0, "n": "둔촌동역 1번(한산중학교)", "g": 5, "c": "3111073"}, {"seg": 4, "am": 42.2, "y2030": 47.4, "wk": 28.6, "s": 10.1, "n": "굽은다리역 2번", "g": 4, "c": "3111075"}, {"seg": 0, "am": 47.1, "y2030": 40.4, "wk": 34.5, "s": 10.8, "n": "둔촌2동주민센터", "g": 4, "c": "3111076"}, {"seg": 0, "am": 67.3, "y2030": 17.3, "wk": 63.3, "s": 34.4, "n": "굽은다리역 3번", "g": 2, "c": "3111080"}, {"seg": 0, "am": 48.1, "y2030": 27.7, "wk": 29.6, "s": 13.6, "n": "한영중고", "g": 3, "c": "3111086"}, {"seg": 1, "am": 62.7, "y2030": 37.1, "wk": 20.2, "s": 10.5, "n": "상일여고(상일초등학교)", "g": 4, "c": "3111089"}, {"seg": 0, "am": 53.3, "y2030": 34.6, "wk": 34.6, "s": 9.9, "n": "강일동주민센터", "g": 4, "c": "3111090"}, {"seg": 1, "am": 63.2, "y2030": 37.5, "wk": 15.7, "s": 30.2, "n": "서대문역", "g": 3, "c": "3120001"}, {"seg": 4, "am": 44.0, "y2030": 52.7, "wk": 37.7, "s": 188.9, "n": "서촌(경복궁역)", "g": 1, "c": "3120002"}, {"seg": 1, "am": 65.6, "y2030": 38.5, "wk": 16.6, "s": 317.0, "n": "광화문역", "g": 1, "c": "3120003"}, {"seg": 1, "am": 64.0, "y2030": 30.6, "wk": 16.1, "s": 66.9, "n": "종로구청", "g": 2, "c": "3120004"}, {"seg": 0, "am": 45.4, "y2030": 32.9, "wk": 44.4, "s": 127.3, "n": "삼청동", "g": 1, "c": "3120005"}, {"seg": 1, "am": 59.5, "y2030": 38.5, "wk": 15.5, "s": 263.4, "n": "종각역", "g": 1, "c": "3120006"}, {"seg": 4, "am": 45.3, "y2030": 51.8, "wk": 32.3, "s": 304.9, "n": "북촌(안국역)", "g": 1, "c": "3120007"}, {"seg": 0, "am": 39.2, "y2030": 21.9, "wk": 31.9, "s": 129.2, "n": "인사동", "g": 1, "c": "3120008"}, {"seg": 4, "am": 37.5, "y2030": 48.1, "wk": 31.3, "s": 298.4, "n": "종로3가역", "g": 1, "c": "3120009"}, {"seg": 1, "am": 85.4, "y2030": 18.3, "wk": 1.8, "s": 31.8, "n": "원남동사거리", "g": 3, "c": "3120010"}, {"seg": 1, "am": 55.0, "y2030": 25.2, "wk": 18.4, "s": 19.8, "n": "종로4가", "g": 3, "c": "3120011"}, {"seg": 3, "am": 30.5, "y2030": 54.8, "wk": 37.1, "s": 282.5, "n": "대학로(혜화역)", "g": 1, "c": "3120012"}, {"seg": 1, "am": 59.2, "y2030": 30.7, "wk": 18.7, "s": 48.7, "n": "이화사거리", "g": 2, "c": "3120013"}, {"seg": 1, "am": 68.1, "y2030": 30.1, "wk": 14.8, "s": 65.0, "n": "종로5가역", "g": 2, "c": "3120014"}, {"seg": 0, "am": 60.2, "y2030": 31.9, "wk": 15.9, "s": 14.2, "n": "종로6가", "g": 3, "c": "3120015"}, {"seg": 0, "am": 41.5, "y2030": 33.8, "wk": 34.6, "s": 6.2, "n": "동대문역", "g": 4, "c": "3120016"}, {"seg": 0, "am": 42.2, "y2030": 41.4, "wk": 33.4, "s": 19.9, "n": "동묘앞역(동묘)", "g": 3, "c": "3120017"}, {"seg": 1, "am": 64.9, "y2030": 36.8, "wk": 15.6, "s": 32.9, "n": "중림동", "g": 3, "c": "3120018"}, {"seg": 1, "am": 66.3, "y2030": 25.5, "wk": 14.4, "s": 43.0, "n": "경찰청앞교차로", "g": 2, "c": "3120019"}, {"seg": 1, "am": 70.8, "y2030": 31.4, "wk": 10.7, "s": 58.7, "n": "시청역_1번", "g": 2, "c": "3120020"}, {"seg": 1, "am": 68.4, "y2030": 30.2, "wk": 10.2, "s": 499.8, "n": "시청역_8번", "g": 1, "c": "3120021"}, {"seg": 1, "am": 71.8, "y2030": 41.3, "wk": 12.2, "s": 98.6, "n": "북창동(시청역_6번)", "g": 2, "c": "3120022"}, {"seg": 1, "am": 68.5, "y2030": 30.7, "wk": 10.5, "s": 86.9, "n": "서울시청", "g": 2, "c": "3120023"}, {"seg": 4, "am": 54.5, "y2030": 41.4, "wk": 23.4, "s": 41.4, "n": "회현역", "g": 2, "c": "3120024"}, {"seg": 0, "am": 60.5, "y2030": 31.5, "wk": 23.9, "s": 11.8, "n": "롯데백화점(시청광장 지하쇼핑센터)", "g": 3, "c": "3120025"}, {"seg": 1, "am": 76.4, "y2030": 31.7, "wk": 6.8, "s": 214.2, "n": "을지로입구역", "g": 1, "c": "3120026"}, {"seg": 1, "am": 64.0, "y2030": 38.5, "wk": 18.7, "s": 34.1, "n": "명동역(명동재미로)", "g": 2, "c": "3120027"}, {"seg": 4, "am": 46.1, "y2030": 44.8, "wk": 27.3, "s": 381.4, "n": "명동(명동거리)", "g": 1, "c": "3120028"}, {"seg": 1, "am": 67.7, "y2030": 30.0, "wk": 18.4, "s": 12.7, "n": "을지로2가", "g": 3, "c": "3120029"}, {"seg": 1, "am": 66.1, "y2030": 40.5, "wk": 16.4, "s": 71.9, "n": "중부경찰서(영화인의거리)", "g": 2, "c": "3120030"}, {"seg": 1, "am": 58.6, "y2030": 38.9, "wk": 16.4, "s": 245.8, "n": "을지로3가역", "g": 1, "c": "3120031"}, {"seg": 1, "am": 60.8, "y2030": 43.2, "wk": 16.2, "s": 129.7, "n": "충무로역", "g": 1, "c": "3120032"}, {"seg": 1, "am": 71.0, "y2030": 29.4, "wk": 14.0, "s": 7.6, "n": "퇴계로5가", "g": 4, "c": "3120035"}, {"seg": 2, "am": 17.0, "y2030": 10.0, "wk": 6.1, "s": 70.4, "n": "장충동족발거리(남소영길)", "g": 2, "c": "3120036"}, {"seg": 4, "am": 44.1, "y2030": 49.7, "wk": 28.0, "s": 105.0, "n": "동대문역사문화공원역", "g": 1, "c": "3120037"}, {"seg": 4, "am": 42.2, "y2030": 45.2, "wk": 31.3, "s": 13.0, "n": "약수역", "g": 3, "c": "3120038"}, {"seg": 4, "am": 41.4, "y2030": 58.7, "wk": 19.4, "s": 25.5, "n": "신당역", "g": 3, "c": "3120039"}, {"seg": 1, "am": 73.7, "y2030": 30.2, "wk": 9.8, "s": 31.4, "n": "용산전자상가(용산역)", "g": 3, "c": "3120040"}, {"seg": 1, "am": 59.4, "y2030": 42.3, "wk": 18.4, "s": 124.0, "n": "신용산역(용산역)", "g": 1, "c": "3120041"}, {"seg": 4, "am": 48.7, "y2030": 57.6, "wk": 34.8, "s": 30.4, "n": "숙대입구역(남영역, 남영동)", "g": 3, "c": "3120042"}, {"seg": 1, "am": 75.3, "y2030": 28.9, "wk": 6.8, "s": 205.6, "n": "서울역", "g": 1, "c": "3120043"}, {"seg": 4, "am": 56.2, "y2030": 49.8, "wk": 31.9, "s": 15.7, "n": "삼각지역", "g": 3, "c": "3120044"}, {"seg": 3, "am": 31.8, "y2030": 58.5, "wk": 30.5, "s": 54.9, "n": "남영동 먹자골목", "g": 2, "c": "3120045"}, {"seg": 3, "am": 28.9, "y2030": 65.4, "wk": 42.4, "s": 68.1, "n": "이태원(이태원역)", "g": 2, "c": "3120046"}, {"seg": 4, "am": 43.9, "y2030": 47.5, "wk": 24.4, "s": 25.4, "n": "한남오거리", "g": 3, "c": "3120047"}, {"seg": 3, "am": 31.9, "y2030": 57.0, "wk": 31.1, "s": 22.6, "n": "왕십리역(왕십리)", "g": 3, "c": "3120049"}, {"seg": 4, "am": 73.1, "y2030": 63.3, "wk": 46.2, "s": 5.8, "n": "서울숲역", "g": 4, "c": "3120050"}, {"seg": 4, "am": 45.9, "y2030": 50.5, "wk": 32.9, "s": 147.3, "n": "뚝섬역", "g": 1, "c": "3120051"}, {"seg": 4, "am": 49.6, "y2030": 50.5, "wk": 26.2, "s": 143.2, "n": "성수역", "g": 1, "c": "3120052"}, {"seg": 3, "am": 28.6, "y2030": 58.8, "wk": 35.7, "s": 302.5, "n": "건대입구역(건대)", "g": 1, "c": "3120053"}, {"seg": 3, "am": 36.2, "y2030": 63.2, "wk": 33.1, "s": 28.1, "n": "어린이대공원역", "g": 3, "c": "3120054"}, {"seg": 3, "am": 34.6, "y2030": 58.0, "wk": 34.9, "s": 43.4, "n": "군자역", "g": 2, "c": "3120055"}, {"seg": 4, "am": 47.2, "y2030": 42.7, "wk": 25.4, "s": 27.4, "n": "구의역", "g": 3, "c": "3120056"}, {"seg": 4, "am": 44.5, "y2030": 43.5, "wk": 38.5, "s": 52.4, "n": "아차산역", "g": 2, "c": "3120057"}, {"seg": 0, "am": 46.7, "y2030": 29.9, "wk": 32.9, "s": 21.5, "n": "구삼강변맛길", "g": 3, "c": "3120059"}, {"seg": 0, "am": 50.0, "y2030": 44.2, "wk": 37.5, "s": 46.2, "n": "강변역(테크노마트)", "g": 2, "c": "3120060"}, {"seg": 0, "am": 56.1, "y2030": 28.6, "wk": 35.8, "s": 6.9, "n": "올림픽대교북단", "g": 4, "c": "3120061"}, {"seg": 1, "am": 62.3, "y2030": 30.4, "wk": 21.7, "s": 38.0, "n": "신설동역", "g": 2, "c": "3120062"}, {"seg": 0, "am": 52.9, "y2030": 42.3, "wk": 29.5, "s": 22.0, "n": "청량리역(청량리)", "g": 3, "c": "3120063"}, {"seg": 4, "am": 51.2, "y2030": 50.5, "wk": 19.4, "s": 102.9, "n": "경희대학교(경희대)", "g": 2, "c": "3120064"}, {"seg": 4, "am": 44.5, "y2030": 57.1, "wk": 34.2, "s": 18.2, "n": "회기역", "g": 3, "c": "3120065"}, {"seg": 1, "am": 56.6, "y2030": 39.5, "wk": 22.3, "s": 33.7, "n": "장한평역(장한평)", "g": 2, "c": "3120066"}, {"seg": 0, "am": 46.4, "y2030": 36.4, "wk": 28.9, "s": 38.1, "n": "장안동사거리", "g": 2, "c": "3120067"}, {"seg": 0, "am": 41.9, "y2030": 42.4, "wk": 34.2, "s": 28.0, "n": "사가정역", "g": 3, "c": "3120068"}, {"seg": 4, "am": 35.0, "y2030": 51.3, "wk": 35.1, "s": 59.7, "n": "상봉역", "g": 2, "c": "3120069"}, {"seg": 3, "am": 27.2, "y2030": 49.1, "wk": 32.7, "s": 26.1, "n": "한성대입구역", "g": 3, "c": "3120070"}, {"seg": 0, "am": 53.8, "y2030": 41.8, "wk": 23.2, "s": 8.1, "n": "성북구청", "g": 4, "c": "3120071"}, {"seg": 3, "am": 25.9, "y2030": 58.4, "wk": 34.8, "s": 274.9, "n": "성신여대", "g": 1, "c": "3120072"}, {"seg": 1, "am": 69.2, "y2030": 37.6, "wk": 30.1, "s": 17.9, "n": "미아사거리", "g": 3, "c": "3120073"}, {"seg": 4, "am": 46.5, "y2030": 61.3, "wk": 16.6, "s": 37.0, "n": "안암역", "g": 2, "c": "3120074"}, {"seg": 4, "am": 53.8, "y2030": 53.6, "wk": 22.6, "s": 21.4, "n": "월곡역", "g": 3, "c": "3120075"}, {"seg": 4, "am": 40.1, "y2030": 45.3, "wk": 28.6, "s": 99.8, "n": "수유역", "g": 2, "c": "3120076"}, {"seg": 0, "am": 46.3, "y2030": 34.6, "wk": 27.5, "s": 25.3, "n": "미아역", "g": 3, "c": "3120077"}, {"seg": 0, "am": 32.6, "y2030": 39.2, "wk": 31.9, "s": 40.5, "n": "미아사거리역", "g": 2, "c": "3120078"}, {"seg": 0, "am": 44.3, "y2030": 34.3, "wk": 32.0, "s": 22.0, "n": "창동역", "g": 3, "c": "3120079"}, {"seg": 4, "am": 48.1, "y2030": 42.8, "wk": 33.1, "s": 16.9, "n": "마들역", "g": 3, "c": "3120080"}, {"seg": 4, "am": 40.5, "y2030": 47.4, "wk": 33.5, "s": 224.5, "n": "노원역", "g": 1, "c": "3120081"}, {"seg": 0, "am": 46.4, "y2030": 29.3, "wk": 35.6, "s": 46.7, "n": "등나무근린공원", "g": 2, "c": "3120083"}, {"seg": 3, "am": 28.8, "y2030": 55.0, "wk": 39.1, "s": 78.2, "n": "공릉역", "g": 2, "c": "3120084"}, {"seg": 0, "am": 41.0, "y2030": 24.7, "wk": 30.8, "s": 19.6, "n": "은행사거리", "g": 3, "c": "3120085"}, {"seg": 4, "am": 50.0, "y2030": 43.9, "wk": 34.2, "s": 21.0, "n": "태릉입구역", "g": 3, "c": "3120086"}, {"seg": 4, "am": 34.6, "y2030": 46.0, "wk": 35.5, "s": 14.1, "n": "응암역", "g": 3, "c": "3120087"}, {"seg": 0, "am": 43.6, "y2030": 36.3, "wk": 32.7, "s": 23.3, "n": "구산역", "g": 3, "c": "3120088"}, {"seg": 0, "am": 38.6, "y2030": 29.9, "wk": 29.0, "s": 15.8, "n": "구파발역", "g": 3, "c": "3120089"}, {"seg": 0, "am": 51.6, "y2030": 38.5, "wk": 34.3, "s": 23.9, "n": "연신내역", "g": 3, "c": "3120090"}, {"seg": 0, "am": 51.0, "y2030": 31.2, "wk": 31.1, "s": 10.5, "n": "본서부병원", "g": 4, "c": "3120091"}, {"seg": 0, "am": 52.3, "y2030": 36.1, "wk": 31.7, "s": 4.2, "n": "불광역", "g": 5, "c": "3120092"}, {"seg": 3, "am": 37.8, "y2030": 59.6, "wk": 38.0, "s": 107.8, "n": "연희동", "g": 1, "c": "3120093"}, {"seg": 3, "am": 29.2, "y2030": 67.8, "wk": 33.5, "s": 196.4, "n": "신촌역(신촌역, 신촌로터리)", "g": 1, "c": "3120094"}, {"seg": 0, "am": 53.2, "y2030": 34.1, "wk": 32.5, "s": 7.9, "n": "홍제역", "g": 4, "c": "3120095"}, {"seg": 3, "am": 40.6, "y2030": 61.9, "wk": 26.7, "s": 39.3, "n": "이화여대(이대역, 이대)", "g": 2, "c": "3120096"}, {"seg": 1, "am": 74.8, "y2030": 36.1, "wk": 9.9, "s": 28.3, "n": "충정로역", "g": 3, "c": "3120097"}, {"seg": 1, "am": 72.4, "y2030": 33.4, "wk": 9.0, "s": 178.5, "n": "DMC(디지털미디어시티)", "g": 1, "c": "3120098"}, {"seg": 1, "am": 63.7, "y2030": 27.0, "wk": 32.9, "s": 24.7, "n": "월드컵경기장역(월드컵경기장)", "g": 3, "c": "3120099"}, {"seg": 4, "am": 40.7, "y2030": 49.8, "wk": 32.2, "s": 27.9, "n": "망원역", "g": 3, "c": "3120100"}, {"seg": 3, "am": 45.2, "y2030": 63.4, "wk": 32.8, "s": 111.6, "n": "합정역", "g": 1, "c": "3120101"}, {"seg": 4, "am": 49.2, "y2030": 57.3, "wk": 31.6, "s": 98.7, "n": "서교동(홍대)", "g": 2, "c": "3120102"}, {"seg": 3, "am": 28.6, "y2030": 67.7, "wk": 37.8, "s": 450.7, "n": "홍대입구역(홍대)", "g": 1, "c": "3120103"}, {"seg": 3, "am": 33.2, "y2030": 66.7, "wk": 37.5, "s": 294.6, "n": "연남동(홍대)", "g": 1, "c": "3120104"}, {"seg": 3, "am": 31.9, "y2030": 67.2, "wk": 39.0, "s": 95.5, "n": "상수역(홍대)", "g": 2, "c": "3120105"}, {"seg": 1, "am": 65.7, "y2030": 42.8, "wk": 13.8, "s": 25.2, "n": "마포역", "g": 3, "c": "3120106"}, {"seg": 1, "am": 63.2, "y2030": 34.8, "wk": 18.7, "s": 60.8, "n": "공덕역(공덕오거리)", "g": 2, "c": "3120107"}, {"seg": 0, "am": 43.8, "y2030": 35.7, "wk": 35.4, "s": 48.9, "n": "신정네거리역", "g": 2, "c": "3120108"}, {"seg": 0, "am": 61.1, "y2030": 25.7, "wk": 20.7, "s": 12.2, "n": "서울남부지방법원", "g": 3, "c": "3120109"}, {"seg": 4, "am": 44.7, "y2030": 44.2, "wk": 31.4, "s": 22.4, "n": "목동역 8번출구", "g": 3, "c": "3120110"}, {"seg": 4, "am": 39.4, "y2030": 44.5, "wk": 32.4, "s": 15.8, "n": "목동사거리", "g": 3, "c": "3120111"}, {"seg": 4, "am": 49.9, "y2030": 47.7, "wk": 34.5, "s": 50.5, "n": "등촌역", "g": 2, "c": "3120112"}, {"seg": 0, "am": 40.9, "y2030": 41.1, "wk": 33.4, "s": 27.4, "n": "오목교역", "g": 3, "c": "3120113"}, {"seg": 0, "am": 48.5, "y2030": 24.2, "wk": 28.3, "s": 74.1, "n": "목동신시가지", "g": 2, "c": "3120114"}, {"seg": 4, "am": 46.9, "y2030": 40.5, "wk": 26.5, "s": 8.4, "n": "송정역", "g": 4, "c": "3120116"}, {"seg": 4, "am": 52.8, "y2030": 40.3, "wk": 25.0, "s": 54.5, "n": "발산역(마곡)", "g": 2, "c": "3120119"}, {"seg": 4, "am": 35.4, "y2030": 50.9, "wk": 32.9, "s": 52.1, "n": "화곡역", "g": 2, "c": "3120120"}, {"seg": 3, "am": 31.4, "y2030": 69.1, "wk": 39.4, "s": 25.4, "n": "까치산역", "g": 3, "c": "3120121"}, {"seg": 4, "am": 48.1, "y2030": 45.1, "wk": 29.3, "s": 21.6, "n": "강서구청", "g": 3, "c": "3120122"}, {"seg": 4, "am": 44.7, "y2030": 53.1, "wk": 34.8, "s": 16.5, "n": "오류동역", "g": 3, "c": "3120123"}, {"seg": 0, "am": 52.3, "y2030": 36.6, "wk": 27.6, "s": 10.9, "n": "개봉동 현대아파트", "g": 4, "c": "3120124"}, {"seg": 1, "am": 67.1, "y2030": 25.1, "wk": 15.4, "s": 36.7, "n": "구로역", "g": 2, "c": "3120125"}, {"seg": 1, "am": 62.5, "y2030": 34.7, "wk": 19.0, "s": 20.8, "n": "구로구청", "g": 3, "c": "3120127"}, {"seg": 4, "am": 52.1, "y2030": 41.7, "wk": 33.7, "s": 33.8, "n": "신도림역", "g": 2, "c": "3120128"}, {"seg": 1, "am": 76.4, "y2030": 44.1, "wk": 7.6, "s": 199.6, "n": "구로디지털단지", "g": 1, "c": "3120129"}, {"seg": 3, "am": 25.9, "y2030": 62.4, "wk": 33.4, "s": 51.4, "n": "구로디지털단지역", "g": 2, "c": "3120130"}, {"seg": 1, "am": 72.8, "y2030": 44.5, "wk": 9.8, "s": 492.5, "n": "가산디지털단지", "g": 1, "c": "3120131"}, {"seg": 4, "am": 47.4, "y2030": 47.7, "wk": 29.0, "s": 41.0, "n": "독산동", "g": 2, "c": "3120132"}, {"seg": 0, "am": 39.4, "y2030": 38.3, "wk": 35.0, "s": 6.6, "n": "서울시흥동우체국(홈플러스시흥점)", "g": 4, "c": "3120133"}, {"seg": 0, "am": 42.0, "y2030": 30.4, "wk": 36.0, "s": 13.6, "n": "구로전화국", "g": 3, "c": "3120134"}, {"seg": 1, "am": 74.3, "y2030": 42.5, "wk": 16.7, "s": 7.4, "n": "양평역", "g": 4, "c": "3120135"}, {"seg": 1, "am": 59.5, "y2030": 39.2, "wk": 22.5, "s": 50.8, "n": "영등포구청역", "g": 2, "c": "3120136"}, {"seg": 0, "am": 49.4, "y2030": 21.5, "wk": 25.3, "s": 22.2, "n": "문래역(문래로데오거리)", "g": 3, "c": "3120137"}, {"seg": 1, "am": 69.4, "y2030": 42.7, "wk": 15.3, "s": 50.0, "n": "당산2동(영등포우체국)", "g": 2, "c": "3120138"}, {"seg": 1, "am": 75.2, "y2030": 44.5, "wk": 12.6, "s": 51.3, "n": "문래동주민센터", "g": 2, "c": "3120140"}, {"seg": 1, "am": 50.9, "y2030": 40.7, "wk": 21.9, "s": 7.9, "n": "영등포청과시장교차로", "g": 4, "c": "3120141"}, {"seg": 0, "am": 54.5, "y2030": 26.1, "wk": 31.0, "s": 24.2, "n": "대림역", "g": 3, "c": "3120142"}, {"seg": 4, "am": 35.7, "y2030": 45.1, "wk": 29.4, "s": 121.9, "n": "당산역", "g": 1, "c": "3120143"}, {"seg": 3, "am": 34.0, "y2030": 56.3, "wk": 40.3, "s": 173.2, "n": "영등포역(영등포)", "g": 1, "c": "3120145"}, {"seg": 1, "am": 72.2, "y2030": 37.8, "wk": 17.5, "s": 9.3, "n": "한강성심병원", "g": 4, "c": "3120146"}, {"seg": 4, "am": 50.3, "y2030": 38.2, "wk": 28.3, "s": 23.7, "n": "보라매역", "g": 3, "c": "3120147"}, {"seg": 1, "am": 64.7, "y2030": 30.6, "wk": 14.9, "s": 287.1, "n": "국회의사당역(국회의사당)", "g": 1, "c": "3120148"}, {"seg": 1, "am": 73.8, "y2030": 30.0, "wk": 6.8, "s": 568.7, "n": "여의도역(여의도)", "g": 1, "c": "3120149"}, {"seg": 1, "am": 83.8, "y2030": 25.1, "wk": 3.4, "s": 10.7, "n": "63빌딩", "g": 4, "c": "3120150"}, {"seg": 1, "am": 59.9, "y2030": 39.8, "wk": 25.6, "s": 117.8, "n": "보라매공원", "g": 1, "c": "3120151"}, {"seg": 4, "am": 37.2, "y2030": 59.7, "wk": 33.8, "s": 19.9, "n": "신대방삼거리역", "g": 3, "c": "3120152"}, {"seg": 4, "am": 44.2, "y2030": 60.1, "wk": 31.7, "s": 69.7, "n": "노량진역(노량진)", "g": 2, "c": "3120153"}, {"seg": 0, "am": 51.9, "y2030": 29.7, "wk": 26.0, "s": 10.0, "n": "장승배기역", "g": 4, "c": "3120154"}, {"seg": 4, "am": 34.4, "y2030": 46.5, "wk": 32.3, "s": 70.4, "n": "총신대입구역(이수, 총신대)", "g": 2, "c": "3120156"}, {"seg": 3, "am": 28.5, "y2030": 70.7, "wk": 35.6, "s": 61.7, "n": "신림역(신림)", "g": 2, "c": "3120157"}, {"seg": 4, "am": 39.9, "y2030": 53.0, "wk": 33.1, "s": 36.3, "n": "녹두거리(대학동)", "g": 2, "c": "3120158"}, {"seg": 3, "am": 33.6, "y2030": 57.7, "wk": 33.1, "s": 72.1, "n": "서울대입구역", "g": 2, "c": "3120159"}, {"seg": 3, "am": 33.6, "y2030": 47.8, "wk": 35.0, "s": 85.2, "n": "사당역(사당)", "g": 2, "c": "3120160"}, {"seg": 0, "am": 50.4, "y2030": 30.1, "wk": 30.8, "s": 133.7, "n": "방배동카페골목", "g": 1, "c": "3120162"}, {"seg": 0, "am": 50.3, "y2030": 31.5, "wk": 32.1, "s": 97.1, "n": "내방역", "g": 2, "c": "3120164"}, {"seg": 0, "am": 49.8, "y2030": 32.7, "wk": 32.7, "s": 26.0, "n": "서래마을카페거리(서래마을)", "g": 3, "c": "3120165"}, {"seg": 1, "am": 53.8, "y2030": 33.2, "wk": 21.1, "s": 31.8, "n": "방배역", "g": 3, "c": "3120166"}, {"seg": 0, "am": 42.7, "y2030": 24.7, "wk": 30.5, "s": 32.4, "n": "고속터미널(고속터미널역)", "g": 3, "c": "3120167"}, {"seg": 1, "am": 60.1, "y2030": 37.9, "wk": 16.8, "s": 4.7, "n": "서울고교교차로", "g": 5, "c": "3120168"}, {"seg": 1, "am": 68.7, "y2030": 28.1, "wk": 26.5, "s": 140.9, "n": "서초역", "g": 1, "c": "3120169"}, {"seg": 0, "am": 52.1, "y2030": 23.7, "wk": 26.8, "s": 52.2, "n": "삼호가든사거리", "g": 2, "c": "3120170"}, {"seg": 1, "am": 62.6, "y2030": 29.5, "wk": 20.6, "s": 68.2, "n": "서초3동사거리", "g": 2, "c": "3120171"}, {"seg": 1, "am": 61.9, "y2030": 34.8, "wk": 19.1, "s": 61.1, "n": "교대입구교차로", "g": 2, "c": "3120172"}, {"seg": 1, "am": 57.3, "y2030": 32.0, "wk": 15.7, "s": 220.3, "n": "교대역(법원.검찰청)", "g": 1, "c": "3120173"}, {"seg": 1, "am": 64.2, "y2030": 36.5, "wk": 17.4, "s": 94.4, "n": "남부터미널역", "g": 2, "c": "3120175"}, {"seg": 4, "am": 38.7, "y2030": 51.1, "wk": 25.1, "s": 30.9, "n": "신논현역 1번", "g": 3, "c": "3120177"}, {"seg": 4, "am": 53.1, "y2030": 46.3, "wk": 19.0, "s": 129.6, "n": "신사역", "g": 1, "c": "3120178"}, {"seg": 1, "am": 60.8, "y2030": 29.4, "wk": 18.4, "s": 142.6, "n": "양재역", "g": 1, "c": "3120179"}, {"seg": 1, "am": 70.9, "y2030": 36.2, "wk": 17.5, "s": 18.1, "n": "양재화물트럭터미널앞", "g": 3, "c": "3120180"}, {"seg": 1, "am": 70.7, "y2030": 41.8, "wk": 19.3, "s": 17.9, "n": "교육개발원입구사거리", "g": 3, "c": "3120181"}, {"seg": 1, "am": 56.5, "y2030": 37.5, "wk": 24.5, "s": 57.3, "n": "양재시민의숲역(양재동꽃시장, aT센터)", "g": 2, "c": "3120182"}, {"seg": 0, "am": 40.5, "y2030": 30.6, "wk": 41.1, "s": 18.9, "n": "양재천카페거리", "g": 3, "c": "3120183"}, {"seg": 1, "am": 58.6, "y2030": 28.8, "wk": 19.7, "s": 103.8, "n": "포이사거리(삼호물산)", "g": 1, "c": "3120184"}, {"seg": 4, "am": 50.9, "y2030": 40.0, "wk": 19.9, "s": 148.9, "n": "논현역", "g": 1, "c": "3120185"}, {"seg": 3, "am": 37.6, "y2030": 53.5, "wk": 33.2, "s": 96.9, "n": "가로수길", "g": 2, "c": "3120186"}, {"seg": 4, "am": 37.1, "y2030": 54.7, "wk": 28.2, "s": 226.2, "n": "신논현역", "g": 1, "c": "3120187"}, {"seg": 4, "am": 55.6, "y2030": 36.7, "wk": 24.3, "s": 90.0, "n": "압구정역", "g": 2, "c": "3120188"}, {"seg": 4, "am": 48.5, "y2030": 54.1, "wk": 23.9, "s": 564.6, "n": "강남역", "g": 1, "c": "3120189"}, {"seg": 1, "am": 55.0, "y2030": 38.9, "wk": 15.7, "s": 33.0, "n": "강남을지병원", "g": 2, "c": "3120190"}, {"seg": 1, "am": 61.7, "y2030": 41.6, "wk": 11.4, "s": 89.2, "n": "학동역", "g": 2, "c": "3120191"}, {"seg": 1, "am": 69.1, "y2030": 38.1, "wk": 12.8, "s": 146.7, "n": "뱅뱅사거리", "g": 1, "c": "3120192"}, {"seg": 1, "am": 64.4, "y2030": 32.3, "wk": 11.8, "s": 14.5, "n": "도산공원교차로", "g": 3, "c": "3120193"}, {"seg": 1, "am": 64.3, "y2030": 41.1, "wk": 19.2, "s": 68.8, "n": "언주역(차병원)", "g": 2, "c": "3120194"}, {"seg": 1, "am": 71.1, "y2030": 33.3, "wk": 15.3, "s": 9.9, "n": "성수대교남단", "g": 4, "c": "3120195"}, {"seg": 1, "am": 75.2, "y2030": 43.7, "wk": 4.1, "s": 15.3, "n": "서울세관", "g": 3, "c": "3120196"}, {"seg": 1, "am": 64.0, "y2030": 39.4, "wk": 12.2, "s": 444.2, "n": "역삼역", "g": 1, "c": "3120197"}, {"seg": 1, "am": 64.5, "y2030": 40.8, "wk": 13.6, "s": 103.0, "n": "구역삼세무서", "g": 2, "c": "3120198"}, {"seg": 1, "am": 67.4, "y2030": 35.9, "wk": 6.5, "s": 41.7, "n": "경복아파트교차로", "g": 2, "c": "3120199"}, {"seg": 4, "am": 50.5, "y2030": 48.7, "wk": 27.3, "s": 82.9, "n": "학동사거리", "g": 2, "c": "3120200"}, {"seg": 1, "am": 67.6, "y2030": 17.6, "wk": 10.8, "s": 21.9, "n": "도곡1동", "g": 3, "c": "3120201"}, {"seg": 4, "am": 35.0, "y2030": 51.1, "wk": 33.2, "s": 64.4, "n": "압구정로데오역(압구정로데오)", "g": 2, "c": "3120202"}, {"seg": 1, "am": 60.3, "y2030": 46.5, "wk": 16.2, "s": 127.5, "n": "강남구청역", "g": 1, "c": "3120203"}, {"seg": 1, "am": 74.2, "y2030": 35.6, "wk": 13.1, "s": 132.3, "n": "르네상스호텔사거리", "g": 1, "c": "3120204"}, {"seg": 4, "am": 51.3, "y2030": 40.9, "wk": 27.8, "s": 91.2, "n": "매봉역", "g": 2, "c": "3120205"}, {"seg": 1, "am": 80.4, "y2030": 22.3, "wk": 9.3, "s": 24.1, "n": "개나리아파트", "g": 3, "c": "3120206"}, {"seg": 1, "am": 67.0, "y2030": 42.8, "wk": 11.9, "s": 44.3, "n": "선정릉역", "g": 2, "c": "3120207"}, {"seg": 4, "am": 44.2, "y2030": 49.6, "wk": 44.4, "s": 55.7, "n": "청담사거리(청담동명품거리)", "g": 2, "c": "3120208"}, {"seg": 1, "am": 57.5, "y2030": 33.0, "wk": 23.0, "s": 16.6, "n": "강남구청(청담역_8번, 강남세무서)", "g": 3, "c": "3120209"}, {"seg": 4, "am": 47.3, "y2030": 50.3, "wk": 21.4, "s": 362.1, "n": "선릉역", "g": 1, "c": "3120210"}, {"seg": 0, "am": 47.0, "y2030": 28.8, "wk": 33.2, "s": 16.8, "n": "도성초등학교", "g": 3, "c": "3120211"}, {"seg": 0, "am": 38.3, "y2030": 19.0, "wk": 37.7, "s": 57.7, "n": "한티역", "g": 2, "c": "3120212"}, {"seg": 1, "am": 59.1, "y2030": 31.7, "wk": 16.7, "s": 57.1, "n": "삼성중앙역", "g": 2, "c": "3120213"}, {"seg": 1, "am": 71.5, "y2030": 35.3, "wk": 11.1, "s": 7.3, "n": "영동대교남단교차로", "g": 4, "c": "3120214"}, {"seg": 1, "am": 68.6, "y2030": 29.5, "wk": 14.8, "s": 300.8, "n": "포스코사거리", "g": 1, "c": "3120215"}, {"seg": 0, "am": 50.7, "y2030": 23.3, "wk": 27.3, "s": 43.0, "n": "대치사거리", "g": 2, "c": "3120217"}, {"seg": 4, "am": 46.2, "y2030": 38.6, "wk": 30.1, "s": 73.4, "n": "코엑스", "g": 2, "c": "3120218"}, {"seg": 0, "am": 45.8, "y2030": 17.5, "wk": 31.2, "s": 86.5, "n": "은마아파트", "g": 2, "c": "3120219"}, {"seg": 0, "am": 42.9, "y2030": 25.1, "wk": 27.9, "s": 36.7, "n": "대치역", "g": 2, "c": "3120220"}, {"seg": 1, "am": 68.5, "y2030": 38.0, "wk": 17.6, "s": 27.3, "n": "봉은사역", "g": 3, "c": "3120221"}, {"seg": 1, "am": 61.1, "y2030": 39.5, "wk": 19.1, "s": 369.1, "n": "삼성역", "g": 1, "c": "3120222"}, {"seg": 1, "am": 71.0, "y2030": 36.9, "wk": 27.9, "s": 11.4, "n": "휘문고교사거리", "g": 3, "c": "3120223"}, {"seg": 1, "am": 56.4, "y2030": 35.3, "wk": 20.1, "s": 92.0, "n": "수서역", "g": 2, "c": "3120224"}, {"seg": 0, "am": 43.5, "y2030": 35.4, "wk": 32.3, "s": 212.4, "n": "잠실새내역(신천)", "g": 1, "c": "3120225"}, {"seg": 4, "am": 47.7, "y2030": 45.0, "wk": 32.2, "s": 30.5, "n": "석촌고분역", "g": 3, "c": "3120226"}, {"seg": 1, "am": 57.9, "y2030": 38.1, "wk": 23.6, "s": 341.1, "n": "잠실역", "g": 1, "c": "3120227"}, {"seg": 4, "am": 39.6, "y2030": 51.0, "wk": 41.0, "s": 93.6, "n": "석촌역(석촌호수)", "g": 2, "c": "3120228"}, {"seg": 4, "am": 32.2, "y2030": 54.1, "wk": 35.8, "s": 79.5, "n": "방이동먹자골목", "g": 2, "c": "3120229"}, {"seg": 0, "am": 52.3, "y2030": 40.1, "wk": 27.3, "s": 8.7, "n": "송파사거리(송파역)", "g": 4, "c": "3120230"}, {"seg": 0, "am": 44.7, "y2030": 29.8, "wk": 28.1, "s": 38.9, "n": "가락시장", "g": 2, "c": "3120231"}, {"seg": 3, "am": 35.6, "y2030": 62.5, "wk": 38.6, "s": 11.3, "n": "송파나루역", "g": 4, "c": "3120232"}, {"seg": 4, "am": 51.0, "y2030": 44.5, "wk": 32.2, "s": 13.4, "n": "몽촌토성역", "g": 3, "c": "3120233"}, {"seg": 1, "am": 59.0, "y2030": 37.6, "wk": 20.0, "s": 44.7, "n": "가락시장역", "g": 2, "c": "3120234"}, {"seg": 1, "am": 71.1, "y2030": 41.2, "wk": 15.3, "s": 86.2, "n": "문정역", "g": 2, "c": "3120235"}, {"seg": 0, "am": 53.4, "y2030": 34.2, "wk": 29.1, "s": 66.9, "n": "장지역(가든파이브)", "g": 2, "c": "3120236"}, {"seg": 1, "am": 61.4, "y2030": 38.0, "wk": 18.8, "s": 21.8, "n": "경찰병원역", "g": 3, "c": "3120237"}, {"seg": 0, "am": 53.9, "y2030": 32.7, "wk": 32.1, "s": 73.3, "n": "방이역", "g": 2, "c": "3120238"}, {"seg": 1, "am": 59.4, "y2030": 36.1, "wk": 20.3, "s": 24.1, "n": "오금역", "g": 3, "c": "3120239"}, {"seg": 0, "am": 45.2, "y2030": 33.8, "wk": 33.6, "s": 16.6, "n": "개롱역", "g": 3, "c": "3120240"}, {"seg": 0, "am": 37.9, "y2030": 36.0, "wk": 33.2, "s": 10.0, "n": "거여역", "g": 4, "c": "3120241"}, {"seg": 0, "am": 56.2, "y2030": 34.1, "wk": 29.2, "s": 46.0, "n": "강동구청역", "g": 2, "c": "3120242"}, {"seg": 4, "am": 41.8, "y2030": 55.1, "wk": 32.6, "s": 66.5, "n": "천호역", "g": 2, "c": "3120243"}, {"seg": 4, "am": 45.7, "y2030": 43.8, "wk": 32.9, "s": 8.1, "n": "암사역", "g": 4, "c": "3120244"}, {"seg": 4, "am": 53.3, "y2030": 43.2, "wk": 34.0, "s": 37.9, "n": "둔촌역", "g": 2, "c": "3120245"}, {"seg": 4, "am": 48.9, "y2030": 39.3, "wk": 25.7, "s": 63.4, "n": "길동역", "g": 2, "c": "3120246"}, {"seg": 0, "am": 50.3, "y2030": 33.8, "wk": 31.8, "s": 7.3, "n": "굽은다리역", "g": 4, "c": "3120247"}, {"seg": 0, "am": 39.8, "y2030": 31.5, "wk": 38.3, "s": 20.2, "n": "명일역", "g": 3, "c": "3120248"}, {"seg": 0, "am": 49.8, "y2030": 29.3, "wk": 32.3, "s": 72.1, "n": "고덕역", "g": 2, "c": "3120249"}, {"seg": 3, "am": 33.9, "y2030": 62.7, "wk": 31.5, "s": 50.5, "n": "통인시장", "g": 2, "c": "3130001"}, {"seg": 4, "am": 49.0, "y2030": 57.8, "wk": 35.0, "s": 14.8, "n": "세종마을음식문화거리(금천교시장)", "g": 3, "c": "3130002"}, {"seg": 0, "am": 44.9, "y2030": 39.6, "wk": 39.0, "s": 13.3, "n": "광장시장(광장전통시장)", "g": 3, "c": "3130007"}, {"seg": 0, "am": 56.9, "y2030": 28.5, "wk": 20.0, "s": 6.7, "n": "종로신진시장", "g": 4, "c": "3130010"}, {"seg": 1, "am": 65.4, "y2030": 30.1, "wk": 17.6, "s": 116.7, "n": "남대문시장(자유상가)", "g": 1, "c": "3130024"}, {"seg": 4, "am": 45.7, "y2030": 44.8, "wk": 25.2, "s": 15.1, "n": "방산종합시장(방산시장)", "g": 3, "c": "3130035"}, {"seg": 1, "am": 60.4, "y2030": 32.1, "wk": 21.1, "s": 16.0, "n": "중부시장(신중부시장)", "g": 3, "c": "3130036"}, {"seg": 0, "am": 42.4, "y2030": 38.1, "wk": 33.1, "s": 4.1, "n": "약수시장", "g": 5, "c": "3130042"}, {"seg": 1, "am": 49.2, "y2030": 47.1, "wk": 9.7, "s": 15.5, "n": "동평화시장", "g": 3, "c": "3130048"}, {"seg": 0, "am": 57.6, "y2030": 28.7, "wk": 28.8, "s": 5.6, "n": "용산용문시장", "g": 5, "c": "3130056"}, {"seg": 3, "am": 17.6, "y2030": 76.7, "wk": 44.8, "s": 20.0, "n": "신흥시장", "g": 3, "c": "3130060"}, {"seg": 4, "am": 40.9, "y2030": 47.7, "wk": 28.6, "s": 15.3, "n": "행당시장상점가", "g": 3, "c": "3130066"}, {"seg": 4, "am": 47.9, "y2030": 45.9, "wk": 27.7, "s": 10.2, "n": "왕십리도선동상점가", "g": 4, "c": "3130067"}, {"seg": 3, "am": 33.8, "y2030": 67.4, "wk": 28.7, "s": 13.1, "n": "한양대앞상점가(한양시장, 왕십리맛골목)", "g": 3, "c": "3130069"}, {"seg": 1, "am": 58.2, "y2030": 41.2, "wk": 20.1, "s": 24.2, "n": "뚝섬역상점가", "g": 3, "c": "3130070"}, {"seg": 4, "am": 57.1, "y2030": 45.8, "wk": 32.5, "s": 13.8, "n": "성동용답상가시장", "g": 3, "c": "3130072"}, {"seg": 2, "am": 30.0, "y2030": 4.5, "wk": 38.1, "s": 5.2, "n": "청량리청과물시장", "g": 5, "c": "3130094"}, {"seg": 4, "am": 43.6, "y2030": 57.7, "wk": 31.6, "s": 4.2, "n": "회기시장", "g": 5, "c": "3130098"}, {"seg": 4, "am": 33.9, "y2030": 41.4, "wk": 30.6, "s": 5.3, "n": "전농로터리시장", "g": 5, "c": "3130099"}, {"seg": 4, "am": 33.5, "y2030": 54.9, "wk": 36.4, "s": 16.5, "n": "중랑동부시장", "g": 3, "c": "3130106"}, {"seg": 0, "am": 35.0, "y2030": 38.5, "wk": 35.6, "s": 5.7, "n": "면목골목시장(면목시장)", "g": 5, "c": "3130110"}, {"seg": 0, "am": 42.8, "y2030": 37.1, "wk": 33.9, "s": 6.3, "n": "동원전통종합시장(동원시장, 동원전통시장 상점가)", "g": 4, "c": "3130111"}, {"seg": 0, "am": 44.3, "y2030": 35.8, "wk": 37.7, "s": 9.0, "n": "정릉시장", "g": 4, "c": "3130117"}, {"seg": 0, "am": 46.5, "y2030": 29.7, "wk": 25.9, "s": 4.8, "n": "삼양골목시장(삼양시장)", "g": 5, "c": "3130132"}, {"seg": 0, "am": 44.5, "y2030": 39.0, "wk": 32.0, "s": 8.4, "n": "쌍문시장(쌍문역골목시장)", "g": 4, "c": "3130146"}, {"seg": 0, "am": 51.7, "y2030": 27.9, "wk": 29.6, "s": 9.1, "n": "방학동도깨비시장", "g": 4, "c": "3130148"}, {"seg": 0, "am": 54.8, "y2030": 33.1, "wk": 26.3, "s": 8.4, "n": "창동역상점가", "g": 4, "c": "3130153"}, {"seg": 3, "am": 25.2, "y2030": 53.1, "wk": 36.8, "s": 35.3, "n": "연신내상점가(연빛거리)", "g": 2, "c": "3130167"}, {"seg": 0, "am": 39.4, "y2030": 26.6, "wk": 40.2, "s": 22.3, "n": "제일시장", "g": 3, "c": "3130170"}, {"seg": 0, "am": 50.5, "y2030": 38.6, "wk": 26.3, "s": 5.5, "n": "불광먹자골목 골목형상점가", "g": 5, "c": "3130171"}, {"seg": 3, "am": 29.6, "y2030": 61.8, "wk": 32.7, "s": 9.0, "n": "신촌 상인회(신촌상점가)", "g": 4, "c": "3130175"}, {"seg": 3, "am": 47.3, "y2030": 67.4, "wk": 17.1, "s": 5.4, "n": "이대 앞 스타트업 상점가", "g": 5, "c": "3130178"}, {"seg": 3, "am": 45.0, "y2030": 66.1, "wk": 20.7, "s": 70.5, "n": "이화여대 3,5,7길 상점가", "g": 2, "c": "3130179"}, {"seg": 1, "am": 56.6, "y2030": 34.5, "wk": 11.9, "s": 66.6, "n": "상암동상점가", "g": 2, "c": "3130183"}, {"seg": 0, "am": 51.5, "y2030": 28.4, "wk": 54.4, "s": 7.8, "n": "마포농수산물시장", "g": 4, "c": "3130184"}, {"seg": 3, "am": 17.2, "y2030": 65.0, "wk": 45.3, "s": 101.6, "n": "홍대소상공인상점가", "g": 2, "c": "3130190"}, {"seg": 3, "am": 23.8, "y2030": 69.0, "wk": 42.5, "s": 109.6, "n": "홍대 걷고싶은 거리", "g": 1, "c": "3130191"}, {"seg": 1, "am": 83.2, "y2030": 13.4, "wk": 25.6, "s": 7.3, "n": "용강동 상점가", "g": 4, "c": "3130194"}, {"seg": 1, "am": 59.4, "y2030": 37.2, "wk": 20.0, "s": 67.2, "n": "도화동 상점가", "g": 2, "c": "3130195"}, {"seg": 0, "am": 39.2, "y2030": 31.1, "wk": 31.6, "s": 6.6, "n": "송화벽화시장(송화골목시장)", "g": 4, "c": "3130214"}, {"seg": 0, "am": 47.6, "y2030": 39.5, "wk": 35.8, "s": 4.8, "n": "화곡중앙시장", "g": 5, "c": "3130216"}, {"seg": 4, "am": 43.0, "y2030": 58.3, "wk": 34.3, "s": 4.1, "n": "까치산시장", "g": 5, "c": "3130219"}, {"seg": 0, "am": 39.3, "y2030": 19.4, "wk": 30.4, "s": 4.3, "n": "남부골목시장(남부화곡시장, 남부시장)", "g": 5, "c": "3130221"}, {"seg": 0, "am": 43.4, "y2030": 33.8, "wk": 34.3, "s": 8.5, "n": "개봉중앙시장", "g": 4, "c": "3130225"}, {"seg": 0, "am": 41.5, "y2030": 33.8, "wk": 31.4, "s": 14.1, "n": "대명여울빛거리시장(대명시장)", "g": 3, "c": "3130235"}, {"seg": 0, "am": 45.3, "y2030": 28.1, "wk": 33.8, "s": 10.2, "n": "비단길현대시장(현대시장)", "g": 4, "c": "3130236"}, {"seg": 1, "am": 75.4, "y2030": 32.8, "wk": 11.5, "s": 9.0, "n": "영등포유통상가", "g": 4, "c": "3130240"}, {"seg": 1, "am": 76.0, "y2030": 34.5, "wk": 12.5, "s": 14.3, "n": "선유도역 골목형상점가", "g": 3, "c": "3130241"}, {"seg": 4, "am": 40.0, "y2030": 48.5, "wk": 36.6, "s": 27.9, "n": "영등포역지하도상점가", "g": 3, "c": "3130248"}, {"seg": 4, "am": 56.9, "y2030": 51.1, "wk": 33.5, "s": 6.9, "n": "신대방1동골목상권", "g": 4, "c": "3130260"}, {"seg": 0, "am": 43.7, "y2030": 40.5, "wk": 34.1, "s": 11.7, "n": "성대전통시장(성대시장)", "g": 3, "c": "3130261"}, {"seg": 4, "am": 50.4, "y2030": 58.7, "wk": 33.6, "s": 6.1, "n": "노량진중앙시장", "g": 4, "c": "3130265"}, {"seg": 2, "am": 8.0, "y2030": 36.9, "wk": 29.3, "s": 6.5, "n": "상도전통시장", "g": 4, "c": "3130268"}, {"seg": 4, "am": 41.7, "y2030": 44.5, "wk": 34.5, "s": 32.2, "n": "남성사계시장(남성시장)", "g": 3, "c": "3130273"}, {"seg": 2, "am": 20.3, "y2030": 35.2, "wk": 25.7, "s": 7.0, "n": "사당1동먹자골목상점가(사당1동먹자골목)", "g": 4, "c": "3130274"}, {"seg": 3, "am": 26.5, "y2030": 64.9, "wk": 38.1, "s": 66.3, "n": "서원동상점가", "g": 2, "c": "3130285"}, {"seg": 4, "am": 38.6, "y2030": 49.2, "wk": 35.2, "s": 8.3, "n": "영림시장", "g": 4, "c": "3130290"}, {"seg": 4, "am": 48.3, "y2030": 39.4, "wk": 37.4, "s": 8.6, "n": "인헌시장(원당종합시장)", "g": 4, "c": "3130295"}, {"seg": 1, "am": 68.5, "y2030": 48.3, "wk": 12.2, "s": 7.3, "n": "강남언주로", "g": 4, "c": "3130306"}, {"seg": 0, "am": 45.6, "y2030": 26.9, "wk": 32.6, "s": 10.9, "n": "강남개포시장", "g": 4, "c": "3130310"}, {"seg": 4, "am": 43.6, "y2030": 45.7, "wk": 35.8, "s": 8.5, "n": "새마을시장", "g": 4, "c": "3130311"}, {"seg": 4, "am": 43.4, "y2030": 42.7, "wk": 30.1, "s": 28.0, "n": "방이시장", "g": 3, "c": "3130313"}, {"seg": 3, "am": 21.4, "y2030": 64.1, "wk": 36.3, "s": 21.6, "n": "로데오거리상점가", "g": 3, "c": "3130318"}], "pipeline": {"same_seg_total": 145, "same_seg_g123": 107, "qualified": 69, "top": [{"name": "북창동(시청역_6번)", "gu": "중구", "g": 2, "sales_eok": 98.6, "pred_g": 14.7, "sps_man": 2347.0}, {"name": "구역삼세무서", "gu": "강남구", "g": 2, "sales_eok": 103.0, "pred_g": 4.7, "sps_man": 1574.0}, {"name": "남부터미널역", "gu": "서초구", "g": 2, "sales_eok": 94.4, "pred_g": 10.4, "sps_man": 1410.0}, {"name": "서울시청", "gu": "중구", "g": 2, "sales_eok": 86.9, "pred_g": 14.6, "sps_man": 2263.0}, {"name": "학동역", "gu": "강남구", "g": 2, "sales_eok": 89.2, "pred_g": 5.3, "sps_man": 1479.0}, {"name": "중부경찰서(영화인의거리)", "gu": "중구", "g": 2, "sales_eok": 71.9, "pred_g": 10.0, "sps_man": 1223.0}, {"name": "성수초등학교", "gu": "성동구", "g": 2, "sales_eok": 68.9, "pred_g": 4.8, "sps_man": 1073.0}, {"name": "종로5가역", "gu": "종로구", "g": 2, "sales_eok": 65.0, "pred_g": 11.2, "sps_man": 1398.0}, {"name": "양재시민의숲역(양재동꽃시장, aT센터)", "gu": "서초구", "g": 2, "sales_eok": 57.3, "pred_g": 13.5, "sps_man": 1836.0}, {"name": "서초3동사거리", "gu": "서초구", "g": 2, "sales_eok": 68.2, "pred_g": 10.6, "sps_man": 1527.0}, {"name": "선정릉역", "gu": "강남구", "g": 2, "sales_eok": 44.3, "pred_g": 4.7, "sps_man": 754.0}, {"name": "장한평역(장한평)", "gu": "동대문구", "g": 2, "sales_eok": 33.7, "pred_g": 12.4, "sps_man": 710.0}, {"name": "종로구청", "gu": "종로구", "g": 2, "sales_eok": 66.9, "pred_g": 6.9, "sps_man": 1873.0}, {"name": "구로역", "gu": "구로구", "g": 2, "sales_eok": 36.7, "pred_g": 8.8, "sps_man": 794.0}, {"name": "영등포구청역", "gu": "영등포구", "g": 2, "sales_eok": 50.8, "pred_g": 5.3, "sps_man": 643.0}]}, "seg_sps": {"0": 695.0, "1": 1032.0, "2": 823.0, "3": 781.0, "4": 943.0}};
+(function(){
+"use strict";
+const E=window.CoffeeEngine, $=s=>document.querySelector(s);
+const fmt=(v,d=0)=>v==null||isNaN(v)?"–":Number(v).toLocaleString("ko-KR",{maximumFractionDigits:d,minimumFractionDigits:d});
+const pct=(v,d=1)=>v==null||isNaN(v)?"–":(v*100).toFixed(d)+"%";
+const cv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const C={hl:cv("--hl"),base:cv("--base"),c1:cv("--c1"),c2:cv("--c2"),c3:cv("--c3"),c4:cv("--c4"),ink:cv("--ink"),ink2:cv("--ink2"),muted:cv("--muted"),line:cv("--line"),line2:cv("--line2"),pos:cv("--pos"),neg:cv("--neg"),mid:cv("--mid"),brand:cv("--brand"),brand2:cv("--brand2"),soft:cv("--soft")};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tip=$("#tip");
+document.addEventListener("mousemove",e=>{const t=e.target.closest("[data-tip]"); if(!t){tip.style.opacity=0;return;}
+  tip.innerHTML=t.getAttribute("data-tip"); let x=e.clientX+14,y=e.clientY-tip.offsetHeight-10;
+  if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-14; if(y<8)y=e.clientY+16; tip.style.left=x+"px";tip.style.top=y+"px";tip.style.opacity=1;});
+function ticks(a,b,n=4){const raw=(b-a)/n,mg=Math.pow(10,Math.floor(Math.log10(raw))),e=raw/mg,st=(e>=7.5?10:e>=3.5?5:e>=1.5?2:1)*mg;const o=[];for(let v=Math.floor(a/st)*st;v<=Math.ceil(b/st)*st+st*1e-6;v+=st)o.push(+v.toFixed(8));return o;}
+const T=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.fs||12}" fill="${o.c||C.muted}" text-anchor="${o.a||"middle"}" font-weight="${o.w||400}" ${o.x||""}>${esc(s)}</text>`;
+const svg=(id,W,H,g)=>{$(id).innerHTML=`<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;};
+
+/* 공통: 꺾은선 */
+function line(id,o){const W=o.w,H=o.h,m={l:46,r:16,t:16,b:24},n=o.vals.length;
+  const yt=ticks(o.min,o.max,4),y0=yt[0],y1=yt[yt.length-1],ys=v=>m.t+(H-m.t-m.b)*(1-(v-y0)/(y1-y0)),xs=i=>m.l+(W-m.l-m.r)*i/(n-1);
+  let g="";yt.forEach(v=>{g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${ys(v)}" y2="${ys(v)}" stroke="${C.line}"/>`+T(m.l-6,ys(v)+4,fmt(v),{a:"end",fs:11});});
+  o.x.forEach((q,i)=>{if(q[4]==="1")g+=T(xs(i),H-6,"'"+q.slice(2,4),{fs:11});});
+  let d="";o.vals.forEach((v,i)=>d+=(i?"L":"M")+xs(i)+","+ys(v));
+  g+=`<path d="${d}" fill="none" stroke="${C.hl}" stroke-width="3" stroke-linejoin="round"/>`;
+  o.marks.forEach(i=>{g+=`<circle cx="${xs(i)}" cy="${ys(o.vals[i])}" r="5" fill="${C.hl}" stroke="#fff" stroke-width="2"/>`+T(xs(i),ys(o.vals[i])-11,fmt(o.vals[i]),{c:C.ink,w:800,fs:13});});
+  o.vals.forEach((v,i)=>{g+=`<rect x="${xs(i)-8}" y="${m.t}" width="16" height="${H-m.t-m.b}" fill="transparent" data-tip="${esc(`<b>${o.x[i].slice(0,4)}년 ${o.x[i][4]}분기</b><br>${fmt(v)}${o.u}`)}"/>`;});
+  svg(id,W,H,g);}
+/* 공통: 가로 막대 비교 */
+function hb(id,o){const W=o.w,rh=o.rh||30,S=o.series,m={l:o.ml||60,r:50,t:2,b:2},H=m.t+m.b+o.cats.length*rh,mx=o.max;
+  const xs=v=>m.l+(W-m.l-m.r)*v/mx,bh=(rh-8)/S.length;let g="";
+  o.cats.forEach((c,i)=>{g+=T(m.l-8,m.t+i*rh+rh/2+4,c,{a:"end",c:C.ink2,fs:12,w:600});
+    S.forEach((s,k)=>{const v=s.vals[i],y=m.t+i*rh+4+k*bh,col=typeof s.color==="function"?s.color(i):s.color;
+      g+=`<rect x="${m.l}" y="${y}" width="${Math.max(1,xs(v)-m.l)}" height="${bh-2}" rx="3" fill="${col}" data-tip="${esc(`<b>${esc(c)}</b><br>${esc(s.name)}: ${(o.f||fmt)(v)}`)}"/>`;
+      g+=T(xs(v)+5,y+bh/2+3,(o.f||fmt)(v),{a:"start",c:k===0?C.ink:C.muted,fs:11.5,w:k===0?800:500});});});
+  svg(id,W,H,g);}
+
+/* 바인딩 */
+const B=E.store(), R30=E.rollout({n_target:30,direct_share:.3});
+const bind=(k,v)=>document.querySelectorAll(`[data-k="${k}"]`).forEach(n=>n.textContent=v);
+bind("salesEok",(B.salesYear/1e4).toFixed(1)+"억 원"); bind("ebitM",pct(B.ebitM)); bind("investEok",(B.invest/1e4).toFixed(1)+"억 원");
+bind("safety",pct(B.safety,0)); bind("r30irr",pct(R30.irr,0)); bind("r30ebitda",(R30.runRate/1e4).toFixed(1)+"억 원");
+bind("salesMan",fmt(B.sales)); bind("ebitMan",fmt(B.ebit)); bind("franUnit",fmt(R30.franUnitY));
+document.querySelector('[data-k="paybackBig"]').innerHTML=B.payback+"<small>개월</small>";
+
+/* 3 시장 */
+const mq=D.market_q;
+line("#c_st",{w:560,h:190,x:mq.map(r=>r.q),vals:mq.map(r=>r.stores),min:18000,max:23000,marks:[12,mq.length-1],u:"개"});
+line("#c_sps",{w:560,h:190,x:mq.map(r=>r.q),vals:mq.map(r=>r.sps_man),min:700,max:1200,marks:[12,mq.length-1],u:"만 원"});
+
+/* 4 사다리 + 분기 */
+(function(){const W=640,H=120,m={l:20,r:20},xs=v=>m.l+(W-m.l-m.r)*(v-60)/(125-60);
+  let g=`<rect x="${xs(60)}" y="46" width="${xs(125)-xs(60)}" height="22" rx="11" fill="${C.soft}" stroke="${C.mid}"/>`;
+  g+=`<rect x="${xs(102.9)}" y="46" width="${xs(125)-xs(102.9)}" height="22" rx="0" fill="${C.mid}"/>`;
+  g+=T(xs(125)-8,61,"1등급",{a:"end",c:C.brand,w:800,fs:12});
+  g+=`<line x1="${xs(102.9)}" x2="${xs(102.9)}" y1="36" y2="78" stroke="${C.brand}" stroke-width="2" stroke-dasharray="4 3"/>`+T(xs(102.9),30,"1등급 기준 102.9",{c:C.brand,w:700,fs:12});
+  g+=`<circle cx="${xs(98.6)}" cy="57" r="10" fill="#fff" stroke="${C.ink}" stroke-width="3"/>`+T(xs(98.6)-14,98,"지금 98.6억",{a:"end",c:C.ink,w:800,fs:14});
+  g+=`<circle cx="${xs(114.2)}" cy="57" r="10" fill="${C.hl}" stroke="#fff" stroke-width="3"/>`+T(xs(114.2),98,"3년 뒤 114.2억",{c:C.hl,w:800,fs:14});
+  g+=`<path d="M${xs(98.6)+12},57 L${xs(114.2)-14},57" stroke="${C.hl}" stroke-width="3" marker-end="url(#a1)"/>`;
+  svg("#c_ladder",W,H,`<defs><marker id="a1" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0,0L8,4L0,8Z" fill="${C.hl}"/></marker></defs>`+g);})();
+(function(){const q=D.A_q,W=640,H=200,m={l:34,r:6,t:20,b:22},n=q.length,bw=(W-m.l-m.r)/n,mx=30,ys=v=>m.t+(H-m.t-m.b)*(1-v/mx);let g="";
+  [0,10,20,30].forEach(v=>g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${ys(v)}" y2="${ys(v)}" stroke="${C.line}"/>`+T(m.l-6,ys(v)+4,v,{a:"end",fs:11}));
+  q.forEach((r,i)=>{const x=m.l+i*bw+bw*.15,w=bw*.7,on=i>=n-4;
+    g+=`<rect x="${x}" y="${ys(r.sales_eok)}" width="${w}" height="${ys(0)-ys(r.sales_eok)}" rx="3" fill="${on?C.hl:C.base}" data-tip="${esc(`<b>${r.q.slice(0,4)}년 ${r.q[4]}분기</b><br>${fmt(r.sales_eok,1)}억 원 · 점포 ${fmt(r.stores)}개`)}"/>`;
+    if(on||i===0)g+=T(x+w/2,ys(r.sales_eok)-5,fmt(r.sales_eok,0),{c:C.ink,w:800,fs:11.5});
+    if(r.q[4]==="1")g+=T(x+w/2,H-5,"'"+r.q.slice(2,4),{fs:11});});
+  svg("#c_q",W,H,g);})();
+
+/* 5 하루 타임라인 */
+(function(){const W=1160,H=150,m={l:90,r:10},tz=[["06–11시","06-11"],["11–14시","11-14"],["14–17시","14-17"],["17–21시","17-21"],["21–24시","21-24"]];
+  const cols=[C.base,C.hl,C.mid,C.base,C.base];
+  const band=(y,mix,label,strong)=>{let x=m.l,g=T(m.l-10,y+22,label,{a:"end",c:C.ink,w:800,fs:14});
+    tz.forEach(([l,k],i)=>{const v=mix.time[k],w=(W-m.l-m.r)*v/tz.reduce((a,[,kk])=>a+mix.time[kk],0);
+      g+=`<rect x="${x}" y="${y}" width="${Math.max(0,w-2)}" height="36" rx="5" fill="${strong?cols[i]:"#eeedf2"}" data-tip="${esc(`<b>${label} ${l}</b><br>매출 비중 ${pct(v)}`)}"/>`;
+      if(w>58)g+=T(x+w/2,y+23,(w>120?l+" ":"")+pct(v,0),{c:strong&&i===1?"#fff":C.ink,w:800,fs:w>120?14:12.5});x+=w;});return g;};
+  svg("#c_day",W,H,band(18,D.mix_A,"북창동",true)+band(86,D.mix_seoul,"서울 평균",false));})();
+const ak=["20대","30대","40대","50대","60대+"];
+hb("#c_age",{w:640,rh:34,ml:56,max:33,cats:ak,series:[{name:"북창동",color:C.hl,vals:ak.map(k=>D.mix_A.age[k]*100)},{name:"서울 평균",color:C.base,vals:ak.map(k=>D.mix_seoul.age[k]*100)}],f:v=>fmt(v,0)+"%"});
+(function(){const W=440,H=60,wk=D.mix_A.weekend,x=W*(1-wk);
+  svg("#c_wk",W,H,`<rect x="0" y="6" width="${x-2}" height="34" rx="6" fill="${C.hl}"/><rect x="${x}" y="6" width="${W-x}" height="34" rx="6" fill="${C.base}"/>`+T(x/2,29,"평일 "+pct(1-wk,0),{c:"#fff",w:800,fs:16})+T(x+(W-x)/2,29,"주말 "+pct(wk,0),{c:C.ink,w:800,fs:13})+T(W,58,"서울 평균 주말 "+pct(D.mix_seoul.weekend,0),{a:"end",fs:11}));})();
+
+/* 7 평면도 */
+(function(){const W=640,H=380,s=62,X=18,Y=18,w=9*s,h=5.5*s;
+  const z=(x,y,ww,hh,f,l,sub,st)=>`<rect x="${X+x*s}" y="${Y+y*s}" width="${ww*s}" height="${hh*s}" rx="7" fill="${f}" stroke="${st||C.line2}" stroke-width="${st?2:1}"/>`+T(X+(x+ww/2)*s,Y+(y+hh/2)*s+(sub?-3:5),l,{c:C.ink,w:800,fs:13})+(sub?T(X+(x+ww/2)*s,Y+(y+hh/2)*s+14,sub,{c:C.ink2,fs:11}):"");
+  let g=`<rect x="${X}" y="${Y}" width="${w}" height="${h}" fill="#fbfaff" stroke="${C.ink}" stroke-width="3"/>`;
+  g+=z(.2,.2,5.6,1.3,C.soft,"① 바 · 3그룹 머신","바리스타 3명 · 시간당 120잔",C.hl)+z(6,.2,2.8,1.3,"#f4f3f7","백바","제빙·냉장");
+  g+=z(.2,1.8,3,.85,"#e6f1fc","② 픽업 선반 20칸","번호 조명")+z(3.4,1.8,1.6,.85,"#fff3e6","카운터","")+z(5.2,1.8,1.6,.85,"#f4f3f7","캐리어","4·6잔");
+  g+=z(.2,4,1.5,1.3,"#fff3e6","③ 키오스크","2대")+z(7,1.8,1.8,3.5,"#f4f3f7","스탠딩","6석")+z(2,4.1,4.6,1.2,"#f4f3f7","벤치","4석 · 잠깐 대기");
+  g+=`<rect x="${X+.2*s}" y="${Y+h-4}" width="${1.6*s}" height="9" fill="${C.brand2}"/>`+T(X+1*s,Y+h+24,"입구 (시청역 6번 출구 쪽)",{c:C.brand,w:800,fs:12});
+  g+=`<path d="M${X+1*s},${Y+h+4} C${X+1*s},${Y+3.4*s} ${X+1.6*s},${Y+3.38*s} ${X+2.3*s},${Y+3.38*s} L${X+6.4*s},${Y+3.38*s}" fill="none" stroke="${C.brand2}" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#a2)"/>`;
+  g+=T(X+4.3*s,Y+3.25*s,"주문 → 픽업 → 퇴장 한 방향 동선",{c:C.brand2,w:700,fs:11.5});
+  svg("#c_floor",W,H+12,`<defs><marker id="a2" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0,0L8,4L0,8Z" fill="${C.brand2}"/></marker></defs>`+g);})();
+hb("#c_cap",{w:420,rh:36,ml:96,max:140,cats:["피크 1시간 수요","처리 능력"],series:[{name:"잔/시간",color:i=>i===0?C.c2:C.hl,vals:[90,120]}],f:v=>v+"잔"});
+
+/* 8 메뉴 */
+hb("#c_pos",{w:760,rh:30,ml:150,max:5200,cats:["초저가 브랜드","우리 브랜드 ☕","중가 브랜드","커피 전문 브랜드"],series:[{name:"아메리카노",color:i=>i===1?C.hl:C.base,vals:[1800,2500,3500,4700]}],f:v=>fmt(v)+"원"});
+(function(){const parts=[["아메리카노",.50,C.hl],["라떼류",.27,C.c1],["시그니처",.12,C.c4],["콜드브루",.09,C.c3],["기타",.02,C.base]];
+  const W=420,H=150,cx=75,cy=75,r=62,ri=38;let a=-Math.PI/2,g="";
+  parts.forEach(([l,v,c])=>{const a2=a+v*2*Math.PI,lg=v>.5?1:0,p=(rr,t)=>[cx+rr*Math.cos(t),cy+rr*Math.sin(t)];
+    const [x1,y1]=p(r,a),[x2,y2]=p(r,a2),[x3,y3]=p(ri,a2),[x4,y4]=p(ri,a);
+    g+=`<path d="M${x1},${y1}A${r},${r} 0 ${lg} 1 ${x2},${y2}L${x3},${y3}A${ri},${ri} 0 ${lg} 0 ${x4},${y4}Z" fill="${c}" stroke="#fff" stroke-width="2" data-tip="${esc(`<b>${l}</b><br>판매 비중 ${pct(v,0)}`)}"/>`;a=a2;});
+  g+=T(cx,cy+6,"9종",{c:C.ink,w:800,fs:16});
+  parts.forEach(([l,v,c],i)=>{g+=`<rect x="175" y="${12+i*26}" width="13" height="13" rx="3" fill="${c}"/>`+T(196,23+i*26,l,{a:"start",c:C.ink2,fs:13,w:600})+T(W-10,23+i*26,pct(v,0),{a:"end",c:C.ink,fs:13,w:800});});
+  svg("#c_mix",W,H,g);})();
+hb("#c_cm",{w:420,rh:30,ml:96,max:3300,cats:["아메리카노","카페라떼","크림라떼","콜드브루"],series:[{name:"공헌이익",color:i=>i===0?C.hl:C.c1,vals:[1867,2361,2923,2511]}],f:v=>fmt(v)+"원"});
+
+/* 9 손익 */
+const a=B.a;
+$("#f_rev").innerHTML=[["상권 하루 거래","평일 "+fmt(a.mkt_wd_txn)+"건"],["×"],["우리 몫",pct(a.capture,0)],["×"],["한 번에","1.75잔"],["×"],["한 잔","3,100원"],["="],["월 매출",fmt(B.sales)+"만"]]
+ .map(([l,v])=>v==null?`<div class="arrow" style="font-size:1.6cqw">${l}</div>`:`<div style="text-align:center;flex:1"><div style="font-size:1.45cqw;font-weight:800;color:${l==="월 매출"?C.brand2:C.ink}">${v}</div><div class="cap" style="margin:0">${l}</div></div>`).join("");
+(function(){const S=B,it=[["매출",S.sales,1],["원재료",-S.v.cogs],["인건비",-S.labor],["월세·관리비",-(S.rent+S.mgmt)],["기타 비용",-(S.v.card+S.v.platform+S.v.util+S.v.supplies+S.v.marketing+S.v.hq+S.a.other_fixed)],["감가상각",-S.da],["영업이익",S.ebit,1]];
+  const W=660,H=250,m={l:10,r:10,t:22,b:40},n=it.length,bw=(W-m.l-m.r)/n,ys=v=>m.t+(H-m.t-m.b)*(1-v/3000);let g="",cur=0;
+  g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${ys(0)}" y2="${ys(0)}" stroke="${C.line2}"/>`;
+  it.forEach(([l,v,t],i)=>{const x=m.l+i*bw+bw*.15,w=bw*.7;let lo,hi,col;
+    if(t){lo=0;hi=v;cur=v;col=i===0?C.base:C.hl;}else{lo=cur+v;hi=cur;cur+=v;col=C.c2;}
+    g+=`<rect x="${x}" y="${ys(hi)}" width="${w}" height="${Math.max(2,ys(lo)-ys(hi))}" rx="3" fill="${col}" data-tip="${esc(`<b>${l}</b><br>${fmt(v)}만 원 · 매출의 ${pct(Math.abs(v)/S.sales)}`)}"/>`;
+    g+=T(x+w/2,ys(hi)-6,(t?"":"−")+fmt(Math.abs(v)),{c:C.ink,w:800,fs:13});
+    g+=T(x+w/2,H-m.b+16,l,{c:C.ink2,fs:12,w:600})+T(x+w/2,H-m.b+31,pct(Math.abs(v)/S.sales,0),{fs:11,c:t&&i>0?C.brand2:C.muted,w:t?800:400});});
+  svg("#c_wf",W,H,g);})();
+const S3=[["비관",E.store(E.SCEN.bear)],["기본",B],["낙관",E.store(E.SCEN.bull)]];
+$("#sc").innerHTML=S3.map(([l,S])=>`<div class="card ${l==="기본"?"on":""}"><div class="t1">${l}</div><div class="v1">${(S.salesYear/1e4).toFixed(1)}억</div><div class="s1">영업이익률 <b>${pct(S.ebitM,0)}</b><br>회수 <b>${S.payback?S.payback+"개월":"불가"}</b></div></div>`).join("");
+(function(){const W=440,H=86,xs=v=>20+(W-40)*v/4000;
+  let g=`<rect x="${xs(0)}" y="30" width="${xs(4000)-xs(0)}" height="18" rx="9" fill="#f1f0f4"/>`;
+  g+=`<rect x="${xs(0)}" y="30" width="${xs(B.bep_ebitda)-xs(0)}" height="18" rx="9" fill="#fbe1d6"/>`+T((xs(0)+xs(B.bep_ebitda))/2,44,"손실 구간",{c:C.c2,w:800,fs:11.5});
+  g+=`<line x1="${xs(B.bep_ebitda)}" x2="${xs(B.bep_ebitda)}" y1="22" y2="56" stroke="${C.c2}" stroke-width="2.5"/>`+T(xs(B.bep_ebitda),16,"손익분기 "+fmt(B.bep_ebitda),{c:C.c2,w:800,fs:12});
+  g+=`<circle cx="${xs(B.sales)}" cy="39" r="9" fill="${C.hl}" stroke="#fff" stroke-width="3"/>`+T(xs(B.sales),74,"기본 매출 "+fmt(B.sales)+" (여유 "+pct(B.safety,0)+")",{c:C.hl,w:800,fs:12});
+  svg("#c_bep",W,H,g);})();
+(function(){const it=E.sensitivity().slice(0,4),W=440,rh=26,m={l:120,r:46},H=it.length*rh+4,mx=340,xs=v=>m.l+(W-m.l-m.r)*(v+mx)/(2*mx);
+  let g=`<line x1="${xs(0)}" x2="${xs(0)}" y1="0" y2="${H}" stroke="${C.ink2}"/>`;
+  it.forEach((x,i)=>{const y=i*rh+4;g+=T(m.l-8,y+13,x.k,{a:"end",c:C.ink2,fs:12,w:600});
+    [x.lo,x.hi].forEach(v=>{g+=`<rect x="${Math.min(xs(0),xs(v))}" y="${y}" width="${Math.abs(xs(v)-xs(0))}" height="${rh-8}" rx="3" fill="${v>=0?C.pos:C.neg}" data-tip="${esc(`<b>${x.k}</b><br>영업이익 ${v>=0?"+":""}${fmt(v)}만 원/월`)}"/>`+T(v>=0?xs(v)+4:xs(v)-4,y+13,(v>=0?"+":"")+fmt(v),{a:v>=0?"start":"end",fs:11,c:C.ink2,w:700});});});
+  svg("#c_tor",W,H,g);})();
+
+/* 10 확장 */
+(function(){const R=R30,W=660,H=170,m={l:30,r:10,t:20,b:22},n=5,bw=(W-m.l-m.r)/n,mx=32,ys=v=>m.t+(H-m.t-m.b)*(1-v/mx);let g="";
+  R.rows.forEach((r,i)=>{const x=m.l+i*bw+bw*.25,w=bw*.5;
+    g+=`<rect x="${x}" y="${ys(r.direct)}" width="${w}" height="${ys(0)-ys(r.direct)}" fill="${C.hl}" data-tip="${esc(`<b>${r.y}년 차</b><br>직영 ${r.direct}개 · 가맹 ${r.fran}개`)}"/>`;
+    g+=`<rect x="${x}" y="${ys(r.direct+r.fran)}" width="${w}" height="${ys(r.direct)-ys(r.direct+r.fran)-1.5}" rx="3" fill="${C.mid}" data-tip="${esc(`<b>${r.y}년 차</b><br>직영 ${r.direct}개 · 가맹 ${r.fran}개`)}"/>`;
+    g+=T(x+w/2,ys(r.direct+r.fran)-6,(r.direct+r.fran)+"개",{c:C.ink,w:800,fs:13})+T(x+w/2,H-5,r.y+"년 차",{fs:12,c:C.ink2});});
+  svg("#c_rs",W,H,g);
+  const H2=150,m2={t:22,b:22},vals=R.rows.map(r=>r.ebitda/1e4),lo=-3,hi=7,ys2=v=>m2.t+(H2-m2.t-m2.b)*(1-(v-lo)/(hi-lo));let g2=`<line x1="${m.l}" x2="${W-m.r}" y1="${ys2(0)}" y2="${ys2(0)}" stroke="${C.line2}"/>`;
+  vals.forEach((v,i)=>{const x=m.l+i*bw+bw*.25,w=bw*.5;g2+=`<rect x="${x}" y="${Math.min(ys2(v),ys2(0))}" width="${w}" height="${Math.abs(ys2(v)-ys2(0))}" rx="3" fill="${v>=0?C.pos:C.neg}" data-tip="${esc(`<b>${i+1}년 차 EBITDA</b><br>${fmt(v,1)}억 원`)}"/>`+T(x+w/2,v>=0?ys2(v)-6:ys2(v)+15,fmt(v,1),{c:C.ink,w:800,fs:13})+T(x+w/2,H2-5,(i+1)+"년 차",{fs:12,c:C.ink2});});
+  svg("#c_re",W,H2,g2);})();
+(function(){const Ns=[10,20,30,50],v=Ns.map(n=>{const r=E.rollout({n_target:n,direct_share:.3});return r.irr==null?-0.3:Math.max(-0.3,r.irr);});
+  const W=440,H=200,m={l:40,r:10,t:24,b:26},bw=(W-m.l-m.r)/Ns.length,lo=-0.3,hi=0.8,ys=x=>m.t+(H-m.t-m.b)*(1-(x-lo)/(hi-lo));
+  let g=`<line x1="${m.l}" x2="${W-m.r}" y1="${ys(0)}" y2="${ys(0)}" stroke="${C.line2}"/>`;
+  v.forEach((x,i)=>{const X=m.l+i*bw+bw*.2,w=bw*.6,n=Ns[i];g+=`<rect x="${X}" y="${Math.min(ys(x),ys(0))}" width="${w}" height="${Math.abs(ys(x)-ys(0))}" rx="3" fill="${x<0?C.neg:(n===30?C.hl:C.base)}" data-tip="${esc(`<b>${n}개점</b><br>IRR ${x<=-0.3?"손실":pct(x,0)}`)}"/>`+T(X+w/2,x>=0?ys(x)-7:ys(x)+15,x<=-0.29?"손실":pct(x,0),{c:C.ink,w:800,fs:14})+T(X+w/2,H-6,n+"개점",{fs:12.5,c:C.ink2,w:600});});
+  svg("#c_irr",W,H,g);})();
+
+/* 3b 선정 로직 점수표 */
+(function(){const L=D.shortlist.slice(0,12),top=L.slice(0,5);
+  const tier=(k,v,lowGood)=>{const arr=L.map(x=>x[k]).sort((a,b)=>lowGood?a-b:b-a);const r=arr.indexOf(v);return r<4?"f":r<8?"h":"";};
+  const mx=Math.max(...top.map(x=>x.score));
+  document.querySelector("#t_logic").innerHTML=`<thead><tr><th>상권</th><th>승급 확률</th><th>3년 성장</th><th>포맷 적합</th><th>리스크</th><th style="text-align:left">종합 점수</th></tr></thead><tbody>`+
+   top.map((x,i)=>`<tr class="${i===0?"win":""}"><td>${i+1}. ${esc(x.name.replace(/_/g," "))} <span class="muted" style="font-weight:500">${esc(x.gu)}</span></td>`+
+    `<td><span class="hv ${tier("p_up",x.p_up)}"></span>${fmt(x.p_up)}%</td>`+
+    `<td><span class="hv ${tier("pred_g",x.pred_g)}"></span>${x.pred_g>0?"+":""}${fmt(x.pred_g,1)}%</td>`+
+    `<td><span class="hv ${tier("fit",x.fit)}"></span>${fmt(x.fit,2)}</td>`+
+    `<td><span class="hv ${tier("risk",x.risk,true)}"></span>${x.risk<0?"낮음":x.risk<.3?"보통":"높음"}</td>`+
+    `<td style="text-align:left"><span class="sbar" style="width:${(x.score/mx*7).toFixed(2)}cqw"></span>${fmt(x.score,2)}</td></tr>`).join("")+`</tbody>`;})();
+/* 쪽번호 자동 */
+document.querySelectorAll(".slide").forEach((sl,i)=>{const f=sl.querySelector(".ft span:last-child");if(f)f.textContent=i+1;});
+
+/* 발표 모드 */
+const sl=[...document.querySelectorAll(".slide")];let cur=0;
+const show=i=>{cur=Math.max(0,Math.min(sl.length-1,i));sl.forEach((s,k)=>s.classList.toggle("on",k===cur));};
+const pres=on=>{document.body.classList.toggle("present",on);if(on){cur=Math.max(0,sl.findIndex(s=>s.getBoundingClientRect().bottom>80));show(cur);document.documentElement.requestFullscreen?.().catch(()=>{});}else{sl.forEach(s=>s.classList.remove("on"));sl[cur].scrollIntoView();if(document.fullscreenElement)document.exitFullscreen?.();}};
+$("#btnP").onclick=()=>pres(true);
+document.addEventListener("keydown",e=>{const P=document.body.classList.contains("present");if(e.key==="f"||e.key==="F"){pres(!P);return;}if(!P)return;
+  if(["ArrowRight","PageDown"," ","Enter"].includes(e.key)){e.preventDefault();show(cur+1);} if(["ArrowLeft","PageUp"].includes(e.key)){e.preventDefault();show(cur-1);} if(e.key==="Escape")pres(false);});
+document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement&&document.body.classList.contains("present"))pres(false);});
+document.addEventListener("click",e=>{if(document.body.classList.contains("present")&&!e.target.closest("button"))show(cur+1);});
+})();
+</script>
+</body>
+</html>
